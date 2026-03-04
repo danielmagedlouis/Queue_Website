@@ -1,0 +1,251 @@
+<style>
+  .about-hero {
+    padding: 8rem 2rem;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+    background: #000000;
+  }
+  
+  .about-hero h1 {
+    font-size: 3.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 0.8s ease-out 0.1s both;
+  }
+  
+  .about-hero p {
+    font-size: 1.2rem;
+    color: #a0aec0;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+    line-height: 1.6;
+  }
+  
+  .mission-section {
+    background: #000000;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    padding: 4rem;
+    border-radius: 12px;
+    margin: 4rem 2rem;
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  .mission-section h2 {
+    font-size: 2.3rem;
+    margin-bottom: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .mission-section p {
+    font-size: 1.05rem;
+    color: #a0aec0;
+    line-height: 1.8;
+  }
+  
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .stat-card {
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out both;
+  }
+  
+  .stat-card:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  
+  .stat-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .stat-card:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  
+  .stat-card:hover {
+    border-color: rgba(124, 58, 237, 0.5);
+    background: rgba(15, 23, 42, 0.4);
+    transform: translateY(-5px);
+  }
+  
+  .stat-card h3 {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .stat-card p {
+    color: #a0aec0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .values-section {
+    background: #000000;
+    padding: 6rem 2rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .values-section h2 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+  }
+
+  .values-section > p {
+    color: #a0aec0;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 1rem;
+  }
+  
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .value-card {
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    padding: 2.5rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out both;
+  }
+  
+  .value-card:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  
+  .value-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .value-card:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  
+  .value-card:hover {
+    border-color: rgba(124, 58, 237, 0.5);
+    background: rgba(15, 23, 42, 0.4);
+    transform: translateY(-5px);
+  }
+  
+  .value-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .value-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+    color: #f0f9ff;
+  }
+    transition: all 0.3s;
+  }
+  
+  .value-card:hover h3 {
+    color: var(--primary-light);
+  }
+  
+  .value-card p {
+    color: #d1d5db;
+    line-height: 1.7;
+  }
+</style>
+
+<section class="about-hero">
+  <div class="container">
+    <h1>About Queue Solutions</h1>
+    <p>Building the digital future, one innovation at a time</p>
+  </div>
+</section>
+
+<section class="mission-section">
+  <h2>Our Mission</h2>
+  <p>We empower businesses through innovative technology solutions. Our mission is to democratize access to enterprise-grade software without the enterprise-grade price tag. We believe that exceptional technology should be accessible to everyone.</p>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h2>Why We Exist</h2>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <h3>🚀 50+ Projects</h3>
+        <p>We've delivered solutions to dozens of satisfied clients worldwide, each exceeding expectations.</p>
+      </div>
+      <div class="stat-card">
+        <h3>🤝 40+ Happy Clients</h3>
+        <p>Our clients trust us to deliver excellence every single time, resulting in lasting partnerships.</p>
+      </div>
+      <div class="stat-card">
+        <h3>⏰ 5+ Years Excellence</h3>
+        <p>Building exceptional digital products and solutions since our founding, continuously innovating.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values-section">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h2>Our Core Values</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">💡</div>
+        <h3>Innovation</h3>
+        <p>We stay at the cutting edge of technology and design to deliver the most modern solutions available. Continuous learning is part of our culture.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">⭐</div>
+        <h3>Quality</h3>
+        <p>We never compromise on code quality, user experience, or attention to detail. Excellence is our standard, not an exception.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤲</div>
+        <h3>Partnership</h3>
+        <p>We work closely with our clients as true partners, not just vendors. Your success is our success, and we're committed to it.</p>
+      </div>
+    </div>
+  </div>
+</section>

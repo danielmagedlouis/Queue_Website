@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <style>
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 5px rgba(124, 58, 237, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(124, 58, 237, 0.8);
+      }
+      100% {
+        box-shadow: 0 0 5px rgba(124, 58, 237, 0.5);
+      }
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #a78bfa;
+      --secondary: #06b6d4;
+      --dark: #0f172a;
+      --darker: #020617;
+      --card-bg: rgba(15, 23, 42, 0.4);
+      --card-border: rgba(124, 58, 237, 0.3);
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #000000;
+      color: #fff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 80px;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    main {
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(15px);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      animation: fadeInDown 0.5s ease-out;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    
+    header .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    header .logo {
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #a78bfa 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      transition: all 0.3s ease;
+    }
+    
+    header .logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.6));
+    }
+    
+    header nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+    
+    header nav a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    
+    header nav a:hover {
+      color: var(--primary-light);
+    }
+    
+    header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    header nav a:hover::after {
+      transform: scaleX(1);
+    }
+    
+    footer {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(124, 58, 237, 0.2);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: #9ca3af;
+      margin-top: 6rem;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    footer a {
+      color: var(--primary-light);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    footer a:hover {
+      color: var(--secondary);
+    }
+    
+    /* Taskbar Navigation */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      border-top: 2px solid rgba(124, 58, 237, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      z-index: 200;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+    }
+    
+    .taskbar a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.8rem 1.5rem;
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .taskbar a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(124, 58, 237, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+    
+    .taskbar a:hover::before {
+      left: 0;
+    }
+    
+    .taskbar a:hover {
+      color: var(--primary-light);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+    }
+    
+    .taskbar a.active {
+      color: var(--primary);
+      background: rgba(124, 58, 237, 0.2);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+    }
+    
+    .taskbar-icon {
+      font-size: 1.5rem;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      header .container {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      header nav {
+        gap: 1.5rem;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .taskbar {
+        height: 90px;
+        gap: 0.5rem;
+        padding: 0 0.5rem;
+      }
+      
+      .taskbar a {
+        padding: 0.6rem 1rem;
+        font-size: 0.75rem;
+      }
+      
+      .taskbar-icon {
+        font-size: 1.3rem;
+      }
+      
+      body {
+        padding-bottom: 100px;
+      }
+    }
+  </style>
+  <%- include('./styles') %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <main>
+    <%- body %>
+  </main>
+  <%- include('../partials/footer') %>
+  
+  <!-- Taskbar Navigation -->
+  <nav class="taskbar">
+    <a href="/" class="<%= page === 'home' ? 'active' : '' %>">
+      <span class="taskbar-icon">🏠</span>
+      <span>Home</span>
+    </a>
+    <a href="/about" class="<%= page === 'about' ? 'active' : '' %>">
+      <span class="taskbar-icon">ℹ️</span>
+      <span>About</span>
+    </a>
+    <a href="/services" class="<%= page === 'services' ? 'active' : '' %>">
+      <span class="taskbar-icon">⚙️</span>
+      <span>Services</span>
+    </a>
+    <a href="/projects" class="<%= page === 'projects' ? 'active' : '' %>">
+      <span class="taskbar-icon">📁</span>
+      <span>Projects</span>
+    </a>
+    <a href="/contact" class="<%= page === 'contact' ? 'active' : '' %>">
+      <span class="taskbar-icon">✉️</span>
+      <span>Contact</span>
+    </a>
+  </nav>
+</body>
+</html>
