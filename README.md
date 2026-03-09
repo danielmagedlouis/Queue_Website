@@ -1,77 +1,16 @@
-# Queue Solutions - Production Ready Website
+# React + Vite
 
-A premium, multi-page company website for Queue Solutions built with Node.js, Express.js, EJS, and Tailwind CSS.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🚀 Features
+Currently, two official plugins are available:
 
-- **5+ Professional Pages**: Home, About, Services, Projects, and Contact
-- **Premium Design**: Dark purple/blue gradient with glassmorphism effects
-- **Responsive**: Fully mobile-optimized design
-- **Modern Animations**: Smooth transitions and hover effects
-- **Form Validation**: Client-side and server-side validation
-- **Clean MVC Architecture**: Organized routes, controllers, and views
-- **SaaS-Level UI**: Professional, conversion-optimized design
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 📁 Project Structure
+## React Compiler
 
-```
-Queue_Website/
-├── app.js                     # Express server setup
-├── package.json              # Dependencies
-├── tailwind.config.js        # Tailwind configuration
-├── postcss.config.js         # PostCSS configuration
-│
-├── routes/
-│   ├── index.js             # Main routes
-│   └── contact.js           # Contact form routes
-│
-├── controllers/
-│   ├── homeController.js
-│   ├── aboutController.js
-│   ├── servicesController.js
-│   ├── projectsController.js
-│   └── contactController.js
-│
-├── views/
-│   ├── layouts/
-│   │   └── main.ejs
-│   ├── partials/
-│   │   ├── header.ejs
-│   │   └── footer.ejs
-│   └── pages/
-│       ├── home.ejs
-│       ├── about.ejs
-│       ├── services.ejs
-│       ├── projects.ejs
-│       ├── contact.ejs
-│       └── 404.ejs
-│
-└── public/
-    ├── css/
-    │   └── styles.css
-    └── js/
-        └── main.js
-```
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## 🛠️ Installation
+## Expanding the ESLint configuration
 
-```bash
-npm install
-```
-
-## ▶️ Running the Server
-
-```bash
-npm start
-```
-
-Visit `http://localhost:3000`
-
-## 📧 Contact
-
-- Email: hello@queuesolutions.com
-- Phone: +1 (234) 567-890
-
-## 📄 License
-
-MIT
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
