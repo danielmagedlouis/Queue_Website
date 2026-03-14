@@ -112,14 +112,16 @@ export default function Services({ content, navTo }) {
       </FocusSection>
 
       <FocusSection className="px-5 py-16 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
-        <Reveal className="grid max-w-6xl gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur md:grid-cols-2 md:gap-8 md:p-10">
-          <SectionHeading
-            eyebrow={ui.whyQueue}
-            title={servicesContent.reasonsTitle}
-            description={servicesContent.reasonsDescription}
-          />
+        <Reveal className="grid max-w-6xl items-start gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:p-10">
+          <div className="max-w-xl">
+            <SectionHeading
+              eyebrow={ui.whyQueue}
+              title={servicesContent.reasonsTitle}
+              description={servicesContent.reasonsDescription}
+            />
+          </div>
 
-          <div className="grid gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             {servicesContent.reasons.map((item) => (
               <div key={item.title} className="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-6">
                 <h4 className="text-xl font-bold text-slate-950">{item.title}</h4>

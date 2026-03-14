@@ -41,33 +41,33 @@ export const SITE_CONTENT = {
     siteDetails: {
       name: "Queue Solutions",
       email: "queuesolutions25@gmail.com",
-      tagline: "Websites, Systems, and AI Automations",
-      shortTagline: "Web, systems, and AI for modern brands",
+      tagline: "Websites, systems, and AI that help businesses grow",
+      shortTagline: "Digital systems for ambitious businesses",
       description:
-        "Queue Solutions designs premium websites, internal systems, and AI automations for businesses that want a cleaner digital presence and stronger operations.",
+        "Queue Solutions helps businesses look more credible online, run more smoothly behind the scenes, and remove repetitive work with practical automation.",
     },
     ui: {
-      startProject: "Start Project",
+      startProject: "Start Your Project",
       contactUs: "Contact Us",
-      viewPortfolio: "View Portfolio",
-      ourServices: "Our Services",
-      discussService: "Discuss This Service",
-      beginProject: "Begin Your Project",
+      viewPortfolio: "See Our Work",
+      ourServices: "Explore Services",
+      discussService: "Talk About This Service",
+      beginProject: "Start the Process",
       languageToggle: "العربية",
       languageToggleMobile: "Arabic (Egypt)",
       footerNavigate: "Navigate",
       footerConnect: "Connect",
       modal: {
-        eyebrow: "Start Your Project",
-        title: "Tell us what you want to build",
+        eyebrow: "Project Inquiry",
+        title: "Tell us what you need help with",
         description:
-          "Share the idea, the business goal, and anything else that helps us understand the project.",
+          "Tell us what your business does, what is slowing you down, and what you want this project to improve.",
         name: "Your name",
         email: "Email",
         phone: "Phone number",
         idea: "Project idea",
         cancel: "Cancel",
-        submit: "Send Inquiry",
+        submit: "Send Details",
         success: "Thank you. Your inquiry has been sent successfully.",
         emailSubject: "New Project Inquiry from",
         emailBodyTitle: "New Project Inquiry",
@@ -79,58 +79,58 @@ export const SITE_CONTENT = {
       },
       contactCards: {
         emailTitle: "Business email",
-        emailAction: "We reply after you submit the form",
+        emailAction: "We usually reply after reviewing the form",
         formTitle: "Start with the form",
         formBody: "Share the main project details and we will contact you directly.",
         formAction: "Open project form",
       },
-      contactWhy: "Why Reach Out",
-      processSteps: "Process Steps",
+      contactWhy: "Why Businesses Contact Us",
+      processSteps: "How the Work Moves",
       capabilities: "Capabilities",
-      whyQueue: "Why Queue Solutions",
-      nextProject: "Next Project",
-      readyToBegin: "Ready To Begin",
-      getInTouch: "Get In Touch",
+      whyQueue: "Why Businesses Choose Queue",
+      nextProject: "Your Next Project",
+      readyToBegin: "Ready to Start?",
+      getInTouch: "Let's Talk",
     },
     home: {
-      heroBadge: "Modern websites, systems, and AI workflows for growing businesses",
-      heroTitleTop: "Built for brands that need",
+      heroBadge: "For businesses that want a stronger digital presence and smoother operations",
+      heroTitleTop: "Built for businesses that need",
       heroTitleAccent: "Queue Solutions",
       heroDescription:
-        "We design clean digital experiences, internal systems, and AI automations that make your business look sharper and run faster.",
+        "We design the parts your customers see and the systems your team relies on, so the business feels sharper, quicker, and easier to run.",
       heroCards: [
-        { title: "Websites", description: "Fast, polished pages that look premium on desktop and mobile." },
-        { title: "Systems", description: "Dashboards and business tools that reduce manual work." },
-        { title: "AI Automations", description: "Practical workflows that help your team move quicker." },
+        { title: "Sales Websites", description: "Clear, polished websites that build trust and turn interest into real inquiries." },
+        { title: "Internal Systems", description: "Simple dashboards and tools that help teams stay aligned and work with less friction." },
+        { title: "Smart Automation", description: "Useful AI and workflow automation that save time without adding complexity." },
       ],
       sections: [
         {
-          eyebrow: "Powerful Web Technology",
-          title: "A cleaner visual style without losing the modern feel",
+          eyebrow: "Built for trust",
+          title: "A website that makes the right impression before the first call",
           description:
-            "The homepage leans into a bright studio look with white surfaces, softer depth, and stronger typography while still keeping the brand edge.",
+            "Clean structure, stronger messaging, and polished visuals help people understand what you do and why they should take you seriously.",
           image: sharedImages.homeTech,
           imageAlt: "Premium workspace with laptop and code",
           points: [
-            { title: "Responsive layout", description: "Structured sections that stay clean on smaller screens." },
-            { title: "Brand accents", description: "Purple stays as the accent instead of carrying the entire theme." },
+            { title: "Clear messaging", description: "Visitors quickly understand the offer, the value, and the next step." },
+            { title: "Mobile polish", description: "The experience stays clean, readable, and well paced on smaller screens." },
           ],
         },
         {
-          eyebrow: "Smart AI Automations",
-          title: "Systems that support the business, not just the launch",
+          eyebrow: "Built for operations",
+          title: "Automation that takes repetitive work off your team",
           description:
-            "From inquiry capture to internal workflows, we build automation layers that remove repetitive tasks and help teams move with more confidence.",
+            "We connect forms, follow-up, reporting, approvals, and internal handoffs so work keeps moving without constant manual chasing.",
           image: sharedImages.homeAi,
           imageAlt: "Futuristic AI workflow screen",
-          tags: ["Lead capture", "Client follow-up", "Internal dashboards", "Process automation"],
+          tags: ["Lead capture", "Follow-up flows", "Internal reporting", "Task routing"],
         },
       ],
       gallery: {
-        eyebrow: "Visual Direction",
-        title: "Brighter, more premium, and easier to trust at first glance",
+        eyebrow: "How It Should Feel",
+        title: "Professional, current, and easy to trust",
         description:
-          "The supporting imagery now sits on light cards so the page feels modern without the heavy black backdrop.",
+          "Every section is designed to make the company feel organized, capable, and ready for serious work.",
         images: [
           { src: sharedImages.officeOne, alt: "Software team working across laptops in a product session" },
           { src: sharedImages.officeTwo, alt: "Business intelligence dashboard with charts and metrics" },
@@ -141,13 +141,13 @@ export const SITE_CONTENT = {
     services: {
       hero: {
         eyebrow: "Our Services",
-        title: "Premium digital systems designed to move the business forward",
+        title: "The core digital services businesses need before they scale",
         description:
-          "We build the front-end presence, internal systems, and automation layers that help companies operate with more clarity and speed.",
+          "We help companies improve how they present themselves, how their teams work, and how repetitive tasks get handled.",
         stats: [
-          { value: "5+", label: "Core service areas" },
-          { value: "Fast", label: "Delivery focused" },
-          { value: "Clean", label: "Design quality" },
+          { value: "5", label: "core services" },
+          { value: "Clear", label: "business focus" },
+          { value: "Built", label: "to last" },
         ],
         image: sharedImages.servicesHero,
         imageAlt: "Digital strategy team collaborating around a laptop",
@@ -157,124 +157,124 @@ export const SITE_CONTENT = {
           title: "AI Automations",
           icon: "brain",
           description:
-            "Intelligent workflows for lead routing, client follow-up, internal tasks, and repetitive business operations.",
+            "We automate lead capture, follow-up, status updates, and repetitive handoffs so work moves without manual chasing.",
           image: sharedImages.serviceAi,
         },
         {
           title: "Website Building",
           icon: "globe",
           description:
-            "Conversion-focused websites with strong visual direction, clean performance, and mobile-first execution.",
+            "We build websites that feel credible, load cleanly, and help visitors understand the value quickly.",
           image: sharedImages.serviceWeb,
         },
         {
           title: "System Building",
           icon: "cogs",
           description:
-            "Custom operational platforms that centralize data, reduce manual work, and support business growth.",
+            "We create internal tools and dashboards that give your team one clear place to track work, data, and decisions.",
           image: sharedImages.serviceSystem,
         },
         {
           title: "AI Modeling",
           icon: "database",
           description:
-            "Targeted machine learning implementations for forecasting, classification, and decision support.",
+            "When the problem needs prediction or classification, we build focused AI models around a real business use case.",
           image: sharedImages.serviceModel,
         },
         {
           title: "IT Services",
           icon: "code",
           description:
-            "Reliable support for infrastructure, workflows, and the technical systems behind day-to-day delivery.",
+            "We support the technical setup behind the work so your tools stay stable, connected, and easier to manage.",
           image: sharedImages.serviceIt,
         },
       ],
-      capabilitiesTitle: "A service mix built for modern brands and operations",
+      capabilitiesTitle: "One partner for the customer-facing side and the operational side",
       capabilitiesDescription:
-        "Each offer is designed to work with the others, so the website, the system, and the workflow automation all feel connected.",
-      reasonsTitle: "Bright design language, serious delivery standards",
+        "The website, the workflow, and the internal system should feel like parts of the same business, not separate projects.",
+      reasonsTitle: "Why businesses choose Queue",
       reasonsDescription:
-        "The visual system stays premium and modern, but the work is still focused on speed, clarity, and measurable business value.",
+        "We keep the work practical. The design needs to look strong, but it also needs to solve something real.",
       reasons: [
         {
-          title: "Business-Driven Thinking",
-          description: "Every build is tied to a business outcome, not just visual polish or technical novelty.",
+          title: "We start with the business problem",
+          description: "Before we talk about features, we ask what is slowing the business down and what a better result should look like.",
         },
         {
-          title: "Premium Execution",
-          description: "Clean interfaces, strong interaction design, and maintainable implementation from day one.",
+          title: "We care about how it feels to use",
+          description: "Strong design is not decoration. It makes the product easier to trust, easier to understand, and easier to use.",
         },
         {
-          title: "Modern Technology",
-          description: "Fast tools, scalable architecture, and practical AI used where it creates real leverage.",
+          title: "We choose useful technology",
+          description: "The stack should support the goal. We use modern tools where they create speed, clarity, and reliability.",
         },
         {
-          title: "End-to-End Delivery",
-          description: "Strategy, design, implementation, launch, and iteration handled in one consistent process.",
+          title: "We stay involved through delivery",
+          description: "Strategy, design, build, launch, and refinement happen in one connected process instead of being passed around.",
         },
       ],
     },
     portfolio: {
       hero: {
         eyebrow: "Featured Work",
-        title: "Modern case studies with stronger visual quality and cleaner presentation",
+        title: "A clearer look at the kind of work we help businesses launch",
         description:
-          "The portfolio uses higher-quality imagery and a more premium layout so the work feels polished before the user even reads the details.",
+          "These examples show the balance we care about most: strong presentation, smoother operations, and outcomes the business can feel.",
       },
       projects: [
         {
-          title: "Luxury Brand Website",
+          title: "Premium Service Website",
           category: "Website Design",
           description:
-            "A high-end marketing site with editorial layouts, immersive visuals, and a conversion-focused structure.",
+            "A high-trust marketing site built to explain the offer clearly and turn serious visitors into inquiries.",
           image: sharedImages.portfolioOne,
-          result: "Premium positioning",
+          result: "Stronger first impression",
         },
         {
-          title: "Operations Control Center",
+          title: "Operations Dashboard",
           category: "Internal System",
-          description: "A dashboard environment that centralizes business data, task flow, and performance visibility.",
+          description: "A central workspace for tasks, reporting, and performance so teams can see what matters without digging through tools.",
           image: sharedImages.portfolioTwo,
-          result: "Faster decisions",
+          result: "Better daily visibility",
         },
         {
           title: "AI Lead Qualification Flow",
           category: "AI Automation",
           description:
-            "An automated qualification pipeline that filters inbound requests and routes real opportunities instantly.",
+            "An automated intake flow that filters inquiries, flags strong leads, and routes follow-up faster.",
           image: sharedImages.portfolioThree,
-          result: "Higher-quality leads",
+          result: "Better leads, less manual sorting",
         },
         {
-          title: "Modern Restaurant Platform",
-          category: "Booking Experience",
+          title: "Multi-Location Booking Site",
+          category: "Booking Platform",
           description:
-            "A visual-first website combining brand storytelling, online reservations, and mobile-native interactions.",
+            "A conversion-focused website that combines brand storytelling, scheduling, and smooth mobile booking.",
           image: sharedImages.portfolioFour,
-          result: "Stronger bookings",
+          result: "More completed bookings",
         },
         {
           title: "Executive Reporting Suite",
           category: "Business Intelligence",
           description:
-            "A clean reporting system with digestible analytics, live data snapshots, and monthly decision support.",
+            "A reporting view built for owners and managers who need quick answers, not noisy dashboards.",
           image: sharedImages.portfolioFive,
-          result: "Clearer oversight",
+          result: "Faster decisions",
         },
         {
-          title: "Client Onboarding Journey",
+          title: "Client Onboarding System",
           category: "Automation System",
           description:
-            "A structured onboarding workflow with form capture, approvals, notifications, and delivery milestones.",
+            "A guided onboarding flow with forms, approvals, notifications, and clear next steps for both sides.",
           image: sharedImages.portfolioSix,
-          result: "Smoother handoff",
+          result: "Cleaner handoff",
         },
       ],
       cta: {
-        eyebrow: "Next Project",
-        title: "If the home page is the tone, the rest of the site now follows it",
+        eyebrow: "Your Next Project",
+        title: "If you want work that feels sharp and makes sense, this is the standard",
         description:
-          "The portfolio is brighter, cleaner, and more image-led, with the same premium rhythm used on the homepage.",
+          "The goal is not to make things look expensive. The goal is to make the business feel clear, credible, and well run.",
         image: sharedImages.creativeOffice,
         imageAlt: "Digital strategy team discussing a project",
       },
@@ -282,73 +282,73 @@ export const SITE_CONTENT = {
     process: {
       hero: {
         eyebrow: "How We Work",
-        title: "A modern process with enough structure to keep quality high",
+        title: "A straightforward process that keeps momentum without losing quality",
         description:
-          "The process page matches the visual confidence of the homepage while showing how the work moves from strategy to delivery in a clean, premium way.",
+          "You always know what we are doing, what comes next, and what the work is meant to improve.",
         image: sharedImages.processHero,
         imageAlt: "Project planning session",
         cards: [
-          { title: "Clarity", text: "Aligned goals before design starts." },
-          { title: "Speed", text: "Focused phases with less drift." },
-          { title: "Quality", text: "Design and build decisions stay connected." },
+          { title: "Clarity", text: "Everyone knows the goal before the build starts." },
+          { title: "Momentum", text: "The work keeps moving without unnecessary detours." },
+          { title: "Care", text: "Design and implementation stay aligned from start to finish." },
         ],
       },
-      stepsTitle: "A clear path from first conversation to finished launch",
+      stepsTitle: "From first conversation to launch, the work stays clear",
       steps: [
         {
           num: "01",
           title: "Discovery",
           description:
-            "We map business goals, audience expectations, brand direction, and the operational problem the build needs to solve.",
+            "We learn how the business works today, where the friction is, and what a better outcome should look like.",
         },
         {
           num: "02",
           title: "Planning",
           description:
-            "We define structure, priorities, interaction direction, and the fastest route to a polished first release.",
+            "We shape the structure, decide what matters first, and set a practical path to a strong first release.",
         },
         {
           num: "03",
           title: "Development",
           description:
-            "Design, front-end build, system logic, and automation are implemented with a focus on clarity and maintainability.",
+            "We design, build, connect, and refine the system so it feels polished in use and stable behind the scenes.",
         },
         {
           num: "04",
           title: "Launch and Support",
           description:
-            "We ship, refine, and support the solution so the project performs well after the handoff, not just on launch day.",
+            "We launch carefully, fix what needs attention, and support the handoff so the result keeps working after go-live.",
         },
       ],
       cta: {
-        eyebrow: "Ready To Begin",
-        title: "A sharper process only matters if it leads to a stronger result",
+        eyebrow: "Ready to Start?",
+        title: "A good process matters because it protects the result",
         description:
-          "If you like the thinking behind the homepage, the same direction now carries across the process and delivery story as well.",
+          "If the site feels calm and polished, the work behind it should feel the same way too.",
         image: sharedImages.processCta,
         imageAlt: "Product team planning a technical rollout",
       },
     },
     contact: {
       hero: {
-        eyebrow: "Get In Touch",
-        title: "Contact page rebuilt in the same premium style as the homepage",
+        eyebrow: "Let's Talk",
+        title: "Tell us what you want to improve",
         description:
-          "Clear contact options, lighter surfaces, better hierarchy, and a modern visual treatment that feels consistent with the rest of the site.",
+          "If you need a better website, a clearer internal system, or smarter automation, send the details and we will come back with the right next step.",
         image: sharedImages.contactHero,
         imageAlt: "Team collaboration around a table",
       },
-      whyTitle: "Websites, systems, and automation planning in one conversation",
+      whyTitle: "A useful first conversation, not a sales script",
       reasons: [
-        "A clear recommendation based on your current stage",
-        "Practical advice on the fastest high-impact first step",
-        "A premium digital direction that stays realistic to build",
+        "Clear advice based on where the business is today",
+        "A realistic recommendation for the highest-impact next move",
+        "A project direction that fits both the brand and the way the team works",
       ],
       cta: {
-        eyebrow: "Project Contact",
-        title: "Let's create something sharp and useful",
+        eyebrow: "Project Brief",
+        title: "Send the essentials and we will take it from there",
         description:
-          "If you like the visual direction of the home page, the contact experience follows the same thinking: lighter, cleaner, and more premium.",
+          "You do not need a perfect brief. Just tell us what you do, what is frustrating right now, and what kind of result you want.",
         image: sharedImages.contactCta,
         imageAlt: "Software team collaborating in a technology office",
       },
@@ -423,7 +423,7 @@ export const SITE_CONTENT = {
     },
     home: {
       heroBadge: "مواقع وأنظمة وتدفقات ذكاء اصطناعي حديثة للشركات التي تريد النمو",
-      heroTitleTop: "حلول مصممة للعلامات التي تحتاج إلى",
+      heroTitleTop: "حلول مصممة للشركات التي تحتاج إلى",
       heroTitleAccent: "Queue Solutions",
       heroDescription:
         "نصمم تجارب رقمية أنيقة وأنظمة داخلية وأتمتة بالذكاء الاصطناعي تجعل نشاطك أكثر قوة وسرعة.",
