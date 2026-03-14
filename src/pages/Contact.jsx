@@ -1,81 +1,143 @@
-export default function Contact({ setShowForm }) {
+import { FaArrowRight, FaEnvelope, FaFacebookF, FaInstagram, FaPaperPlane } from "react-icons/fa";
+import PageShell from "../components/layout/PageShell";
+import ActionButton from "../components/ui/ActionButton";
+import AnimatedImage from "../components/ui/AnimatedImage";
+import FocusSection from "../components/ui/FocusSection";
+import Reveal from "../components/ui/Reveal";
+import SectionHeading from "../components/ui/SectionHeading";
+
+export default function Contact({ content, setShowForm }) {
+  const contact = content.contact;
+  const ui = content.ui;
+  const site = content.siteDetails;
+
   return (
-    <div className="min-h-screen bg-slate-950 py-24 px-6">
-      <div className="max-w-4xl mx-auto space-y-16">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <div className="inline-block px-3 py-1 bg-purple-600/30 rounded-full text-purple-300 text-sm font-medium">
-            GET IN TOUCH
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Contact Us</h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            Have a project in mind? We'd love to hear about it. Reach out to us today.
-          </p>
-        </div>
+    <PageShell>
+      <FocusSection
+        className="px-5 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
+        innerClassName="mx-auto grid max-w-6xl items-stretch gap-8 md:grid-cols-[1fr_0.95fr] md:gap-12"
+      >
+          <div className="space-y-8">
+            <Reveal>
+              <div className="inline-flex rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
+                {contact.hero.eyebrow}
+              </div>
+            </Reveal>
 
-        {/* Contact Options */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Email Option */}
-          <div className="p-8 rounded-lg border border-white/10 bg-white/5 hover:border-purple-500/50 transition space-y-4">
-            <div className="text-3xl">✉️</div>
-            <h3 className="text-xl font-bold text-white">Email</h3>
-            <p className="text-white/70">Send us an email and we'll get back to you within 24 hours.</p>
-            <a
-              href="mailto:queuesolutions25@gmail.com"
-              className="text-purple-400 font-medium hover:text-purple-300 transition"
-            >
-              queuesolutions25@gmail.com
-            </a>
+            <Reveal delay={0.06}>
+              <SectionHeading
+                title={contact.hero.title}
+                description={contact.hero.description}
+              />
+            </Reveal>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <ContactCard
+                icon={<FaEnvelope />}
+                title={ui.contactCards.emailTitle}
+                body={site.email}
+                action={<span className="text-sm font-semibold text-slate-500">{ui.contactCards.emailAction}</span>}
+              />
+              <ContactCard
+                icon={<FaPaperPlane />}
+                title={ui.contactCards.formTitle}
+                body={ui.contactCards.formBody}
+                action={
+                  <button
+                    type="button"
+                    onClick={() => setShowForm(true)}
+                    className="text-sm font-semibold text-purple-700 transition hover:text-purple-600"
+                  >
+                    {ui.contactCards.formAction}
+                  </button>
+                }
+              />
+            </div>
           </div>
 
-          {/* Form Option */}
-          <div className="p-8 rounded-lg border border-white/10 bg-white/5 hover:border-purple-500/50 transition space-y-4">
-            <div className="text-3xl">💬</div>
-            <h3 className="text-xl font-bold text-white">Quick Form</h3>
-            <p className="text-white/70">Fill out our quick form to tell us about your project idea.</p>
-            <button
-              onClick={() => setShowForm(true)}
-              className="text-purple-400 font-medium hover:text-purple-300 transition"
-            >
-              Open Form →
-            </button>
-          </div>
-        </div>
+          <AnimatedImage
+            src={contact.hero.image}
+            alt={contact.hero.imageAlt}
+            className="h-full"
+            imageClassName="h-full min-h-[18rem] sm:min-h-[22rem] md:min-h-[30rem]"
+          />
+      </FocusSection>
 
-        {/* Social Links */}
-        <div className="p-8 rounded-lg border border-white/10 bg-white/5 text-center space-y-6">
-          <h3 className="text-xl font-bold text-white">Follow Us</h3>
-          <div className="flex gap-4 justify-center">
-            <a
-              href="https://www.instagram.com/queue.solutions/"
-              target="_blank"
-              rel="noreferrer"
-              className="px-6 py-2 border border-purple-500/50 rounded-lg text-white hover:bg-purple-600/20 transition"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://www.facebook.com/profile.php?id=61585024646035"
-              target="_blank"
-              rel="noreferrer"
-              className="px-6 py-2 border border-purple-500/50 rounded-lg text-white hover:bg-purple-600/20 transition"
-            >
-              Facebook
-            </a>
-          </div>
-        </div>
+      <FocusSection className="px-5 py-16 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-6xl items-stretch gap-6 md:grid-cols-[1fr_0.9fr] md:gap-8">
+          <Reveal className="h-full rounded-[2rem] border border-slate-200/80 bg-white/85 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] sm:p-8 md:p-10">
+            <div className="flex h-full flex-col justify-center">
+            <SectionHeading
+              eyebrow={ui.contactWhy}
+              title={contact.whyTitle}
+            />
 
-        {/* Final CTA */}
-        <div className="text-center space-y-6 pt-8 border-t border-white/10">
-          <h3 className="text-2xl font-bold text-white">Let's Create Something Amazing Together</h3>
-          <button
-            onClick={() => setShowForm(true)}
-            className="px-8 py-3 bg-purple-600 rounded-lg font-medium text-white hover:bg-purple-700 transition"
-          >
-            Start Your Project
-          </button>
-        </div>
+            <div className="mt-8 grid gap-4">
+              {contact.reasons.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center gap-3 rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4 text-slate-700"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-700">
+                    <FaArrowRight className="text-sm" />
+                  </span>
+                  <span className="leading-6">{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              {content.socialLinks.map((link) => (
+                <SocialPill key={link.id} href={link.href} icon={link.id === "instagram" ? <FaInstagram /> : <FaFacebookF />}>
+                  {link.label}
+                </SocialPill>
+              ))}
+            </div>
+            </div>
+          </Reveal>
+
+          <Reveal className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
+            <img
+              src={contact.cta.image}
+              alt={contact.cta.imageAlt}
+              className="h-56 w-full object-cover object-center sm:h-64"
+            />
+            <div className="flex flex-1 flex-col justify-center space-y-5 p-6 sm:p-8">
+              <SectionHeading
+                eyebrow={contact.cta.eyebrow}
+                title={contact.cta.title}
+                description={contact.cta.description}
+              />
+              <ActionButton onClick={() => setShowForm(true)}>{ui.startProject}</ActionButton>
+            </div>
+          </Reveal>
+      </FocusSection>
+    </PageShell>
+  );
+}
+
+function ContactCard({ action, body, icon, title }) {
+  return (
+    <Reveal className="rounded-[1.75rem] border border-white/80 bg-white/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-700">
+        {icon}
       </div>
-    </div>
+      <h3 className="mt-4 text-xl font-bold text-slate-950">{title}</h3>
+      <p className="mt-2 leading-7 text-slate-600">{body}</p>
+      <div className="mt-4">{action}</div>
+    </Reveal>
+  );
+}
+
+function SocialPill({ children, href, icon }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 font-medium text-slate-700 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:border-purple-300 hover:text-purple-700"
+    >
+      {icon}
+      {children}
+    </a>
   );
 }

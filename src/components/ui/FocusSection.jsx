@@ -1,0 +1,21 @@
+import { motion as Motion, useInView } from "framer-motion";
+import { useRef } from "react";
+
+export default function FocusSection({ children, className = "", innerClassName = "" }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { amount: 0.25, margin: "-18% 0px -18% 0px" });
+
+  return (
+    <Motion.section
+      ref={ref}
+      animate={{
+        opacity: inView ? 1 : 0.58,
+        scale: inView ? 1 : 0.992,
+      }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      <div className={innerClassName}>{children}</div>
+    </Motion.section>
+  );
+}

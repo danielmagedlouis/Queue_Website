@@ -1,241 +1,151 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useEffect } from "react";
-import { FaFacebookF, FaInstagram, FaEnvelope } from "react-icons/fa";
+import { motion as Motion } from "framer-motion";
+import PageShell from "../components/layout/PageShell";
+import ActionButton from "../components/ui/ActionButton";
+import AnimatedImage from "../components/ui/AnimatedImage";
+import FocusSection from "../components/ui/FocusSection";
+import Reveal from "../components/ui/Reveal";
+import SectionHeading from "../components/ui/SectionHeading";
 
-/* =========================
-   Mouse Glow
-========================= */
-function MouseGlow() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springX = useSpring(mouseX, { stiffness: 120, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 120, damping: 20 });
-
-  useEffect(() => {
-    const move = (e) => {
-      mouseX.set(e.clientX - 200);
-      mouseY.set(e.clientY - 200);
-    };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
+export default function Home({ content, navTo, setShowForm }) {
+  const home = content.home;
+  const ui = content.ui;
+  const isRtl = content.direction === "rtl";
 
   return (
-    <motion.div
-      style={{ left: springX, top: springY }}
-      className="pointer-events-none fixed w-96 h-96 bg-purple-600/20 blur-3xl rounded-full z-0"
-    />
-  );
-}
-
-/* =========================
-   Tech Grid
-========================= */
-function TechGrid() {
-  return (
-    <div className="absolute inset-0 opacity-10 pointer-events-none">
-      <div className="w-full h-full bg-[linear-gradient(to_right,#9333ea33_1px,transparent_1px),linear-gradient(to_bottom,#9333ea33_1px,transparent_1px)] bg-[size:80px_80px]" />
-    </div>
-  );
-}
-
-/* =========================
-   Modern Image
-========================= */
-function ModernImage({ src, alt, className }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateX = useTransform(mouseY, [0, window.innerHeight], [15, -15]);
-  const rotateY = useTransform(mouseX, [0, window.innerWidth], [-15, 15]);
-
-  useEffect(() => {
-    const move = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
-
-  return (
-    <motion.div
-      style={{ rotateX, rotateY }}
-      className={`relative group ${className}`}
-      whileHover={{ scale: 1.05 }}
-      transition={{ type: "spring", stiffness: 120, damping: 15 }}
-    >
-      <img
-        src={src}
-        alt={alt}
-        className="w-full h-full object-cover rounded-xl border border-purple-500/20 shadow-2xl shadow-purple-600/20 transition-transform duration-500"
-      />
-
-      {/* Neon Glow */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/30 to-blue-500/30 blur-2xl pointer-events-none"
-      />
-
-      {/* Floating Shadow */}
-      <motion.div
-        animate={{ y: [0, -10, 0] }}
-        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        className="absolute inset-0 rounded-xl shadow-[0_0_50px_rgba(147,51,234,0.4)] pointer-events-none"
-      />
-    </motion.div>
-  );
-}
-
-/* =========================
-   Modern Button
-========================= */
-function ModernButton({ children, onClick }) {
-  return (
-    <motion.button
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={onClick}
-      className="relative px-8 py-4 rounded-lg font-semibold text-white overflow-hidden bg-purple-600"
-    >
-      <span className="relative z-10">{children}</span>
-
-      <motion.div
-        initial={{ x: "-100%" }}
-        whileHover={{ x: "100%" }}
-        transition={{ duration: 0.8 }}
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-      />
-    </motion.button>
-  );
-}
-
-/* =========================
-   Home Page
-========================= */
-export default function Home({ navTo, setShowForm }) {
-  return (
-    <div className="relative space-y-0 overflow-hidden">
-      <MouseGlow />
-      <TechGrid />
-
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 text-center">
-        <div className="max-w-4xl space-y-8">
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+    <PageShell>
+      <FocusSection className="px-5 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20" innerClassName="mx-auto max-w-6xl text-center">
+          <Motion.div
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-6xl md:text-7xl font-bold"
+            transition={{ duration: 0.6 }}
+            className="mx-auto inline-flex rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur"
           >
-            <span className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
-              Queue Solutions
+            {home.heroBadge}
+          </Motion.div>
+
+          <Motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.1 }}
+            className="mx-auto mt-6 max-w-5xl text-4xl font-bold leading-tight text-slate-950 sm:text-5xl md:mt-8 md:text-6xl xl:text-7xl"
+          >
+            {home.heroTitleTop}
+            <span className="block bg-gradient-to-r from-slate-950 via-purple-700 to-violet-500 bg-clip-text text-transparent">
+              {home.heroTitleAccent}
             </span>
-          </motion.h1>
+          </Motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-xl text-white/70"
+          <Motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.2 }}
+            className="mx-auto mt-5 max-w-3xl text-base text-slate-600 sm:text-lg md:mt-6 md:text-xl"
           >
-            Websites • Systems • AI Automations
-          </motion.p>
+            {home.heroDescription}
+          </Motion.p>
 
-          <div className="flex gap-4 justify-center pt-6">
-            <ModernButton onClick={() => setShowForm(true)}>Start Project</ModernButton>
-            <ModernButton onClick={() => navTo("services")}>Our Services</ModernButton>
+          <Motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.3 }}
+            className="mt-8 flex flex-col justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4"
+          >
+            <ActionButton onClick={() => setShowForm(true)}>{ui.startProject}</ActionButton>
+            <ActionButton onClick={() => navTo("services")} variant="secondary">
+              {ui.ourServices}
+            </ActionButton>
+          </Motion.div>
+
+          <div className={`mx-auto mt-10 grid max-w-4xl gap-4 md:mt-12 md:grid-cols-3 ${isRtl ? "text-right" : "text-left"}`}>
+            {home.heroCards.map((card, index) => (
+              <Reveal key={card.title} delay={index * 0.08}>
+                <div className="rounded-[1.75rem] border border-white/80 bg-white/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6">
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-purple-700">
+                    {card.title}
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{card.description}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
-        </div>
-      </section>
+      </FocusSection>
 
-      {/* SECTION 1 */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-white">Powerful Web Technology</h2>
-            <p className="text-lg text-white/70">
-              We build fast scalable websites and systems using modern technologies.
-            </p>
+      <FocusSection className="px-5 py-16 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-6xl items-stretch gap-8 md:grid-cols-2 md:gap-12">
+          <Reveal className="h-full rounded-[2rem] border border-slate-200/80 bg-white/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:p-10">
+            <div className="flex h-full flex-col justify-center">
+            <SectionHeading
+              eyebrow={home.sections[0].eyebrow}
+              title={home.sections[0].title}
+              description={home.sections[0].description}
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {home.sections[0].points.map((point) => (
+                <div key={point.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <p className="text-sm font-semibold text-slate-900">{point.title}</p>
+                  <p className="mt-2 text-sm text-slate-600">{point.description}</p>
+                </div>
+              ))}
+            </div>
+            </div>
+          </Reveal>
+
+          <AnimatedImage
+            src={home.sections[0].image}
+            alt={home.sections[0].imageAlt}
+            className="h-full"
+            imageClassName="h-full min-h-[18rem] sm:min-h-[22rem] md:min-h-[26rem]"
+          />
+      </FocusSection>
+
+      <FocusSection className="px-5 py-16 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-6xl items-stretch gap-8 md:grid-cols-2 md:gap-12">
+          <AnimatedImage
+            src={home.sections[1].image}
+            alt={home.sections[1].imageAlt}
+            imageClassName="h-full min-h-[18rem] sm:min-h-[22rem] md:min-h-[26rem]"
+          />
+
+          <Reveal className="h-full rounded-[2rem] border border-slate-200/80 bg-white/80 p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:p-10">
+            <div className="flex h-full flex-col justify-center">
+            <SectionHeading
+              eyebrow={home.sections[1].eyebrow}
+              title={home.sections[1].title}
+              description={home.sections[1].description}
+            />
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {home.sections[1].tags.map((tag) => (
+                <div
+                  key={tag}
+                  className="rounded-full border border-purple-200 bg-purple-50 px-4 py-3 text-sm font-medium text-slate-700"
+                >
+                  {tag}
+                </div>
+              ))}
+            </div>
+            </div>
+          </Reveal>
+      </FocusSection>
+
+      <FocusSection className="px-5 py-16 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto max-w-6xl space-y-8">
+          <Reveal>
+            <SectionHeading
+              eyebrow={home.gallery.eyebrow}
+              title={home.gallery.title}
+              description={home.gallery.description}
+            />
+          </Reveal>
+
+          <div className="grid gap-5 md:grid-cols-3 md:gap-8">
+            {home.gallery.images.map((image, index) => (
+              <AnimatedImage
+                key={image.src}
+                src={image.src}
+                alt={image.alt}
+                className={index === 1 ? "md:translate-y-6" : ""}
+                imageClassName="h-56 sm:h-64 md:h-72"
+              />
+            ))}
           </div>
-          <ModernImage
-            src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80"
-            alt="technology"
-            className="w-full h-96"
-          />
-        </div>
-      </section>
-
-      {/* SECTION 2 */}
-      <section className="py-24 px-6 bg-slate-900/50">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <ModernImage
-            src="https://images.unsplash.com/photo-1581092795368-3c55a1aa8b5f?w=600&q=80"
-            alt="AI automation"
-            className="w-full h-96"
-          />
-          <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-white">Smart AI Automations</h2>
-            <p className="text-lg text-white/70">
-              Automate your business operations using advanced AI tools.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3 */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 items-center">
-          <ModernImage
-            src="https://images.unsplash.com/photo-1605902711622-cfb43c4431b2?w=600&q=80"
-            alt="team work"
-            className="w-full h-64"
-          />
-          <ModernImage
-            src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=600&q=80"
-            alt="coding"
-            className="w-full h-64"
-          />
-          <ModernImage
-            src="https://images.unsplash.com/photo-1581091012184-7e9f464d5f52?w=600&q=80"
-            alt="business strategy"
-            className="w-full h-64"
-          />
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="bg-slate-950 py-12 px-6 mt-24 border-t border-white/10 text-white">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex gap-6 text-2xl">
-            <a
-              href="https://www.facebook.com/profile.php?id=61585024646035"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-purple-400 transition"
-            >
-              <FaFacebookF />
-            </a>
-            <a
-              href="https://www.instagram.com/queue.solutions/"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-purple-400 transition"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="mailto:queuesolutions25@gmail.com"
-              className="hover:text-purple-400 transition"
-            >
-              <FaEnvelope />
-            </a>
-          </div>
-          <p className="text-white/70">Developed by Queue Team</p>
-        </div>
-      </footer>
-    </div>
+      </FocusSection>
+    </PageShell>
   );
 }

@@ -3,8 +3,12 @@
 @import "tailwindcss";
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply font-sans tracking-tight scroll-smooth;
+    @apply bg-white font-sans tracking-tight text-slate-900;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -13,6 +17,29 @@
 
   p {
     @apply leading-relaxed;
+  }
+
+  ::selection {
+    background: rgba(168, 85, 247, 0.18);
+    color: #111827;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f8fafc;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.55), rgba(59, 130, 246, 0.45));
+    border: 3px solid #f8fafc;
+    border-radius: 999px;
+  }
+
+  #root {
+    min-height: 100vh;
   }
 }
 
@@ -60,5 +87,11 @@
       opacity: 1;
       transform: scale(1);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
