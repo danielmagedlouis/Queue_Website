@@ -1,15 +1,21 @@
+import aiAutomationsImage from "../../images/ai-automations.png";
+import aiCallAgentImage from "../../images/Ai-Call-Agent.jpg";
+
 const sharedImages = {
   homeTech: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
-  homeAi: "https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=1400&q=80",
+  homeAi: "images/ai-automations.png",
   officeOne: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
   officeTwo: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
   teamOne: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
   servicesHero: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1400&q=80",
   serviceAi: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
+  serviceCallAgent: aiCallAgentImage,
+  serviceMobile: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80",
   serviceWeb: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
   serviceSystem: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
   serviceModel: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80",
   serviceIt: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
+  automationWorkflow: aiAutomationsImage,
   portfolioOne: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80",
   portfolioTwo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
   portfolioThree: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
@@ -44,7 +50,7 @@ export const SITE_CONTENT = {
       tagline: "Websites, systems, and AI that help businesses grow",
       shortTagline: "Digital systems for ambitious businesses",
       description:
-        "Queue Solutions helps businesses look more credible online, run more smoothly behind the scenes, and remove repetitive work with practical automation.",
+        "Queue Solutions helps businesses present themselves more credibly online, run more smoothly behind the scenes, and reduce repetitive work with practical automation.",
     },
     ui: {
       startProject: "Start Your Project",
@@ -63,12 +69,22 @@ export const SITE_CONTENT = {
         description:
           "Tell us what your business does, what is slowing you down, and what you want this project to improve.",
         name: "Your name",
+        businessName: "Business name",
         email: "Email",
         phone: "Phone number",
+        whatsappQuestion: "Is this number on WhatsApp?",
+        whatsappYes: "Yes, it has WhatsApp",
+        whatsappYesHint: "We can reach you faster there if needed.",
+        whatsappNo: "No, regular calls only",
+        whatsappNoHint: "We will use normal calls and email instead.",
+        whatsappRequired: "Choose whether this number has WhatsApp.",
         idea: "Project idea",
         cancel: "Cancel",
         submit: "Send Details",
         success: "Thank you. Your inquiry has been sent successfully.",
+        successTitle: "Your form has been sent",
+        successDescription: "Our team will review your details and reply within the next 24 hours.",
+        successButton: "Close",
         emailSubject: "New Project Inquiry from",
         emailBodyTitle: "New Project Inquiry",
         emailName: "Name",
@@ -91,22 +107,27 @@ export const SITE_CONTENT = {
       nextProject: "Your Next Project",
       readyToBegin: "Ready to Start?",
       getInTouch: "Let's Talk",
+      resultLabel: "Result",
     },
     home: {
       heroBadge: "For businesses that want a stronger digital presence and smoother operations",
       heroTitleTop: "Built for businesses that need",
+      heroMobileTitleTop: "Built for",
+      heroMobileDescription: "Websites, systems, and automation that make the business feel sharper and easier to run.",
       heroTitleAccent: "Queue Solutions",
       heroDescription:
-        "We design the parts your customers see and the systems your team relies on, so the business feels sharper, quicker, and easier to run.",
+        "We design the experience your customers see and the systems your team relies on, so the business feels sharper, faster, and easier to run.",
       heroCards: [
         { title: "Sales Websites", description: "Clear, polished websites that build trust and turn interest into real inquiries." },
         { title: "Internal Systems", description: "Simple dashboards and tools that help teams stay aligned and work with less friction." },
-        { title: "Smart Automation", description: "Useful AI and workflow automation that save time without adding complexity." },
+        { title: "Smart Automation", description: "We handle follow-up, reminders, and repeated admin so your team can focus on the business." },
       ],
       sections: [
         {
           eyebrow: "Built for trust",
           title: "A website that makes the right impression before the first call",
+          mobileTitle: "A website that builds trust fast",
+          mobileDescription: "Clear structure and strong messaging help people trust the business faster.",
           description:
             "Clean structure, stronger messaging, and polished visuals help people understand what you do and why they should take you seriously.",
           image: sharedImages.homeTech,
@@ -117,18 +138,22 @@ export const SITE_CONTENT = {
           ],
         },
         {
-          eyebrow: "Built for operations",
-          title: "Automation that takes repetitive work off your team",
+          eyebrow: "Less repeated work",
+          title: "We build AI automation that handles the routine work, so you can focus on growing the business",
+          mobileTitle: "AI automation handles the routine work",
+          mobileDescription: "Automation handles follow-up, reminders, and routing so your team can focus on growth.",
           description:
-            "We connect forms, follow-up, reporting, approvals, and internal handoffs so work keeps moving without constant manual chasing.",
+            "Lead replies, reminders, follow-up messages, request sorting, internal updates, and task routing can all happen automatically instead of taking time from your team every day.",
           image: sharedImages.homeAi,
           imageAlt: "Futuristic AI workflow screen",
-          tags: ["Lead capture", "Follow-up flows", "Internal reporting", "Task routing"],
+          tags: ["Instant replies", "Automatic follow-up", "Smart routing", "Less manual admin"],
         },
       ],
       gallery: {
         eyebrow: "How It Should Feel",
         title: "Professional, current, and easy to trust",
+        mobileTitle: "Professional and easy to trust",
+        mobileDescription: "The design should feel organized, current, and ready for serious work.",
         description:
           "Every section is designed to make the company feel organized, capable, and ready for serious work.",
         images: [
@@ -141,24 +166,101 @@ export const SITE_CONTENT = {
     services: {
       hero: {
         eyebrow: "Our Services",
-        title: "The core digital services businesses need before they scale",
+        title: "Websites, systems, and automation that take pressure off your team",
+        mobileTitle: "Websites, systems, and automation",
+        mobileDescription: "We help businesses look stronger and waste less time on repeated work.",
         description:
-          "We help companies improve how they present themselves, how their teams work, and how repetitive tasks get handled.",
-        stats: [
-          { value: "5", label: "core services" },
-          { value: "Clear", label: "business focus" },
-          { value: "Built", label: "to last" },
-        ],
+          "We help businesses look sharper, work faster, and stop losing time on the repeated tasks that should already be handled.",
         image: sharedImages.servicesHero,
         imageAlt: "Digital strategy team collaborating around a laptop",
+      },
+      automationHighlight: {
+        eyebrow: "Let automation carry the routine",
+        title: "We make the repeated work run on its own, so your head stays free for growth, service, and better ideas",
+        mobileTitle: "Routine work runs itself",
+        description:
+          "Instead of your team replying manually, chasing people, copying details between tools, or updating the same task over and over, we build automation that keeps those steps moving in the background.",
+        mobileDescription:
+          "Replies, follow-up, reminders, and handoffs keep moving automatically while your team focuses on real work.",
+        note:
+          "You focus on clients, delivery, strategy, and growing the business. We make the repeated work stop stealing attention.",
+        mobileNote: "Less busywork. More time for growth.",
+        chips: ["Reply faster", "Follow up automatically", "Reduce admin work", "Keep work moving"],
+        image: sharedImages.automationWorkflow,
+        imageAlt: "Workflow dashboard showing automated reporting and team activity",
+        points: [
+          {
+            title: "New leads hear back right away",
+            description: "The moment someone fills a form, they can receive a reply and the right next step before interest drops.",
+          },
+          {
+            title: "Follow-up happens without chasing",
+            description: "Reminders, check-ins, and routine updates can be sent automatically instead of depending on memory.",
+          },
+          {
+            title: "The right person gets the task",
+            description: "Requests can be sorted and sent to sales, operations, or support with the right details already attached.",
+          },
+          {
+            title: "Your team gets its time back",
+            description: "Less copy-paste work and fewer repeated checks means more room for delivery, sales, and creative thinking.",
+          },
+        ],
+      },
+      callAgentHighlight: {
+        eyebrow: "AI call agent",
+        title: "Turn missed calls into new clients with an AI agent that answers, explains, and captures the lead",
+        mobileTitle: "Never miss a valuable call",
+        description:
+          "When someone calls and your team is busy, the opportunity should not disappear. We build AI call agents that answer instantly, explain your service clearly, collect the caller's details, and pass the conversation to your team.",
+        mobileDescription:
+          "The AI agent answers fast, explains your service, and sends your team the important details.",
+        note:
+          "The goal is simple: fewer missed opportunities, faster response, and a smoother first impression for every caller.",
+        mobileNote: "Missed calls become real opportunities.",
+        chips: ["Answers instantly", "Explains the service", "Captures lead details", "Reduces missed opportunities"],
+        image: sharedImages.serviceCallAgent,
+        imageAlt: "AI call agent interface with voice support visuals",
+        points: [
+          {
+            title: "Missed calls stop turning into lost leads",
+            description: "The call gets answered even when your team is unavailable, so potential clients are not left waiting.",
+          },
+          {
+            title: "The service is explained clearly",
+            description: "The agent can answer common questions, explain the offer, and guide the caller to the right next step.",
+          },
+          {
+            title: "Your team receives the important details",
+            description: "Names, phone numbers, service interest, and call context can all be captured automatically.",
+          },
+          {
+            title: "It feels faster and more professional",
+            description: "A quick response on the first call builds trust and makes the business feel organized from the start.",
+          },
+        ],
       },
       services: [
         {
           title: "AI Automations",
           icon: "brain",
           description:
-            "We automate lead capture, follow-up, status updates, and repetitive handoffs so work moves without manual chasing.",
+            "Perfect for the repeated work businesses do every day: lead replies, follow-up, reminders, handoffs, and admin updates.",
           image: sharedImages.serviceAi,
+        },
+        {
+          title: "AI Call Agent",
+          icon: "headset",
+          description:
+            "An AI voice agent that answers calls, handles common questions, captures lead details, and helps turn missed calls into new clients.",
+          image: sharedImages.serviceCallAgent,
+        },
+        {
+          title: "Mobile App Development",
+          icon: "mobile",
+          description:
+            "Mobile apps built for customers or internal teams, with clean flows, solid performance, and a product feel that matches the brand.",
+          image: sharedImages.serviceMobile,
         },
         {
           title: "Website Building",
@@ -190,9 +292,13 @@ export const SITE_CONTENT = {
         },
       ],
       capabilitiesTitle: "One partner for the customer-facing side and the operational side",
+      capabilitiesMobileTitle: "One partner across the business",
+      capabilitiesMobileDescription: "The site, system, and automation should all work together.",
       capabilitiesDescription:
         "The website, the workflow, and the internal system should feel like parts of the same business, not separate projects.",
       reasonsTitle: "Why businesses choose Queue",
+      reasonsMobileTitle: "Why businesses choose us",
+      reasonsMobileDescription: "The work has to look strong and solve a real business problem.",
       reasonsDescription:
         "We keep the work practical. The design needs to look strong, but it also needs to solve something real.",
       reasons: [
@@ -217,7 +323,9 @@ export const SITE_CONTENT = {
     portfolio: {
       hero: {
         eyebrow: "Featured Work",
-        title: "A clearer look at the kind of work we help businesses launch",
+        title: "A closer look at the kind of work we help businesses launch",
+        mobileTitle: "A look at the work",
+        mobileDescription: "Examples of work that balance presentation, operations, and real business value.",
         description:
           "These examples show the balance we care about most: strong presentation, smoother operations, and outcomes the business can feel.",
       },
@@ -273,6 +381,8 @@ export const SITE_CONTENT = {
       cta: {
         eyebrow: "Your Next Project",
         title: "If you want work that feels sharp and makes sense, this is the standard",
+        mobileTitle: "This is the standard",
+        mobileDescription: "The goal is simple: clear, credible work that feels well run.",
         description:
           "The goal is not to make things look expensive. The goal is to make the business feel clear, credible, and well run.",
         image: sharedImages.creativeOffice,
@@ -282,7 +392,9 @@ export const SITE_CONTENT = {
     process: {
       hero: {
         eyebrow: "How We Work",
-        title: "A straightforward process that keeps momentum without losing quality",
+        title: "A clear process that keeps momentum without losing quality",
+        mobileTitle: "A process that stays clear",
+        mobileDescription: "You always know what we are doing, what comes next, and why it matters.",
         description:
           "You always know what we are doing, what comes next, and what the work is meant to improve.",
         image: sharedImages.processHero,
@@ -294,6 +406,7 @@ export const SITE_CONTENT = {
         ],
       },
       stepsTitle: "From first conversation to launch, the work stays clear",
+      stepsMobileTitle: "From first call to launch",
       steps: [
         {
           num: "01",
@@ -323,6 +436,8 @@ export const SITE_CONTENT = {
       cta: {
         eyebrow: "Ready to Start?",
         title: "A good process matters because it protects the result",
+        mobileTitle: "The process protects the result",
+        mobileDescription: "A calm, well-run process leads to a stronger result.",
         description:
           "If the site feels calm and polished, the work behind it should feel the same way too.",
         image: sharedImages.processCta,
@@ -333,8 +448,10 @@ export const SITE_CONTENT = {
       hero: {
         eyebrow: "Let's Talk",
         title: "Tell us what you want to improve",
+        mobileTitle: "Tell us what to improve",
+        mobileDescription: "Share the essentials and we will come back with the right next step.",
         description:
-          "If you need a better website, a clearer internal system, or smarter automation, send the details and we will come back with the right next step.",
+          "If you need a better website, a clearer internal system, or smarter automation, send the essentials and we will come back with the right next step.",
         image: sharedImages.contactHero,
         imageAlt: "Team collaboration around a table",
       },
@@ -347,6 +464,8 @@ export const SITE_CONTENT = {
       cta: {
         eyebrow: "Project Brief",
         title: "Send the essentials and we will take it from there",
+        mobileTitle: "Send the essentials",
+        mobileDescription: "You do not need a perfect brief. Just send the important parts.",
         description:
           "You do not need a perfect brief. Just tell us what you do, what is frustrating right now, and what kind of result you want.",
         image: sharedImages.contactCta,
@@ -392,12 +511,22 @@ export const SITE_CONTENT = {
         title: "احك لنا ما الذي تريد بناءه",
         description: "شاركنا الفكرة والهدف التجاري وكل ما يساعدنا على فهم المشروع بشكل أفضل.",
         name: "اسمك",
+        businessName: "اسم الشركة",
         email: "البريد الإلكتروني",
         phone: "رقم الهاتف",
+        whatsappQuestion: "هل هذا الرقم عليه واتساب؟",
+        whatsappYes: "نعم، عليه واتساب",
+        whatsappYesHint: "يمكننا التواصل أسرع من خلاله عند الحاجة.",
+        whatsappNo: "لا، مكالمات عادية فقط",
+        whatsappNoHint: "سنعتمد على المكالمات العادية والبريد الإلكتروني.",
+        whatsappRequired: "اختر هل هذا الرقم عليه واتساب أم لا.",
         idea: "فكرة المشروع",
         cancel: "إلغاء",
         submit: "إرسال الطلب",
         success: "شكرًا لك. تم إرسال طلبك بنجاح.",
+        successTitle: "تم إرسال النموذج بنجاح",
+        successDescription: "سيقوم فريقنا بمراجعة التفاصيل والرد عليك خلال الـ 24 ساعة القادمة.",
+        successButton: "إغلاق",
         emailSubject: "طلب مشروع جديد من",
         emailBodyTitle: "طلب مشروع جديد",
         emailName: "الاسم",
@@ -430,7 +559,7 @@ export const SITE_CONTENT = {
       heroCards: [
         { title: "المواقع", description: "صفحات سريعة واحترافية تبدو قوية على الكمبيوتر والهاتف." },
         { title: "الأنظمة", description: "لوحات تحكم وأدوات أعمال تقلل العمل اليدوي وتزيد الوضوح." },
-        { title: "الأتمتة", description: "تدفقات عملية تساعد فريقك على التحرك بشكل أسرع." },
+        { title: "الأتمتة الذكية", description: "نتولى المتابعة والتذكيرات والأعمال المتكررة حتى يركز فريقك على النشاط نفسه." },
       ],
       sections: [
         {
@@ -446,13 +575,13 @@ export const SITE_CONTENT = {
           ],
         },
         {
-          eyebrow: "أتمتة ذكية بالذكاء الاصطناعي",
-          title: "أنظمة تدعم النشاط وليس فقط لحظة الإطلاق",
+          eyebrow: "مجهود متكرر أقل",
+          title: "نبني أتمتة ذكية تتولى الأعمال الروتينية حتى يركز فريقك على تنمية النشاط",
           description:
-            "من استقبال الطلبات إلى التدفقات الداخلية، نبني طبقات أتمتة تقلل التكرار وتمنح الفريق سرعة وثقة أعلى.",
+            "الرد على العملاء، والتذكيرات، ورسائل المتابعة، وفرز الطلبات، وتحديثات الفريق، وتحويل المهام يمكن أن تتم تلقائيًا بدلًا من أن تستهلك وقت الفريق كل يوم.",
           image: sharedImages.homeAi,
           imageAlt: "واجهة عمل مستقبلية للذكاء الاصطناعي",
-          tags: ["استقبال العملاء", "متابعة العملاء", "لوحات تحكم داخلية", "أتمتة العمليات"],
+          tags: ["ردود فورية", "متابعة تلقائية", "تحويل ذكي للمهام", "إدارة أقل يدويًا"],
         },
       ],
       gallery: {
@@ -469,23 +598,88 @@ export const SITE_CONTENT = {
     services: {
       hero: {
         eyebrow: "خدماتنا",
-        title: "أنظمة رقمية احترافية تدفع النشاط إلى الأمام",
+        title: "مواقع وأنظمة وأتمتة تخفف الضغط عن فريقك",
         description:
-          "نبني الواجهة الرقمية والأنظمة الداخلية وطبقات الأتمتة التي تساعد الشركات على العمل بوضوح وسرعة أكبر.",
-        stats: [
-          { value: "+5", label: "مجالات خدمة أساسية" },
-          { value: "سريع", label: "تنفيذ مركز" },
-          { value: "راقي", label: "جودة التصميم" },
-        ],
+          "نساعد الشركات أن تظهر بشكل أقوى، وتعمل بسرعة أكبر، وتتوقف عن إهدار الوقت في الأعمال المتكررة التي يجب أن تتم تلقائيًا.",
         image: sharedImages.servicesHero,
         imageAlt: "فريق استراتيجية رقمية يتعاون حول لابتوب",
+      },
+      automationHighlight: {
+        eyebrow: "دع الأتمتة تحمل الروتين",
+        title: "نجعل الأعمال المتكررة تعمل وحدها حتى يبقى ذهنك متفرغًا للنمو والخدمة والأفكار الأفضل",
+        description:
+          "بدلًا من أن يرد الفريق يدويًا ويطارد العملاء وينقل البيانات بين الأدوات ويكرر نفس الخطوات كل يوم، نبني أتمتة تحرك هذه المهام في الخلفية.",
+        note:
+          "أنت تركز على العملاء والتنفيذ والاستراتيجية وتنمية النشاط، ونحن نجعل الأعمال المتكررة تتوقف عن استنزاف الانتباه.",
+        chips: ["رد أسرع", "متابعة تلقائية", "تقليل الأعمال الإدارية", "استمرار سير العمل"],
+        image: sharedImages.automationWorkflow,
+        imageAlt: "لوحة تدفق عمل تعرض تقارير وأتمتة وأنشطة الفريق",
+        points: [
+          {
+            title: "العميل الجديد يحصل على رد فورًا",
+            description: "بمجرد أن يملأ العميل النموذج يمكن أن تصله رسالة واضحة وخطوة تالية قبل أن يفقد اهتمامه.",
+          },
+          {
+            title: "المتابعة تتم بدون مطاردة",
+            description: "يمكن إرسال التذكيرات ورسائل المتابعة وتحديثات الحالة تلقائيًا بدلًا من الاعتماد على التذكر.",
+          },
+          {
+            title: "المهمة تصل للشخص المناسب",
+            description: "يمكن فرز الطلبات وتحويلها للمبيعات أو التشغيل أو الدعم مع كل المعلومات المهمة مرفقة.",
+          },
+          {
+            title: "الفريق يستعيد وقته",
+            description: "أعمال نسخ المعلومات والمراجعات المتكررة تقل، ويزيد الوقت المخصص للبيع والتنفيذ والتفكير الإبداعي.",
+          },
+        ],
+      },
+      callAgentHighlight: {
+        eyebrow: "وكيل مكالمات ذكي",
+        title: "حوّل المكالمات الفائتة إلى عملاء جدد عبر وكيل ذكي يرد ويشرح الخدمة ويجمع بيانات العميل",
+        description:
+          "عندما يتصل العميل ويكون الفريق مشغولًا لا يجب أن تضيع الفرصة. نحن نبني وكلاء مكالمات بالذكاء الاصطناعي يردون فورًا، ويشرحون الخدمة بوضوح، ويجمعون البيانات المهمة، ثم يمررونها لفريقك.",
+        note:
+          "الهدف واضح: فرص ضائعة أقل، واستجابة أسرع، وانطباع أول أكثر احترافية مع كل مكالمة.",
+        chips: ["يرد فورًا", "يشرح الخدمة", "يجمع بيانات العميل", "يقلل الفرص الضائعة"],
+        image: sharedImages.serviceCallAgent,
+        imageAlt: "واجهة وكيل مكالمات ذكي مع عناصر دعم صوتي",
+        points: [
+          {
+            title: "المكالمات الفائتة لا تتحول إلى فرص ضائعة",
+            description: "يتم الرد على المكالمة حتى عندما يكون الفريق غير متاح، فلا يترك العميل بدون استجابة.",
+          },
+          {
+            title: "الخدمة تُشرح بشكل واضح",
+            description: "يمكن للوكيل أن يجيب على الأسئلة الشائعة ويشرح الخدمة ويوجه المتصل إلى الخطوة التالية المناسبة.",
+          },
+          {
+            title: "فريقك يستلم التفاصيل المهمة",
+            description: "يتم جمع الاسم ورقم الهاتف واهتمام العميل وسياق المكالمة بشكل تلقائي.",
+          },
+          {
+            title: "الانطباع يصبح أسرع وأكثر احترافية",
+            description: "الرد السريع من أول مكالمة يجعل النشاط يبدو منظمًا وجاهزًا للتعامل الجاد.",
+          },
+        ],
       },
       services: [
         {
           title: "أتمتة الذكاء الاصطناعي",
           icon: "brain",
-          description: "تدفقات ذكية لفرز الطلبات ومتابعة العملاء والمهام الداخلية والعمليات المتكررة.",
+          description: "مثالية للأعمال التي تتكرر كل يوم: الرد على العملاء، والمتابعة، والتذكيرات، والتحويلات الداخلية، وتحديثات الإدارة.",
           image: sharedImages.serviceAi,
+        },
+        {
+          title: "وكيل مكالمات ذكي",
+          icon: "headset",
+          description: "وكيل صوتي ذكي يرد على المكالمات، يشرح الخدمة، يجمع بيانات العميل، ويساعد على تحويل المكالمات الفائتة إلى عملاء جدد.",
+          image: sharedImages.serviceCallAgent,
+        },
+        {
+          title: "تطوير تطبيقات الموبايل",
+          icon: "mobile",
+          description: "تطبيقات موبايل للعملاء أو الفرق الداخلية بتجربة نظيفة وأداء قوي وإحساس منتج احترافي يليق بالعلامة.",
+          image: sharedImages.serviceMobile,
         },
         {
           title: "بناء المواقع",

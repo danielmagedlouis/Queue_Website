@@ -34,13 +34,13 @@ export default function AnimatedImage({ alt, className = "", imageClassName = ""
         whileHover={{ y: -8, scale: 1.01 }}
         transition={{ type: "spring", stiffness: 180, damping: 18 }}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/80 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.12)] backdrop-blur"
+        className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white/80 p-3 shadow-[0_20px_50px_rgba(15,23,42,0.1)] backdrop-blur sm:rounded-[2rem] sm:p-4 sm:shadow-[0_30px_80px_rgba(15,23,42,0.12)]"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-sky-300/10 opacity-0 transition duration-500 group-hover:opacity-100" />
         <img
           src={src}
           alt={alt}
-          className={`relative h-full w-full rounded-[1.5rem] object-cover object-center transition duration-700 group-hover:scale-[1.03] ${imageClassName}`.trim()}
+          className={`relative h-full w-full rounded-[1.25rem] object-cover object-center transition duration-700 group-hover:scale-[1.03] sm:rounded-[1.5rem] ${imageClassName}`.trim()}
         />
         <div className="pointer-events-none absolute inset-x-8 bottom-6 h-10 rounded-full bg-slate-900/10 blur-2xl opacity-0 transition duration-500 group-hover:opacity-100" />
       </Motion.div>

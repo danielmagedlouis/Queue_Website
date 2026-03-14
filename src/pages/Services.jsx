@@ -1,7 +1,8 @@
-import { FaArrowRight, FaBrain, FaCode, FaCogs, FaDatabase, FaGlobe } from "react-icons/fa";
+import { FaArrowRight, FaBrain, FaCode, FaCogs, FaDatabase, FaGlobe, FaHeadset, FaMobileAlt } from "react-icons/fa";
 import PageShell from "../components/layout/PageShell";
 import ActionButton from "../components/ui/ActionButton";
 import AnimatedImage from "../components/ui/AnimatedImage";
+import ExpandableText from "../components/ui/ExpandableText";
 import FocusSection from "../components/ui/FocusSection";
 import Reveal from "../components/ui/Reveal";
 import SectionHeading from "../components/ui/SectionHeading";
@@ -12,40 +13,34 @@ const iconMap = {
   cogs: FaCogs,
   database: FaDatabase,
   globe: FaGlobe,
+  headset: FaHeadset,
+  mobile: FaMobileAlt,
 };
 
 export default function Services({ content, navTo }) {
   const servicesContent = content.services;
   const ui = content.ui;
+  const locale = content.locale;
 
   return (
     <PageShell>
       <FocusSection
-        className="px-5 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
-        innerClassName="mx-auto grid max-w-6xl items-stretch gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-12"
+        className="px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
+        innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1.05fr_0.95fr] md:gap-12"
       >
-          <Reveal className="h-full rounded-[2rem] border border-slate-200/80 bg-white/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:p-10">
+          <Reveal className="mx-auto h-full w-full max-w-xl rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:max-w-none md:p-10">
             <div className="flex h-full flex-col justify-center space-y-8">
             <div className="inline-flex w-fit rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
               {servicesContent.hero.eyebrow}
             </div>
 
             <SectionHeading
+              locale={locale}
+              mobileDescription={servicesContent.hero.mobileDescription}
+              mobileTitle={servicesContent.hero.mobileTitle}
               title={servicesContent.hero.title}
               description={servicesContent.hero.description}
             />
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {servicesContent.hero.stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-[1.5rem] border border-white/80 bg-white/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur"
-                >
-                  <p className="text-3xl font-bold text-slate-950">{stat.value}</p>
-                  <p className="mt-2 text-sm uppercase tracking-[0.18em] text-slate-500">{stat.label}</p>
-                </div>
-              ))}
-            </div>
 
             <div className="flex flex-col gap-4 sm:flex-row">
               <ActionButton onClick={() => navTo("contact")}>{ui.contactUs}</ActionButton>
@@ -59,28 +54,190 @@ export default function Services({ content, navTo }) {
           <AnimatedImage
             src={servicesContent.hero.image}
             alt={servicesContent.hero.imageAlt}
-            className="h-full"
-            imageClassName="h-full min-h-[18rem] sm:min-h-[22rem] md:min-h-[28rem]"
+            className="mx-auto h-full w-full max-w-sm sm:max-w-xl md:max-w-none"
+            imageClassName="h-[13rem] object-center sm:h-[20rem] md:h-full md:min-h-[28rem]"
           />
       </FocusSection>
 
-      <FocusSection className="px-5 py-16 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto max-w-6xl space-y-8 md:space-y-10">
+      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
+        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-6 md:max-w-6xl md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:p-10">
+          <div className="order-1 relative h-[calc(100svh-8.5rem)] min-h-[26rem] max-h-[34rem] overflow-hidden rounded-[2rem] bg-slate-950 p-4 text-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-8 md:h-auto md:max-h-none md:p-8 md:order-1">
+            <div className="absolute -left-12 top-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
+            <div className="absolute bottom-0 right-0 h-48 w-48 rounded-full bg-sky-400/15 blur-3xl" />
+            <div className="relative flex h-full w-full flex-col justify-start">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-purple-200 sm:text-sm sm:tracking-[0.24em]">
+                {servicesContent.automationHighlight.eyebrow}
+              </p>
+              <h2 className="mt-3 text-[1.45rem] font-bold leading-[1.05] text-white md:hidden">
+                {servicesContent.automationHighlight.mobileTitle ?? servicesContent.automationHighlight.title}
+              </h2>
+              <h2 className="mt-4 hidden text-3xl font-bold leading-tight text-white sm:text-4xl md:block">
+                {servicesContent.automationHighlight.title}
+              </h2>
+              <p className="mt-3 text-[13px] leading-5 text-slate-300 md:hidden">
+                {servicesContent.automationHighlight.mobileDescription ?? servicesContent.automationHighlight.description}
+              </p>
+              <p className="mt-4 hidden text-base leading-8 text-slate-300 md:block">
+                {servicesContent.automationHighlight.description}
+              </p>
+              <div className="mt-4 rounded-[1.15rem] border border-white/10 bg-white/8 px-3 py-2.5 text-[12px] leading-5 text-slate-200 backdrop-blur md:mt-6 md:rounded-[1.5rem] md:px-5 md:py-4 md:text-sm md:leading-7">
+                <p className="text-[12px] leading-5 text-slate-200 md:hidden">
+                  {servicesContent.automationHighlight.mobileNote ?? servicesContent.automationHighlight.note}
+                </p>
+                <p className="hidden text-sm leading-7 text-slate-200 md:block">
+                  {servicesContent.automationHighlight.note}
+                </p>
+              </div>
+              <div className="relative mt-4 overflow-hidden rounded-[1.35rem] border border-white/10 md:hidden">
+                <img
+                  src={servicesContent.automationHighlight.image}
+                  alt={servicesContent.automationHighlight.imageAlt}
+                  className="h-28 w-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2 md:mt-6 md:gap-3">
+                {servicesContent.automationHighlight.chips.map((chip, index) => (
+                  <span
+                    key={chip}
+                    className={`rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[12px] font-medium text-white/90 backdrop-blur sm:px-4 sm:text-sm ${index > 2 ? "hidden md:inline-flex" : ""}`}
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-5 md:mt-8">
+                <ActionButton onClick={() => navTo("contact")} variant="secondary" className="w-full justify-center sm:w-auto">
+                  {ui.contactUs}
+                </ActionButton>
+              </div>
+            </div>
+          </div>
+
+          <div className="order-2 grid gap-4 md:order-2">
+            <AnimatedImage
+              src={servicesContent.automationHighlight.image}
+              alt={servicesContent.automationHighlight.imageAlt}
+              className="mx-auto hidden w-full max-w-sm sm:max-w-xl md:block md:max-w-none"
+              imageClassName="h-[12.5rem] object-center sm:h-[20rem] md:h-full md:min-h-[22rem]"
+            />
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {servicesContent.automationHighlight.points.map((point) => (
+                <div key={point.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 sm:max-w-none sm:p-6">
+                  <h3 className="text-lg font-bold text-slate-950">{point.title}</h3>
+                  <p className="mt-2 leading-7 text-slate-600">{point.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </FocusSection>
+
+      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
+        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-6 md:max-w-6xl md:grid-cols-[1.05fr_0.95fr] md:gap-8 md:p-10">
+          <div className="order-2 grid gap-4 md:order-1">
+            <AnimatedImage
+              src={servicesContent.callAgentHighlight.image}
+              alt={servicesContent.callAgentHighlight.imageAlt}
+              className="mx-auto hidden w-full max-w-sm sm:max-w-xl md:block md:max-w-none"
+              imageClassName="h-[12.5rem] object-[center_35%] sm:h-[20rem] md:h-full md:min-h-[24rem] md:object-center"
+            />
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {servicesContent.callAgentHighlight.points.map((point) => (
+                <div key={point.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 sm:max-w-none sm:p-6">
+                  <h3 className="text-lg font-bold text-slate-950">{point.title}</h3>
+                  <p className="mt-2 leading-7 text-slate-600">{point.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="order-1 relative h-[calc(100svh-8.5rem)] min-h-[26rem] max-h-[34rem] overflow-hidden rounded-[2rem] bg-slate-950 p-4 text-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-8 md:h-auto md:max-h-none md:p-8 md:order-2">
+            <div className="absolute -right-12 top-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
+            <div className="absolute bottom-0 left-0 h-48 w-48 rounded-full bg-sky-400/15 blur-3xl" />
+            <div className="relative flex h-full w-full flex-col justify-start">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-purple-200 sm:text-sm sm:tracking-[0.24em]">
+                {servicesContent.callAgentHighlight.eyebrow}
+              </p>
+              <h2 className="mt-3 text-[1.45rem] font-bold leading-[1.05] text-white md:hidden">
+                {servicesContent.callAgentHighlight.mobileTitle ?? servicesContent.callAgentHighlight.title}
+              </h2>
+              <h2 className="mt-4 hidden text-3xl font-bold leading-tight text-white sm:text-4xl md:block">
+                {servicesContent.callAgentHighlight.title}
+              </h2>
+              <p className="mt-3 text-[13px] leading-5 text-slate-300 md:hidden">
+                {servicesContent.callAgentHighlight.mobileDescription ?? servicesContent.callAgentHighlight.description}
+              </p>
+              <p className="mt-4 hidden text-base leading-8 text-slate-300 md:block">
+                {servicesContent.callAgentHighlight.description}
+              </p>
+              <div className="mt-4 rounded-[1.15rem] border border-white/10 bg-white/8 px-3 py-2.5 text-[12px] leading-5 text-slate-200 backdrop-blur md:mt-6 md:rounded-[1.5rem] md:px-5 md:py-4 md:text-sm md:leading-7">
+                <p className="text-[12px] leading-5 text-slate-200 md:hidden">
+                  {servicesContent.callAgentHighlight.mobileNote ?? servicesContent.callAgentHighlight.note}
+                </p>
+                <p className="hidden text-sm leading-7 text-slate-200 md:block">
+                  {servicesContent.callAgentHighlight.note}
+                </p>
+              </div>
+              <div className="relative mt-4 overflow-hidden rounded-[1.35rem] border border-white/10 md:hidden">
+                <img
+                  src={servicesContent.callAgentHighlight.image}
+                  alt={servicesContent.callAgentHighlight.imageAlt}
+                  className="h-28 w-full object-cover object-[center_35%]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2 md:mt-6 md:gap-3">
+                {servicesContent.callAgentHighlight.chips.map((chip, index) => (
+                  <span
+                    key={chip}
+                    className={`rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[12px] font-medium text-white/90 backdrop-blur sm:px-4 sm:text-sm ${index > 2 ? "hidden md:inline-flex" : ""}`}
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-5 md:mt-8">
+                <ActionButton onClick={() => navTo("contact")} variant="secondary" className="w-full justify-center sm:w-auto">
+                  {ui.contactUs}
+                </ActionButton>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </FocusSection>
+
+      <FocusSection
+        className="px-5 py-16 sm:px-6 sm:py-20 md:py-24"
+        inactiveOpacity={1}
+        inactiveScale={1}
+        innerClassName="mx-auto max-w-xl space-y-8 md:max-w-6xl md:space-y-10"
+      >
           <Reveal>
             <SectionHeading
               eyebrow={ui.capabilities}
+              locale={locale}
+              mobileDescription={servicesContent.capabilitiesMobileDescription}
+              mobileTitle={servicesContent.capabilitiesMobileTitle}
               title={servicesContent.capabilitiesTitle}
               description={servicesContent.capabilitiesDescription}
             />
           </Reveal>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
             {servicesContent.services.map((service, index) => {
               const Icon = iconMap[service.icon];
 
               return (
                 <Reveal key={service.title} delay={index * 0.06}>
-                  <article className="group overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)]">
-                    <div className="relative h-56 overflow-hidden sm:h-60">
+                  <article className="group mx-auto w-full max-w-sm overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] md:max-w-none">
+                    <div className="relative h-44 overflow-hidden sm:h-60">
                       <img
                         src={service.image}
                         alt={service.title}
@@ -92,14 +249,19 @@ export default function Services({ content, navTo }) {
                       </div>
                     </div>
 
-                    <div className="space-y-4 p-6 sm:p-7">
+                    <div className="space-y-4 p-5 sm:p-7">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-2xl font-bold text-slate-950">{service.title}</h3>
+                        <h3 className="text-[1.35rem] font-bold leading-tight text-slate-950 sm:text-2xl">{service.title}</h3>
                         <FaArrowRight className="text-slate-300 transition group-hover:translate-x-1 group-hover:text-purple-600" />
                       </div>
-                      <p className="leading-7 text-slate-600">{service.description}</p>
+                      <ExpandableText
+                        className="text-[15px] leading-6 text-slate-600 sm:text-base sm:leading-7"
+                        locale={locale}
+                        mobileWords={6}
+                        text={service.description}
+                      />
                       <div className="pt-2">
-                        <ActionButton onClick={() => navTo("contact")} variant="subtle">
+                        <ActionButton onClick={() => navTo("contact")} variant="subtle" className="w-full justify-center sm:w-auto">
                           {ui.discussService}
                         </ActionButton>
                       </div>
@@ -111,11 +273,14 @@ export default function Services({ content, navTo }) {
           </div>
       </FocusSection>
 
-      <FocusSection className="px-5 py-16 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
-        <Reveal className="grid max-w-6xl items-start gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:p-10">
-          <div className="max-w-xl">
+      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
+        <Reveal className="mx-auto grid w-full max-w-xl items-start gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-6 md:max-w-6xl md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:p-10">
+          <div className="mx-auto w-full max-w-xl">
             <SectionHeading
               eyebrow={ui.whyQueue}
+              locale={locale}
+              mobileDescription={servicesContent.reasonsMobileDescription}
+              mobileTitle={servicesContent.reasonsMobileTitle}
               title={servicesContent.reasonsTitle}
               description={servicesContent.reasonsDescription}
             />
@@ -123,7 +288,7 @@ export default function Services({ content, navTo }) {
 
           <div className="grid gap-4 sm:grid-cols-2">
             {servicesContent.reasons.map((item) => (
-              <div key={item.title} className="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-6">
+              <div key={item.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 sm:max-w-none sm:p-6">
                 <h4 className="text-xl font-bold text-slate-950">{item.title}</h4>
                 <p className="mt-2 leading-7 text-slate-600">{item.description}</p>
               </div>

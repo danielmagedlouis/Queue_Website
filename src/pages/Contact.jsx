@@ -10,14 +10,15 @@ export default function Contact({ content, setShowForm }) {
   const contact = content.contact;
   const ui = content.ui;
   const site = content.siteDetails;
+  const locale = content.locale;
 
   return (
     <PageShell>
       <FocusSection
-        className="px-5 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
-        innerClassName="mx-auto grid max-w-6xl items-stretch gap-8 md:grid-cols-[1fr_0.95fr] md:gap-12"
+        className="px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
+        innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1fr_0.95fr] md:gap-12"
       >
-          <div className="space-y-8">
+          <div className="mx-auto w-full max-w-xl space-y-6 sm:space-y-8">
             <Reveal>
               <div className="inline-flex rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
                 {contact.hero.eyebrow}
@@ -26,6 +27,9 @@ export default function Contact({ content, setShowForm }) {
 
             <Reveal delay={0.06}>
               <SectionHeading
+                locale={locale}
+                mobileDescription={contact.hero.mobileDescription}
+                mobileTitle={contact.hero.mobileTitle}
                 title={contact.hero.title}
                 description={contact.hero.description}
               />
@@ -58,26 +62,28 @@ export default function Contact({ content, setShowForm }) {
           <AnimatedImage
             src={contact.hero.image}
             alt={contact.hero.imageAlt}
-            className="h-full"
-            imageClassName="h-full min-h-[18rem] sm:min-h-[22rem] md:min-h-[30rem]"
+            className="mx-auto h-full w-full max-w-sm sm:max-w-xl md:max-w-none"
+            imageClassName="h-[12.75rem] object-center sm:h-[20rem] md:h-full md:min-h-[30rem]"
           />
       </FocusSection>
 
-      <FocusSection className="px-5 py-16 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-6xl items-stretch gap-6 md:grid-cols-[1fr_0.9fr] md:gap-8">
-          <Reveal className="h-full rounded-[2rem] border border-slate-200/80 bg-white/85 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] sm:p-8 md:p-10">
+      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1fr_0.9fr] md:gap-8">
+          <Reveal className="h-full overflow-hidden rounded-[2rem] bg-slate-950 p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] sm:p-8 md:p-10">
             <div className="flex h-full flex-col justify-center">
-            <SectionHeading
-              eyebrow={ui.contactWhy}
-              title={contact.whyTitle}
-            />
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-purple-200">
+              {ui.contactWhy}
+            </p>
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+              {contact.whyTitle}
+            </h2>
 
             <div className="mt-8 grid gap-4">
               {contact.reasons.map((item) => (
                 <div
                   key={item}
-                  className="flex items-center gap-3 rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4 text-slate-700"
+                  className="flex items-center gap-3 rounded-[1.25rem] border border-white/10 bg-white/8 px-4 py-4 text-slate-100 backdrop-blur"
                 >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-700">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-400/18 text-purple-200">
                     <FaArrowRight className="text-sm" />
                   </span>
                   <span className="leading-6">{item}</span>
@@ -85,7 +91,7 @@ export default function Contact({ content, setShowForm }) {
               ))}
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-3">
               {content.socialLinks.map((link) => (
                 <SocialPill key={link.id} href={link.href} icon={link.id === "instagram" ? <FaInstagram /> : <FaFacebookF />}>
                   {link.label}
@@ -99,15 +105,18 @@ export default function Contact({ content, setShowForm }) {
             <img
               src={contact.cta.image}
               alt={contact.cta.imageAlt}
-              className="h-56 w-full object-cover object-center sm:h-64"
+              className="h-40 w-full object-cover object-center sm:h-64"
             />
             <div className="flex flex-1 flex-col justify-center space-y-5 p-6 sm:p-8">
               <SectionHeading
                 eyebrow={contact.cta.eyebrow}
+                locale={locale}
+                mobileDescription={contact.cta.mobileDescription}
+                mobileTitle={contact.cta.mobileTitle}
                 title={contact.cta.title}
                 description={contact.cta.description}
               />
-              <ActionButton onClick={() => setShowForm(true)}>{ui.startProject}</ActionButton>
+              <ActionButton onClick={() => setShowForm(true)} className="w-full justify-center sm:w-auto">{ui.startProject}</ActionButton>
             </div>
           </Reveal>
       </FocusSection>
@@ -117,7 +126,7 @@ export default function Contact({ content, setShowForm }) {
 
 function ContactCard({ action, body, icon, title }) {
   return (
-    <Reveal className="rounded-[1.75rem] border border-white/80 bg-white/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6">
+    <Reveal className="mx-auto w-full max-w-sm rounded-[1.75rem] border border-white/80 bg-white/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-none sm:p-6">
       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-700">
         {icon}
       </div>
@@ -134,7 +143,7 @@ function SocialPill({ children, href, icon }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 font-medium text-slate-700 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:border-purple-300 hover:text-purple-700"
+      className="flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:border-purple-300 hover:text-purple-700 sm:px-5"
     >
       {icon}
       {children}

@@ -25,6 +25,11 @@ export default function App() {
     document.body.dir = content.direction;
   }, [content.direction, locale]);
 
+  useEffect(() => {
+    const pageTitle = content.navItems.find((item) => item.id === currentPage)?.label ?? content.siteDetails.name;
+    document.title = currentPage === "home" ? content.siteDetails.name : `${pageTitle} | ${content.siteDetails.name}`;
+  }, [content.navItems, content.siteDetails.name, currentPage]);
+
   const navTo = (page) => {
     setCurrentPage(page);
     setMobileMenuOpen(false);
@@ -52,7 +57,7 @@ export default function App() {
         setShowForm={setShowForm}
       />
 
-      <main className="pt-24 sm:pt-28">
+      <main className="pt-22 sm:pt-28">
         <AnimatePresence mode="wait">
           <Motion.div
             key={currentPage}

@@ -15,13 +15,17 @@ export default function SiteHeader({
   const [scrolled, setScrolled] = useState(false);
   const { scrollY, scrollYProgress } = useScroll();
   const isRtl = content.direction === "rtl";
+  const nextLocale = locale === "en" ? "ar" : "en";
+  const languageFlag = nextLocale === "ar" ? "\u{1F1EA}\u{1F1EC}" : "\u{1F1FA}\u{1F1F8}";
+  const languageLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" : "English";
+  const languageMobileLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629 (Egypt)" : "English (US)";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 20);
   });
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4">
+    <header className="fixed inset-x-0 top-0 z-50 px-2.5 pt-2.5 sm:px-6 sm:pt-4">
       <div
         className={`mx-auto max-w-7xl rounded-[1.75rem] border border-white/70 backdrop-blur transition-all ${
           scrolled
@@ -29,7 +33,7 @@ export default function SiteHeader({
             : "bg-white/82 shadow-[0_14px_40px_rgba(15,23,42,0.08)]"
         }`}
       >
-        <div className="flex items-center justify-between gap-3 px-3 py-3 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between gap-2 px-2.5 py-2.5 sm:px-4 sm:py-3 lg:px-6">
           <button
             onClick={() => navTo("home")}
             className={`flex items-center gap-3 rounded-full px-1 py-1 transition hover:bg-slate-50 ${isRtl ? "text-right" : "text-left"}`}
@@ -37,8 +41,8 @@ export default function SiteHeader({
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-slate-100 shadow-sm sm:h-12 sm:w-12">
               <img src="/queue-logo.jpeg" alt={content.siteDetails.name} className="h-full w-full object-cover" />
             </div>
-            <div className="max-w-[11rem] sm:max-w-none">
-              <p className="text-sm font-bold tracking-wide text-slate-950 sm:text-base">{content.siteDetails.name}</p>
+            <div className="max-w-[8.75rem] sm:max-w-none">
+              <p className="text-[13px] font-bold tracking-wide text-slate-950 sm:text-base">{content.siteDetails.name}</p>
               <p className="hidden text-[10px] uppercase tracking-[0.2em] text-slate-500 sm:block">
                 {content.siteDetails.shortTagline}
               </p>
@@ -54,9 +58,7 @@ export default function SiteHeader({
                   key={item.id}
                   onClick={() => navTo(item.id)}
                   className={`relative rounded-full px-4 py-2 text-sm font-medium transition ${
-                    active
-                      ? "text-white"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+                    active ? "text-white" : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
                   }`}
                 >
                   <AnimatePresence>
@@ -80,8 +82,11 @@ export default function SiteHeader({
           </nav>
 
           <div className={`hidden items-center gap-3 md:flex ${isRtl ? "flex-row-reverse" : ""}`}>
-            <ActionButton className="px-6 py-3" onClick={() => setLocale(locale === "en" ? "ar" : "en")} variant="subtle">
-              {content.ui.languageToggle}
+            <ActionButton className="px-6 py-3" onClick={() => setLocale(nextLocale)} variant="subtle">
+              <span className="flex items-center gap-2">
+                <span aria-hidden="true">{languageFlag}</span>
+                <span>{languageLabel}</span>
+              </span>
             </ActionButton>
             <ActionButton className="px-6 py-3" onClick={() => setShowForm(true)} variant="secondary">
               {content.ui.startProject}
@@ -91,32 +96,26 @@ export default function SiteHeader({
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white md:hidden"
             aria-label="Toggle navigation menu"
           >
             <div className="flex flex-col gap-1.5">
-              <span
-                className={`h-0.5 w-5 bg-slate-900 transition ${mobileMenuOpen ? "translate-y-2 rotate-45" : ""}`}
-              />
+              <span className={`h-0.5 w-5 bg-slate-900 transition ${mobileMenuOpen ? "translate-y-2 rotate-45" : ""}`} />
               <span className={`h-0.5 w-5 bg-slate-900 transition ${mobileMenuOpen ? "opacity-0" : ""}`} />
-              <span
-                className={`h-0.5 w-5 bg-slate-900 transition ${mobileMenuOpen ? "-translate-y-2 -rotate-45" : ""}`}
-              />
+              <span className={`h-0.5 w-5 bg-slate-900 transition ${mobileMenuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
             </div>
           </button>
         </div>
 
         {mobileMenuOpen ? (
-          <div className="border-t border-slate-200 px-4 py-4 md:hidden">
+          <div className="border-t border-slate-200 px-3 py-3 md:hidden">
             <nav className="grid gap-2">
               {content.navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => navTo(item.id)}
-                  className={`rounded-2xl px-4 py-3 text-base font-medium transition ${isRtl ? "text-right" : "text-left"} ${
-                    currentPage === item.id
-                      ? "bg-slate-950 text-white"
-                      : "bg-white text-slate-700 hover:bg-slate-50"
+                  className={`rounded-2xl px-4 py-3 text-[15px] font-medium transition ${isRtl ? "text-right" : "text-left"} ${
+                    currentPage === item.id ? "bg-slate-950 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
                   }`}
                 >
                   {item.label}
@@ -124,8 +123,11 @@ export default function SiteHeader({
               ))}
             </nav>
             <div className="mt-4 grid gap-3">
-              <ActionButton className="w-full" onClick={() => setLocale(locale === "en" ? "ar" : "en")} variant="subtle">
-                {content.ui.languageToggleMobile}
+              <ActionButton className="w-full" onClick={() => setLocale(nextLocale)} variant="subtle">
+                <span className="flex items-center gap-2">
+                  <span aria-hidden="true">{languageFlag}</span>
+                  <span>{languageMobileLabel}</span>
+                </span>
               </ActionButton>
               <ActionButton className="w-full" onClick={() => setShowForm(true)} variant="secondary">
                 {content.ui.startProject}

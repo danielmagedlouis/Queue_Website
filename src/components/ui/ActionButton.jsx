@@ -1,7 +1,7 @@
 import { motion as Motion } from "framer-motion";
 
 const baseClassName =
-  "inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2";
+  "inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 sm:px-8 sm:py-4";
 
 const variantClassNames = {
   primary:
