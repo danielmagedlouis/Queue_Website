@@ -90,7 +90,7 @@ export default function Portfolio({ content, setShowForm }) {
               mobileWords={7}
               text={portfolio.cta.mobileDescription ?? portfolio.cta.description}
             />
-            <ActionButton onClick={() => setShowForm(true)} variant="secondary">{ui.startProject}</ActionButton>
+            <ActionButton onClick={() => setShowForm(true)} variant="secondary" className="w-full justify-center sm:w-auto">{ui.startProject}</ActionButton>
             </div>
           </Reveal>
 

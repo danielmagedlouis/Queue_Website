@@ -1,8 +1,9 @@
 import { motion as Motion, useMotionValue, useSpring } from "framer-motion";
 import shellBackground from "../../../images/background.avif";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function MouseAura() {
+  const [enabled, setEnabled] = useState(false);
   const initialX = typeof window === "undefined" ? 0 : window.innerWidth / 2;
   const initialY = typeof window === "undefined" ? 0 : window.innerHeight / 2;
   const mouseX = useMotionValue(initialX);
@@ -13,6 +14,16 @@ function MouseAura() {
   const trailY = useSpring(mouseY, { stiffness: 95, damping: 16, mass: 0.95 });
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const updateEnabled = () => setEnabled(mediaQuery.matches);
+
+    updateEnabled();
+    mediaQuery.addEventListener("change", updateEnabled);
+
+    if (!mediaQuery.matches) {
+      return () => mediaQuery.removeEventListener("change", updateEnabled);
+    }
+
     mouseX.set(window.innerWidth / 2);
     mouseY.set(window.innerHeight / 2);
 
@@ -22,8 +33,15 @@ function MouseAura() {
     };
 
     window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
+    return () => {
+      mediaQuery.removeEventListener("change", updateEnabled);
+      window.removeEventListener("mousemove", move);
+    };
   }, [mouseX, mouseY]);
+
+  if (!enabled) {
+    return null;
+  }
 
   return (
     <>

@@ -83,11 +83,11 @@ export default function Process({ content, setShowForm }) {
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 via-violet-500 to-fuchsia-500 text-sm font-bold text-white shadow-[0_14px_30px_rgba(124,58,237,0.22)]">
                           {step.num}
                         </div>
-                        <div className={`${isArabic ? "text-right" : "text-left"}`}>
+                        <div className={`min-w-0 ${isArabic ? "text-right" : "text-left"}`}>
                           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">
                             {locale === "ar" ? "المرحلة" : "Phase"}
                           </p>
-                          <p className="mt-1 text-base font-semibold text-slate-950">{step.title}</p>
+                          <p className="mt-1 text-sm font-semibold text-slate-950 sm:text-base">{step.title}</p>
                         </div>
                       </div>
                       {index < process.steps.length - 1 ? (
@@ -120,11 +120,11 @@ export default function Process({ content, setShowForm }) {
                           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.4rem] bg-gradient-to-br from-purple-600 via-violet-500 to-fuchsia-500 text-xl font-bold text-white shadow-[0_18px_35px_rgba(124,58,237,0.28)]">
                             {step.num}
                           </div>
-                          <div>
+                          <div className="min-w-0">
                             <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-500">
                               {locale === "ar" ? `المرحلة ${step.num}` : `Stage ${step.num}`}
                             </p>
-                            <h3 className="mt-2 text-[1.9rem] font-bold leading-tight text-slate-950">
+                            <h3 className="mt-2 text-[1.55rem] font-bold leading-tight text-slate-950 sm:text-[1.9rem]">
                               {step.title}
                             </h3>
                           </div>
@@ -188,7 +188,7 @@ export default function Process({ content, setShowForm }) {
               mobileWords={7}
               text={process.cta.mobileDescription ?? process.cta.description}
             />
-            <ActionButton onClick={() => setShowForm(true)} variant="secondary">{ui.beginProject}</ActionButton>
+            <ActionButton onClick={() => setShowForm(true)} variant="secondary" className="w-full justify-center sm:w-auto">{ui.beginProject}</ActionButton>
             </div>
           </Reveal>
 

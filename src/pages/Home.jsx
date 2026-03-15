@@ -23,22 +23,22 @@ export default function Home({ content, navTo, setShowForm }) {
   return (
     <PageShell>
       <FocusSection
-        className="flex min-h-[100svh] items-center px-5 pb-10 pt-24 sm:px-6 sm:pb-12 sm:pt-28 md:pt-32"
+        className="flex min-h-[100svh] items-center px-5 pb-8 pt-24 sm:px-6 sm:pb-12 sm:pt-28 md:pt-32"
         innerClassName="mx-auto w-full max-w-xl text-center md:max-w-6xl"
       >
-          <Reveal className="mx-auto flex min-h-[calc(100svh-9rem)] w-full flex-col">
-            <div className="flex flex-1 flex-col items-center justify-center">
+          <Reveal className="mx-auto flex min-h-[calc(100svh-8rem)] w-full flex-col justify-center gap-10 sm:min-h-[calc(100svh-9rem)] sm:justify-start sm:gap-0">
+            <div className="flex flex-col items-center justify-center sm:flex-1">
               <Motion.h1
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.75, delay: 0.1 }}
-                className={`mx-auto mt-7 overflow-visible pb-2 font-bold text-slate-950 ${
+                className={`mx-auto mt-7 flex w-full flex-col items-center overflow-visible pb-2 text-center font-bold text-slate-950 ${
                   isArabic
-                    ? "max-w-[19rem] text-[2.25rem] leading-[1.12] sm:max-w-5xl sm:pb-3 sm:text-[3.6rem] lg:text-[4.4rem]"
-                    : "max-w-[19rem] text-[2.5rem] leading-[1.02] sm:max-w-6xl sm:pb-3 sm:text-5xl lg:text-[5rem]"
+                    ? "max-w-[20rem] text-[2rem] leading-[1.14] sm:max-w-5xl sm:pb-3 sm:text-[3.6rem] lg:text-[4.4rem]"
+                    : "max-w-[20rem] text-[2.2rem] leading-[1.04] sm:max-w-6xl sm:pb-3 sm:text-5xl lg:text-[5rem]"
                 }`}
               >
-                <span className="mt-2 block overflow-visible pb-[0.12em] bg-gradient-to-r from-slate-950 via-purple-700 to-violet-500 bg-clip-text text-transparent">
+                <span className="mt-2 block w-full overflow-visible pb-[0.12em] text-center bg-gradient-to-r from-slate-950 via-purple-700 to-violet-500 bg-clip-text text-transparent">
                   {home.heroTitleAccent}
                 </span>
                 <span
@@ -59,7 +59,7 @@ export default function Home({ content, navTo, setShowForm }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.75, delay: 0.2 }}
-                className="mx-auto mt-6 max-w-[20rem] text-[15px] leading-7 text-slate-600 sm:max-w-3xl sm:text-xl"
+                className="mx-auto mt-5 max-w-[21rem] text-[15px] leading-7 text-slate-600 sm:mt-6 sm:max-w-3xl sm:text-xl"
               >
                 {home.heroDescription}
               </Motion.p>
@@ -75,7 +75,7 @@ export default function Home({ content, navTo, setShowForm }) {
                   showHeroLabels ? "pointer-events-auto" : "pointer-events-none"
                 }`}
               >
-                <ActionButton onClick={() => setShowForm(true)} className="px-7">
+                <ActionButton onClick={() => setShowForm(true)} className="w-full justify-center px-7 sm:w-auto">
                   {ui.startProject}
                 </ActionButton>
                 <button
@@ -95,12 +95,12 @@ export default function Home({ content, navTo, setShowForm }) {
                 y: showHeroLabels ? 0 : 26,
               }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className={`mt-10 grid grid-cols-3 gap-4 border-t border-slate-300/60 pt-6 text-center transition-opacity ${
+              className={`mt-10 grid grid-cols-1 gap-3 border-t border-slate-300/60 pt-5 text-center transition-opacity sm:grid-cols-3 sm:gap-4 sm:pt-6 ${
                 showHeroLabels ? "pointer-events-auto" : "pointer-events-none"
               }`}
             >
               {home.heroCards.map((card) => (
-                <div key={card.title} className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-500 sm:text-sm">
+                <div key={card.title} className="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-500 sm:text-sm sm:tracking-[0.32em]">
                   {card.title}
                 </div>
               ))}

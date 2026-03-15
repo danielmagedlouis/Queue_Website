@@ -31,8 +31,8 @@ export default function SiteHeader({
       <div
         className={`mx-auto max-w-7xl rounded-[1.75rem] border backdrop-blur transition-all ${
           scrolled
-            ? "border-white/70 bg-white/95 shadow-[0_20px_60px_rgba(15,23,42,0.12)]"
-            : "border-white/70 bg-white/82 shadow-[0_14px_40px_rgba(15,23,42,0.08)]"
+            ? "border-slate-200/85 bg-slate-100/95 shadow-[0_20px_60px_rgba(15,23,42,0.12)]"
+            : "border-slate-200/80 bg-slate-100/88 shadow-[0_14px_40px_rgba(15,23,42,0.08)]"
         }`}
       >
         <div className="flex items-center justify-between gap-2 px-2.5 py-2.5 sm:px-4 sm:py-3 lg:px-6">

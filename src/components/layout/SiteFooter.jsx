@@ -27,7 +27,7 @@ export default function SiteFooter({ content, navTo }) {
               <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_18px_34px_rgba(15,23,42,0.08)]">
                 <img src="/queue-logo.png" alt={content.siteDetails.name} className="h-full w-full object-contain p-1.5" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-lg font-semibold text-slate-950">{content.siteDetails.name}</p>
                 <p className={`text-sm text-slate-400 ${isRtl ? "" : "uppercase tracking-[0.22em]"}`}>{content.siteDetails.shortTagline}</p>
               </div>
@@ -60,10 +60,10 @@ export default function SiteFooter({ content, navTo }) {
                 href={`mailto:${content.siteDetails.email}`}
                 className={`flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 transition hover:border-purple-300 hover:bg-white hover:text-slate-950 ${socialAlignment}`}
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-purple-700 shadow-sm">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-purple-700 shadow-sm">
                   @
                 </span>
-                <span>{content.siteDetails.email}</span>
+                <span className="min-w-0 break-all text-sm sm:text-base">{content.siteDetails.email}</span>
               </a>
               {content.socialLinks.map((link) => {
                 const Icon = socialIcons[link.id];
@@ -77,10 +77,10 @@ export default function SiteFooter({ content, navTo }) {
                     rel={isExternal ? "noreferrer" : undefined}
                     className={`flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 transition hover:border-purple-300 hover:bg-white hover:text-slate-950 ${socialAlignment}`}
                   >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-purple-700 shadow-sm">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-purple-700 shadow-sm">
                       <Icon />
                     </span>
-                    <span>{link.label}</span>
+                    <span className="min-w-0">{link.label}</span>
                   </a>
                 );
               })}

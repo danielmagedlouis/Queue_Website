@@ -1,8 +1,13 @@
-import { motion as Motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion as Motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { useCallback } from "react";
 import Reveal from "./Reveal";
 
 export default function AnimatedImage({ alt, className = "", imageClassName = "", src }) {
+  const prefersReducedMotion = useReducedMotion();
+  const interactive =
+    typeof window !== "undefined" &&
+    !prefersReducedMotion &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const smoothX = useSpring(pointerX, { stiffness: 180, damping: 18 });
@@ -29,20 +34,20 @@ export default function AnimatedImage({ alt, className = "", imageClassName = ""
   return (
     <Reveal className={className}>
       <Motion.div
-        onMouseMove={handleMove}
-        onMouseLeave={handleLeave}
-        whileHover={{ y: -8, scale: 1.01 }}
+        onMouseMove={interactive ? handleMove : undefined}
+        onMouseLeave={interactive ? handleLeave : undefined}
+        whileHover={interactive ? { y: -8, scale: 1.01 } : undefined}
         transition={{ type: "spring", stiffness: 180, damping: 18 }}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative overflow-hidden rounded-[1.75rem] border border-slate-300/70 bg-slate-100/76 p-3 shadow-[0_20px_50px_rgba(15,23,42,0.1)] backdrop-blur sm:rounded-[2rem] sm:p-4 sm:shadow-[0_30px_80px_rgba(15,23,42,0.12)]"
+        style={interactive ? { rotateX, rotateY, transformStyle: "preserve-3d" } : undefined}
+        className="group relative overflow-hidden rounded-[1.5rem] border border-slate-300/70 bg-slate-100/76 p-2 shadow-[0_18px_44px_rgba(15,23,42,0.08)] backdrop-blur sm:rounded-[2rem] sm:p-4 sm:shadow-[0_30px_80px_rgba(15,23,42,0.12)]"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-sky-300/10 opacity-0 transition duration-500 group-hover:opacity-100" />
+        <div className={`absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-sky-300/10 transition duration-500 ${interactive ? "opacity-0 group-hover:opacity-100" : "opacity-40"}`} />
         <img
           src={src}
           alt={alt}
-          className={`relative h-full w-full rounded-[1.25rem] object-cover object-center transition duration-700 group-hover:scale-[1.03] sm:rounded-[1.5rem] ${imageClassName}`.trim()}
+          className={`relative h-full w-full rounded-[1.1rem] object-cover object-center transition duration-700 ${interactive ? "group-hover:scale-[1.03]" : ""} sm:rounded-[1.5rem] ${imageClassName}`.trim()}
         />
-        <div className="pointer-events-none absolute inset-x-8 bottom-6 h-10 rounded-full bg-slate-900/10 blur-2xl opacity-0 transition duration-500 group-hover:opacity-100" />
+        <div className={`pointer-events-none absolute inset-x-8 bottom-6 h-10 rounded-full bg-slate-900/10 blur-2xl transition duration-500 ${interactive ? "opacity-0 group-hover:opacity-100" : "opacity-0"}`} />
       </Motion.div>
     </Reveal>
   );

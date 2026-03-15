@@ -13,7 +13,10 @@ export default function SectionHeading({
   title,
   titleClassName = "",
 }) {
-  const alignClassName = align === "center" ? "mx-auto max-w-[19rem] text-center sm:max-w-xl md:max-w-3xl" : "max-w-[19rem] sm:max-w-xl md:max-w-3xl";
+  const alignClassName =
+    align === "center"
+      ? "mx-auto max-w-[22rem] text-center sm:max-w-xl md:max-w-3xl"
+      : "max-w-[22rem] sm:max-w-xl md:max-w-3xl";
 
   return (
     <div className={`${alignClassName} space-y-4 ${className}`.trim()}>
@@ -22,13 +25,13 @@ export default function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className={`text-[1.7rem] font-bold leading-[1.06] text-slate-950 sm:text-4xl lg:text-5xl ${titleClassName}`.trim()}>
+      <h2 className={`text-[1.55rem] font-bold leading-[1.08] text-slate-950 sm:text-4xl lg:text-5xl ${titleClassName}`.trim()}>
         <span className="md:hidden">{mobileTitle ?? title}</span>
         <span className="hidden md:inline">{title}</span>
       </h2>
       {description ? (
         <ExpandableText
-          className={`max-w-[18.5rem] text-[15px] leading-7 text-slate-600 sm:max-w-xl sm:text-base md:text-lg ${descriptionClassName}`.trim()}
+          className={`max-w-[21rem] text-[15px] leading-7 text-slate-600 sm:max-w-xl sm:text-base md:text-lg ${descriptionClassName}`.trim()}
           desktopText={description}
           locale={locale}
           mobileWords={9}

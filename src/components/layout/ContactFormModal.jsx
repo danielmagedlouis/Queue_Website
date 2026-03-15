@@ -43,10 +43,22 @@ export default function ContactFormModal({ content, setShowForm }) {
   const modal = content.ui.modal;
   const isArabic = content.locale === "ar";
   const activePhoneCountry = PHONE_COUNTRIES.find((country) => country.code === formData.phoneCountry) ?? PHONE_COUNTRIES[0];
+  const trimmedName = formData.name.trim();
+  const trimmedBusinessName = formData.businessName.trim();
+  const trimmedEmail = formData.email.trim();
+  const trimmedIdea = formData.idea.trim();
+  const phoneDigits = formData.phone.replace(/\D/g, "");
+  const hasRequiredFields = Boolean(trimmedName && trimmedBusinessName && phoneDigits && trimmedIdea && formData.whatsapp);
+  const isPhoneLengthValid = phoneDigits.length >= activePhoneCountry.min && phoneDigits.length <= activePhoneCountry.max;
+  const hasValidOptionalEmail = !trimmedEmail || emailPattern.test(trimmedEmail);
+  const isSubmitDisabled = submitState === "submitting" || !hasRequiredFields || !isPhoneLengthValid || !hasValidOptionalEmail;
   const errorMessage = isArabic
     ? "تعذر إرسال النموذج الآن. حاول مرة أخرى بعد لحظات."
     : "The form could not be sent right now. Please try again in a moment.";
   const sendingLabel = isArabic ? "جاري الإرسال..." : "Sending...";
+
+  const getFieldClassName = (fieldName) =>
+    `${inputClassName} ${validationErrors[fieldName] ? "border-red-300 bg-red-50/70 focus:border-red-400" : ""}`.trim();
 
   useEffect(() => {
     const handleEscape = (event) => {
@@ -149,12 +161,19 @@ export default function ContactFormModal({ content, setShowForm }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const trimmedName = formData.name.trim();
-    const trimmedBusinessName = formData.businessName.trim();
-    const trimmedEmail = formData.email.trim();
-    const trimmedIdea = formData.idea.trim();
-    const phoneDigits = formData.phone.replace(/\D/g, "");
     const nextValidationErrors = { name: "", businessName: "", email: "", phone: "", idea: "" };
+
+    if (!hasRequiredFields) {
+      setValidationErrors({
+        name: trimmedName ? "" : modal.nameRequired,
+        businessName: trimmedBusinessName ? "" : modal.businessNameRequired,
+        email: "",
+        phone: phoneDigits ? "" : modal.phoneRequired,
+        idea: trimmedIdea ? "" : modal.ideaRequired,
+      });
+      setShowWhatsappError(!formData.whatsapp);
+      return;
+    }
 
     if (!trimmedName) {
       nextValidationErrors.name = modal.nameRequired;
@@ -274,14 +293,14 @@ export default function ContactFormModal({ content, setShowForm }) {
               </ActionButton>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+            <form noValidate onSubmit={handleSubmit} className="mt-8 space-y-4">
               <input
                 type="text"
                 name="name"
                 placeholder={modal.name}
                 onChange={handleInputChange}
                 value={formData.name}
-                className={inputClassName}
+                className={getFieldClassName("name")}
               />
               {validationErrors.name ? (
                 <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -294,7 +313,7 @@ export default function ContactFormModal({ content, setShowForm }) {
                 placeholder={modal.businessName}
                 onChange={handleInputChange}
                 value={formData.businessName}
-                className={inputClassName}
+                className={getFieldClassName("businessName")}
               />
               {validationErrors.businessName ? (
                 <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -308,7 +327,7 @@ export default function ContactFormModal({ content, setShowForm }) {
                 autoComplete="email"
                 onChange={handleInputChange}
                 value={formData.email}
-                className={inputClassName}
+                className={getFieldClassName("email")}
               />
               {validationErrors.email ? (
                 <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -331,7 +350,7 @@ export default function ContactFormModal({ content, setShowForm }) {
                   autoComplete="tel-national"
                   onChange={handleInputChange}
                   value={formData.phone}
-                  className={inputClassName}
+                  className={getFieldClassName("phone")}
                 />
               </div>
               {validationErrors.phone ? (
@@ -373,7 +392,7 @@ export default function ContactFormModal({ content, setShowForm }) {
                 rows="5"
                 onChange={handleInputChange}
                 value={formData.idea}
-                className={`${inputClassName} resize-none`}
+                className={`${getFieldClassName("idea")} resize-none`}
               />
               {validationErrors.idea ? (
                 <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -385,7 +404,7 @@ export default function ContactFormModal({ content, setShowForm }) {
                 <ActionButton className="sm:flex-1" onClick={() => setShowForm(false)} variant="secondary">
                   {modal.cancel}
                 </ActionButton>
-                <ActionButton className="sm:flex-1" disabled={submitState === "submitting"} type="submit">
+                <ActionButton className="sm:flex-1" disabled={isSubmitDisabled} type="submit">
                   {submitState === "submitting" ? sendingLabel : modal.submit}
                 </ActionButton>
               </div>

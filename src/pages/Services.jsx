@@ -60,8 +60,8 @@ export default function Services({ content, navTo }) {
       </FocusSection>
 
       <FocusSection className="bg-slate-950 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
-        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-900/90 bg-slate-950 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-5 md:max-w-6xl md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:border-slate-300/70 md:bg-slate-100/76 md:p-10">
-          <div className="order-1 relative h-[calc(100svh-8.5rem)] min-h-[26rem] max-h-[34rem] overflow-hidden rounded-[2rem] bg-slate-950 p-4 text-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-8 md:h-auto md:max-h-none md:p-8 md:order-1">
+        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-white/10 bg-slate-950 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.18)] backdrop-blur sm:max-w-2xl sm:p-5 md:max-w-6xl md:grid-cols-[1.04fr_0.96fr] md:items-stretch md:gap-8 md:p-10">
+          <div className="order-1 relative min-h-[23rem] overflow-hidden rounded-[2rem] border border-white/8 bg-slate-950 p-4 text-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:min-h-[26rem] sm:p-8 md:order-1 md:min-h-[34rem] md:p-8">
             <div className="absolute -left-12 top-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
             <div className="absolute bottom-0 right-0 h-48 w-48 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="relative flex h-full w-full flex-col justify-start">
@@ -116,19 +116,19 @@ export default function Services({ content, navTo }) {
             </div>
           </div>
 
-          <div className="order-2 grid gap-4 md:order-2">
+          <div className="order-2 grid gap-4 md:order-2 md:grid-rows-[auto_1fr]">
             <AnimatedImage
               src={servicesContent.automationHighlight.image}
               alt={servicesContent.automationHighlight.imageAlt}
               className="mx-auto hidden w-full max-w-sm sm:max-w-xl md:block md:max-w-none"
-              imageClassName="h-[12.5rem] object-center sm:h-[20rem] md:h-full md:min-h-[22rem]"
+              imageClassName="h-[12.5rem] object-center sm:h-[20rem] md:h-[22rem]"
             />
 
             <div className="grid gap-4 sm:grid-cols-2">
               {servicesContent.automationHighlight.points.map((point) => (
-                <div key={point.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-300/60 bg-slate-50/88 p-5 sm:max-w-none sm:p-6">
-                  <h3 className="text-lg font-bold text-slate-950">{point.title}</h3>
-                  <p className="mt-2 leading-7 text-slate-600">{point.description}</p>
+                <div key={point.title} className="mx-auto flex h-full w-full max-w-sm flex-col justify-start rounded-[1.5rem] border border-white/10 bg-slate-900/92 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.2)] sm:max-w-none md:p-5">
+                  <h3 className="text-lg font-bold text-white">{point.title}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-slate-300">{point.description}</p>
                 </div>
               ))}
             </div>
@@ -137,26 +137,26 @@ export default function Services({ content, navTo }) {
       </FocusSection>
 
       <FocusSection className="border-y border-slate-300/50 bg-slate-100/58 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
-        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-900/90 bg-slate-950 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-5 md:max-w-6xl md:grid-cols-[1.05fr_0.95fr] md:gap-8 md:border-slate-300/70 md:bg-slate-100/76 md:p-10">
-          <div className="order-2 grid gap-4 md:order-1">
+        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-900/90 bg-slate-950 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-5 md:max-w-6xl md:grid-cols-[0.96fr_1.04fr] md:items-stretch md:gap-8 md:border-slate-300/70 md:bg-slate-100/76 md:p-10">
+          <div className="order-2 grid gap-4 md:order-1 md:grid-rows-[auto_1fr]">
             <AnimatedImage
               src={servicesContent.callAgentHighlight.image}
               alt={servicesContent.callAgentHighlight.imageAlt}
               className="mx-auto hidden w-full max-w-sm sm:max-w-xl md:block md:max-w-none"
-              imageClassName="h-[12.5rem] object-[center_35%] sm:h-[20rem] md:h-full md:min-h-[24rem] md:object-center"
+              imageClassName="h-[12.5rem] object-[center_35%] sm:h-[20rem] md:h-[22rem] md:object-center"
             />
 
             <div className="grid gap-4 sm:grid-cols-2">
               {servicesContent.callAgentHighlight.points.map((point) => (
-                <div key={point.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-300/60 bg-slate-50/88 p-5 sm:max-w-none sm:p-6">
+                <div key={point.title} className="mx-auto flex h-full w-full max-w-sm flex-col justify-start rounded-[1.5rem] border border-slate-300/60 bg-slate-50/88 p-5 sm:max-w-none md:p-5">
                   <h3 className="text-lg font-bold text-slate-950">{point.title}</h3>
-                  <p className="mt-2 leading-7 text-slate-600">{point.description}</p>
+                  <p className="mt-2 text-[15px] leading-7 text-slate-600">{point.description}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="order-1 relative h-[calc(100svh-8.5rem)] min-h-[26rem] max-h-[34rem] overflow-hidden rounded-[2rem] bg-slate-950 p-4 text-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-8 md:h-auto md:max-h-none md:p-8 md:order-2">
+          <div className="order-1 relative min-h-[23rem] overflow-hidden rounded-[2rem] bg-slate-950 p-4 text-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:min-h-[26rem] sm:p-8 md:order-2 md:min-h-[34rem] md:p-8">
             <div className="absolute -right-12 top-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
             <div className="absolute bottom-0 left-0 h-48 w-48 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="relative flex h-full w-full flex-col justify-start">

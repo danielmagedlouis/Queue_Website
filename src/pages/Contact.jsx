@@ -91,7 +91,7 @@ export default function Contact({ content, setShowForm }) {
               ))}
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               {content.socialLinks.map((link) => (
                 <SocialPill key={link.id} href={link.href} icon={link.id === "instagram" ? <FaInstagram /> : <FaFacebookF />}>
                   {link.label}
@@ -143,7 +143,7 @@ function SocialPill({ children, href, icon }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="flex items-center justify-center gap-3 rounded-full border border-slate-300/70 bg-slate-100/88 px-4 py-3 font-medium text-slate-700 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:border-purple-300 hover:text-purple-700 sm:px-5"
+      className="flex w-full items-center justify-center gap-3 rounded-full border border-slate-300/70 bg-slate-100/88 px-4 py-3 font-medium text-slate-700 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:border-purple-300 hover:text-purple-700 sm:w-auto sm:px-5"
     >
       {icon}
       {children}
