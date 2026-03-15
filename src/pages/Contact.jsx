@@ -15,12 +15,12 @@ export default function Contact({ content, setShowForm }) {
   return (
     <PageShell>
       <FocusSection
-        className="px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
+        className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
         innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1fr_0.95fr] md:gap-12"
       >
           <div className="mx-auto w-full max-w-xl space-y-6 sm:space-y-8">
             <Reveal>
-              <div className="inline-flex rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
+              <div className="inline-flex rounded-full border border-purple-200 bg-slate-50/90 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
                 {contact.hero.eyebrow}
               </div>
             </Reveal>
@@ -67,7 +67,7 @@ export default function Contact({ content, setShowForm }) {
           />
       </FocusSection>
 
-      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1fr_0.9fr] md:gap-8">
+      <FocusSection className="bg-slate-950 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1fr_0.9fr] md:gap-8">
           <Reveal className="h-full overflow-hidden rounded-[2rem] bg-slate-950 p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] sm:p-8 md:p-10">
             <div className="flex h-full flex-col justify-center">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-purple-200">
@@ -101,7 +101,7 @@ export default function Contact({ content, setShowForm }) {
             </div>
           </Reveal>
 
-          <Reveal className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
+          <Reveal className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-slate-300/70 bg-slate-100/82 shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
             <img
               src={contact.cta.image}
               alt={contact.cta.imageAlt}
@@ -126,7 +126,7 @@ export default function Contact({ content, setShowForm }) {
 
 function ContactCard({ action, body, icon, title }) {
   return (
-    <Reveal className="mx-auto w-full max-w-sm rounded-[1.75rem] border border-white/80 bg-white/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-none sm:p-6">
+    <Reveal className="mx-auto w-full max-w-sm rounded-[1.75rem] border border-slate-300/60 bg-slate-100/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-none sm:p-6">
       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-700">
         {icon}
       </div>
@@ -143,7 +143,7 @@ function SocialPill({ children, href, icon }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:border-purple-300 hover:text-purple-700 sm:px-5"
+      className="flex items-center justify-center gap-3 rounded-full border border-slate-300/70 bg-slate-100/88 px-4 py-3 font-medium text-slate-700 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:border-purple-300 hover:text-purple-700 sm:px-5"
     >
       {icon}
       {children}

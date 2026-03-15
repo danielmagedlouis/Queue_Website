@@ -1,5 +1,5 @@
 import { AnimatePresence, motion as Motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import ContactFormModal from "./components/layout/ContactFormModal";
 import ScrollToTopButton from "./components/layout/ScrollToTopButton";
 import SiteFooter from "./components/layout/SiteFooter";
@@ -16,6 +16,8 @@ export default function App() {
   const [showForm, setShowForm] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [locale, setLocale] = useState("en");
+  const [localeFxKey, setLocaleFxKey] = useState(0);
+  const [localeFxDirection, setLocaleFxDirection] = useState(1);
   const content = SITE_CONTENT[locale];
   const isRtl = content.direction === "rtl";
 
@@ -36,6 +38,19 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleLocaleChange = (nextLocale) => {
+    if (nextLocale === locale) {
+      return;
+    }
+
+    setMobileMenuOpen(false);
+    setLocaleFxDirection(nextLocale === "ar" ? 1 : -1);
+    setLocaleFxKey((previous) => previous + 1);
+    startTransition(() => {
+      setLocale(nextLocale);
+    });
+  };
+
   const pages = {
     home: <Home content={content} navTo={navTo} setShowForm={setShowForm} />,
     services: <Services content={content} navTo={navTo} setShowForm={setShowForm} />,
@@ -52,12 +67,12 @@ export default function App() {
         locale={locale}
         mobileMenuOpen={mobileMenuOpen}
         navTo={navTo}
-        setLocale={setLocale}
+        onLocaleChange={handleLocaleChange}
         setMobileMenuOpen={setMobileMenuOpen}
         setShowForm={setShowForm}
       />
 
-      <main className="pt-22 sm:pt-28">
+      <main className={currentPage === "home" ? "" : "pt-22 sm:pt-28"}>
         <AnimatePresence mode="wait">
           <Motion.div
             key={currentPage}
@@ -74,7 +89,59 @@ export default function App() {
       <SiteFooter content={content} navTo={navTo} setShowForm={setShowForm} />
       <ScrollToTopButton />
 
+      <AnimatePresence initial={false}>
+        {localeFxKey ? (
+          <LocaleTransitionOverlay key={localeFxKey} direction={localeFxDirection} />
+        ) : null}
+      </AnimatePresence>
+
       {showForm ? <ContactFormModal content={content} setShowForm={setShowForm} /> : null}
     </div>
+  );
+}
+
+function LocaleTransitionOverlay({ direction }) {
+  const travel = direction > 0 ? [120, -120] : [-120, 120];
+
+  return (
+    <Motion.div
+      className="pointer-events-none fixed inset-0 z-[55] overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.32, ease: [0.2, 0.9, 0.3, 1] }}
+    >
+      <Motion.div
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14),transparent_58%)]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 0] }}
+        transition={{ duration: 0.42, times: [0, 0.35, 1], ease: "easeOut" }}
+      />
+      <Motion.div
+        className="absolute left-[-20%] top-[18%] h-40 w-[70%] rounded-full bg-[linear-gradient(90deg,rgba(168,85,247,0)_0%,rgba(168,85,247,0.22)_35%,rgba(56,189,248,0.26)_70%,rgba(56,189,248,0)_100%)] blur-3xl"
+        initial={{ x: `${travel[0]}%`, opacity: 0 }}
+        animate={{ x: `${travel[1]}%`, opacity: [0, 0.9, 0] }}
+        transition={{ duration: 0.46, times: [0, 0.18, 1], ease: [0.2, 0.9, 0.3, 1] }}
+      />
+      <Motion.div
+        className="absolute right-[-18%] top-[42%] h-28 w-[58%] rounded-full bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.18)_32%,rgba(167,139,250,0.28)_70%,rgba(255,255,255,0)_100%)] blur-3xl"
+        initial={{ x: `${-travel[0]}%`, opacity: 0 }}
+        animate={{ x: `${-travel[1]}%`, opacity: [0, 0.8, 0] }}
+        transition={{ duration: 0.42, delay: 0.04, times: [0, 0.2, 1], ease: [0.2, 0.9, 0.3, 1] }}
+      />
+      {[0, 1, 2, 3].map((index) => (
+        <Motion.span
+          key={index}
+          className="absolute h-2.5 w-2.5 rounded-full bg-white/70 shadow-[0_0_14px_rgba(255,255,255,0.45)]"
+          style={{
+            left: `${18 + index * 18}%`,
+            top: `${28 + (index % 2) * 16}%`,
+          }}
+          initial={{ opacity: 0, x: direction > 0 ? -26 : 26, y: 10, scale: 0.6 }}
+          animate={{ opacity: [0, 1, 0], x: direction > 0 ? 26 : -26, y: -10, scale: [0.6, 1, 0.8] }}
+          transition={{ duration: 0.34, delay: index * 0.04, ease: "easeOut" }}
+        />
+      ))}
+    </Motion.div>
   );
 }

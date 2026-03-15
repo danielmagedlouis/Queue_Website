@@ -8,7 +8,7 @@ export default function SiteHeader({
   locale,
   mobileMenuOpen,
   navTo,
-  setLocale,
+  onLocaleChange,
   setMobileMenuOpen,
   setShowForm,
 }) {
@@ -16,7 +16,6 @@ export default function SiteHeader({
   const { scrollY, scrollYProgress } = useScroll();
   const isRtl = content.direction === "rtl";
   const nextLocale = locale === "en" ? "ar" : "en";
-  const languageFlag = nextLocale === "ar" ? "\u{1F1EA}\u{1F1EC}" : "\u{1F1FA}\u{1F1F8}";
   const languageLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" : "English";
   const languageMobileLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629 (Egypt)" : "English (US)";
 
@@ -27,10 +26,10 @@ export default function SiteHeader({
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-2.5 pt-2.5 sm:px-6 sm:pt-4">
       <div
-        className={`mx-auto max-w-7xl rounded-[1.75rem] border border-white/70 backdrop-blur transition-all ${
+        className={`mx-auto max-w-7xl rounded-[1.75rem] border backdrop-blur transition-all ${
           scrolled
-            ? "bg-white/95 shadow-[0_20px_60px_rgba(15,23,42,0.12)]"
-            : "bg-white/82 shadow-[0_14px_40px_rgba(15,23,42,0.08)]"
+            ? "border-white/70 bg-white/95 shadow-[0_20px_60px_rgba(15,23,42,0.12)]"
+            : "border-white/70 bg-white/82 shadow-[0_14px_40px_rgba(15,23,42,0.08)]"
         }`}
       >
         <div className="flex items-center justify-between gap-2 px-2.5 py-2.5 sm:px-4 sm:py-3 lg:px-6">
@@ -82,11 +81,8 @@ export default function SiteHeader({
           </nav>
 
           <div className={`hidden items-center gap-3 md:flex ${isRtl ? "flex-row-reverse" : ""}`}>
-            <ActionButton className="px-6 py-3" onClick={() => setLocale(nextLocale)} variant="subtle">
-              <span className="flex items-center gap-2">
-                <span aria-hidden="true">{languageFlag}</span>
-                <span>{languageLabel}</span>
-              </span>
+            <ActionButton className="px-6 py-3" onClick={() => onLocaleChange(nextLocale)} variant="subtle">
+              <span>{languageLabel}</span>
             </ActionButton>
             <ActionButton className="px-6 py-3" onClick={() => setShowForm(true)} variant="secondary">
               {content.ui.startProject}
@@ -123,11 +119,8 @@ export default function SiteHeader({
               ))}
             </nav>
             <div className="mt-4 grid gap-3">
-              <ActionButton className="w-full" onClick={() => setLocale(nextLocale)} variant="subtle">
-                <span className="flex items-center gap-2">
-                  <span aria-hidden="true">{languageFlag}</span>
-                  <span>{languageMobileLabel}</span>
-                </span>
+              <ActionButton className="w-full" onClick={() => onLocaleChange(nextLocale)} variant="subtle">
+                <span>{languageMobileLabel}</span>
               </ActionButton>
               <ActionButton className="w-full" onClick={() => setShowForm(true)} variant="secondary">
                 {content.ui.startProject}
@@ -136,10 +129,16 @@ export default function SiteHeader({
           </div>
         ) : null}
 
-        <Motion.div
-          className="h-px origin-left bg-gradient-to-r from-purple-600 via-violet-500 to-sky-400"
-          style={{ scaleX: scrollYProgress }}
-        />
+        <div className="px-2.5 pb-2.5 sm:px-4 sm:pb-3 lg:px-6">
+          <div className="h-[2px] overflow-hidden rounded-full">
+            <Motion.div
+              className={`h-full rounded-full bg-gradient-to-r from-purple-600 via-violet-500 to-sky-400 shadow-[0_0_18px_rgba(168,85,247,0.35)] ${
+                isRtl ? "origin-right" : "origin-left"
+              }`}
+              style={{ scaleX: scrollYProgress }}
+            />
+          </div>
+        </div>
       </div>
     </header>
   );

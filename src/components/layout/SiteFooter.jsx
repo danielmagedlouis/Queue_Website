@@ -13,8 +13,8 @@ export default function SiteFooter({ content, navTo, setShowForm }) {
   const socialAlignment = isRtl ? "flex-row-reverse text-right" : "text-left";
 
   return (
-    <footer className="border-t border-slate-200 bg-white/85 px-5 py-14 backdrop-blur sm:px-6 sm:py-16">
-      <Reveal className="mx-auto grid max-w-xl gap-8 rounded-[2rem] border border-slate-200/80 bg-white/85 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] md:max-w-7xl md:grid-cols-[1.1fr_0.9fr] md:gap-10 md:p-10">
+    <footer className="border-t border-slate-300/70 bg-slate-100/62 px-5 py-14 backdrop-blur sm:px-6 sm:py-16">
+      <Reveal className="mx-auto grid max-w-xl gap-8 rounded-[2rem] border border-slate-300/70 bg-slate-100/76 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] md:max-w-7xl md:grid-cols-[1.1fr_0.9fr] md:gap-10 md:p-10">
         <div className={`space-y-5 text-center ${desktopAlign}`}>
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-purple-700">
             {content.siteDetails.name}
@@ -39,7 +39,7 @@ export default function SiteFooter({ content, navTo, setShowForm }) {
                 <button
                   key={item.id}
                   onClick={() => navTo(item.id)}
-                  className={`rounded-xl px-3 py-2 text-slate-600 transition hover:bg-slate-50 hover:text-slate-950 ${isRtl ? "text-right" : "text-left"}`}
+                    className={`rounded-xl px-3 py-2 text-slate-600 transition hover:bg-slate-200/55 hover:text-slate-950 ${isRtl ? "text-right" : "text-left"}`}
                 >
                   {item.label}
                 </button>
@@ -60,9 +60,9 @@ export default function SiteFooter({ content, navTo, setShowForm }) {
                     href={link.href}
                     target={isExternal ? "_blank" : undefined}
                     rel={isExternal ? "noreferrer" : undefined}
-                    className={`flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 transition hover:border-purple-300 hover:text-purple-700 ${socialAlignment}`}
+                    className={`flex items-center gap-3 rounded-2xl border border-slate-300/70 bg-slate-50/86 px-4 py-3 text-slate-700 transition hover:border-purple-300 hover:text-purple-700 ${socialAlignment}`}
                   >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-purple-700 shadow-sm">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-purple-700 shadow-sm">
                       <Icon />
                     </span>
                     <span>{link.label}</span>

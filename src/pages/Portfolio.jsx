@@ -16,9 +16,9 @@ export default function Portfolio({ content, setShowForm }) {
 
   return (
     <PageShell>
-      <FocusSection className="px-5 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" innerClassName="mx-auto max-w-xl space-y-5 text-center md:max-w-6xl md:space-y-8">
+      <FocusSection className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" innerClassName="mx-auto max-w-xl space-y-5 text-center md:max-w-6xl md:space-y-8">
           <Reveal>
-            <div className="inline-flex rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
+            <div className="inline-flex rounded-full border border-purple-200 bg-slate-50/90 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
               {portfolio.hero.eyebrow}
             </div>
           </Reveal>
@@ -34,10 +34,10 @@ export default function Portfolio({ content, setShowForm }) {
           </Reveal>
       </FocusSection>
 
-      <FocusSection className="px-5 pb-14 sm:px-6 sm:pb-20 md:pb-24" innerClassName="mx-auto grid max-w-xl gap-5 md:max-w-6xl md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
+      <FocusSection className="bg-slate-950 px-5 pb-14 pt-14 sm:px-6 sm:pb-20 sm:pt-20 md:pb-24 md:pt-24" innerClassName="mx-auto grid max-w-xl gap-5 md:max-w-6xl md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
           {portfolio.projects.map((project, index) => (
             <Reveal key={project.title} className="mx-auto w-full max-w-sm md:max-w-none" delay={index * 0.05}>
-              <article className="group overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(15,23,42,0.12)]">
+              <article className="group overflow-hidden rounded-[2rem] border border-slate-300/70 bg-slate-100/82 shadow-[0_24px_60px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(15,23,42,0.12)]">
                 <div className="relative h-44 overflow-hidden sm:h-72">
                   <img
                     src={project.image}
@@ -45,7 +45,7 @@ export default function Portfolio({ content, setShowForm }) {
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
-                  <div className={`absolute top-5 rounded-full border border-white/70 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-purple-700 ${isRtl ? "right-5" : "left-5"}`}>
+                  <div className={`absolute top-5 rounded-full border border-slate-100/70 bg-slate-50/92 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-purple-700 ${isRtl ? "right-5" : "left-5"}`}>
                     {project.category}
                   </div>
                 </div>
@@ -71,8 +71,8 @@ export default function Portfolio({ content, setShowForm }) {
       </FocusSection>
 
       <FocusSection
-        className="px-5 py-14 sm:px-6 sm:py-20 md:py-24"
-        innerClassName="mx-auto grid max-w-xl items-stretch gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur md:max-w-6xl md:grid-cols-[1.1fr_0.9fr] md:gap-8 md:p-10"
+        className="border-y border-slate-300/50 bg-slate-100/58 px-5 py-14 sm:px-6 sm:py-20 md:py-24"
+        innerClassName="mx-auto grid max-w-xl items-stretch gap-6 rounded-[2rem] border border-slate-300/70 bg-slate-100/76 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur md:max-w-6xl md:grid-cols-[1.1fr_0.9fr] md:gap-8 md:p-10"
       >
           <Reveal className="h-full overflow-hidden rounded-[1.75rem] bg-slate-950 p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] sm:p-8">
             <div className="flex h-full flex-col justify-center space-y-5">

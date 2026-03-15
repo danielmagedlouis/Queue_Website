@@ -29,7 +29,7 @@ const sharedImages = {
   contactCta: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
 };
 
-export const SITE_CONTENT = {
+export const SITE_CONTENT = { 
   en: {
     locale: "en",
     direction: "ltr",
@@ -48,15 +48,15 @@ export const SITE_CONTENT = {
       name: "Queue Solutions",
       email: "queuesolutions25@gmail.com",
       tagline: "Websites, systems, and AI that help businesses grow",
-      shortTagline: "Digital systems for ambitious businesses",
+      shortTagline: "Web, systems, and AI for modern brands",
       description:
         "Queue Solutions helps businesses present themselves more credibly online, run more smoothly behind the scenes, and reduce repetitive work with practical automation.",
     },
     ui: {
-      startProject: "Start Your Project",
+      startProject: "Start Project",
       contactUs: "Contact Us",
       viewPortfolio: "See Our Work",
-      ourServices: "Explore Services",
+      ourServices: "Our Services",
       discussService: "Talk About This Service",
       beginProject: "Start the Process",
       languageToggle: "العربية",
@@ -68,16 +68,23 @@ export const SITE_CONTENT = {
         title: "Tell us what you need help with",
         description:
           "Tell us what your business does, what is slowing you down, and what you want this project to improve.",
-        name: "Your name",
+        name: "Your full name",
         businessName: "Business name",
-        email: "Email",
+        email: "Email (optional)",
+        phoneCountry: "Country code",
         phone: "Phone number",
         whatsappQuestion: "Is this number on WhatsApp?",
         whatsappYes: "Yes, it has WhatsApp",
         whatsappYesHint: "We can reach you faster there if needed.",
         whatsappNo: "No, regular calls only",
         whatsappNoHint: "We will use normal calls and email instead.",
+        nameRequired: "Enter your full name.",
+        businessNameRequired: "Enter your business name.",
+        phoneRequired: "Enter your phone number.",
+        ideaRequired: "Tell us a bit about the project.",
         whatsappRequired: "Choose whether this number has WhatsApp.",
+        emailInvalid: "Enter a valid email address.",
+        phoneInvalid: "Enter a valid phone number.",
         idea: "Project idea",
         cancel: "Cancel",
         submit: "Send Details",
@@ -110,17 +117,17 @@ export const SITE_CONTENT = {
       resultLabel: "Result",
     },
     home: {
-      heroBadge: "For businesses that want a stronger digital presence and smoother operations",
-      heroTitleTop: "Built for businesses that need",
-      heroMobileTitleTop: "Built for",
-      heroMobileDescription: "Websites, systems, and automation that make the business feel sharper and easier to run.",
+      heroBadge: "Modern websites, systems, and AI workflows for growing businesses",
+      heroTitleTop: "Where Your Ideas Come True",
+      heroMobileTitleTop: "Where Your Ideas Come True",
+      heroMobileDescription: "We design clean digital experiences, internal systems, and AI automations that make your business look sharper and run faster.",
       heroTitleAccent: "Queue Solutions",
       heroDescription:
-        "We design the experience your customers see and the systems your team relies on, so the business feels sharper, faster, and easier to run.",
+        "We design clean digital experiences, internal systems, and AI automations that make your business look sharper and run faster.",
       heroCards: [
-        { title: "Sales Websites", description: "Clear, polished websites that build trust and turn interest into real inquiries." },
-        { title: "Internal Systems", description: "Simple dashboards and tools that help teams stay aligned and work with less friction." },
-        { title: "Smart Automation", description: "We handle follow-up, reminders, and repeated admin so your team can focus on the business." },
+        { title: "Websites", description: "Clear, polished websites that build trust and turn interest into real inquiries." },
+        { title: "Systems", description: "Simple dashboards and tools that help teams stay aligned and work with less friction." },
+        { title: "AI Automations", description: "We handle follow-up, reminders, and repeated admin so your team can focus on the business." },
       ],
       sections: [
         {
@@ -270,18 +277,11 @@ export const SITE_CONTENT = {
           image: sharedImages.serviceWeb,
         },
         {
-          title: "System Building",
+          title: "System Design",
           icon: "cogs",
           description:
             "We create internal tools and dashboards that give your team one clear place to track work, data, and decisions.",
           image: sharedImages.serviceSystem,
-        },
-        {
-          title: "AI Modeling",
-          icon: "database",
-          description:
-            "When the problem needs prediction or classification, we build focused AI models around a real business use case.",
-          image: sharedImages.serviceModel,
         },
         {
           title: "IT Services",
@@ -510,16 +510,23 @@ export const SITE_CONTENT = {
         eyebrow: "ابدأ مشروعك",
         title: "احك لنا ما الذي تريد بناءه",
         description: "شاركنا الفكرة والهدف التجاري وكل ما يساعدنا على فهم المشروع بشكل أفضل.",
-        name: "اسمك",
+        name: "اسمك الكامل",
         businessName: "اسم الشركة",
-        email: "البريد الإلكتروني",
+        email: "البريد الإلكتروني (اختياري)",
+        phoneCountry: "مفتاح الدولة",
         phone: "رقم الهاتف",
         whatsappQuestion: "هل هذا الرقم عليه واتساب؟",
         whatsappYes: "نعم، عليه واتساب",
         whatsappYesHint: "يمكننا التواصل أسرع من خلاله عند الحاجة.",
         whatsappNo: "لا، مكالمات عادية فقط",
         whatsappNoHint: "سنعتمد على المكالمات العادية والبريد الإلكتروني.",
+        nameRequired: "أدخل اسمك الكامل.",
+        businessNameRequired: "أدخل اسم الشركة.",
+        phoneRequired: "أدخل رقم الهاتف.",
+        ideaRequired: "اكتب نبذة قصيرة عن المشروع.",
         whatsappRequired: "اختر هل هذا الرقم عليه واتساب أم لا.",
+        emailInvalid: "أدخل بريدًا إلكترونيًا صحيحًا.",
+        phoneInvalid: "أدخل رقم هاتف صحيحًا.",
         idea: "فكرة المشروع",
         cancel: "إلغاء",
         submit: "إرسال الطلب",
@@ -552,7 +559,8 @@ export const SITE_CONTENT = {
     },
     home: {
       heroBadge: "مواقع وأنظمة وتدفقات ذكاء اصطناعي حديثة للشركات التي تريد النمو",
-      heroTitleTop: "حلول مصممة للشركات التي تحتاج إلى",
+      heroTitleTop: "حيث تتحول أفكارك إلى واقع",
+      heroMobileTitleTop: "حيث تتحول أفكارك إلى واقع",
       heroTitleAccent: "Queue Solutions",
       heroDescription:
         "نصمم تجارب رقمية أنيقة وأنظمة داخلية وأتمتة بالذكاء الاصطناعي تجعل نشاطك أكثر قوة وسرعة.",

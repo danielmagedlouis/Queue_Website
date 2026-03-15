@@ -1,18 +1,48 @@
 import { motion as Motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { FaCheck, FaWhatsapp } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { FaCheck, FaChevronDown, FaWhatsapp } from "react-icons/fa";
 import ActionButton from "../ui/ActionButton";
 
 const inputClassName =
   "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder-slate-400 transition focus:border-purple-500/50 focus:outline-none";
 const formEndpoint = "https://formsubmit.co/ajax/queuesolutions25@gmail.com";
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_COUNTRIES = [
+  { code: "EG", dialCode: "+20", label: { en: "Egypt (+20)", ar: "مصر (+20)" }, min: 10, max: 10 },
+  { code: "SA", dialCode: "+966", label: { en: "Saudi Arabia (+966)", ar: "السعودية (+966)" }, min: 9, max: 9 },
+  { code: "AE", dialCode: "+971", label: { en: "UAE (+971)", ar: "الإمارات (+971)" }, min: 9, max: 9 },
+  { code: "QA", dialCode: "+974", label: { en: "Qatar (+974)", ar: "قطر (+974)" }, min: 8, max: 8 },
+  { code: "KW", dialCode: "+965", label: { en: "Kuwait (+965)", ar: "الكويت (+965)" }, min: 8, max: 8 },
+  { code: "BH", dialCode: "+973", label: { en: "Bahrain (+973)", ar: "البحرين (+973)" }, min: 8, max: 8 },
+  { code: "US", dialCode: "+1", label: { en: "United States (+1)", ar: "الولايات المتحدة (+1)" }, min: 10, max: 10 },
+  { code: "GB", dialCode: "+44", label: { en: "United Kingdom (+44)", ar: "المملكة المتحدة (+44)" }, min: 10, max: 11 },
+];
 
 export default function ContactFormModal({ content, setShowForm }) {
-  const [formData, setFormData] = useState({ name: "", businessName: "", email: "", phone: "", whatsapp: "", idea: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    businessName: "",
+    email: "",
+    phoneCountry: "EG",
+    phone: "",
+    whatsapp: "",
+    idea: "",
+  });
   const [submitState, setSubmitState] = useState("idle");
   const [showWhatsappError, setShowWhatsappError] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({
+    name: "",
+    businessName: "",
+    email: "",
+    phone: "",
+    idea: "",
+  });
+  const [scrollIndicator, setScrollIndicator] = useState({ canScroll: false, height: 120, top: 0 });
+  const scrollRef = useRef(null);
+  const indicatorTrackRef = useRef(null);
   const modal = content.ui.modal;
   const isArabic = content.locale === "ar";
+  const activePhoneCountry = PHONE_COUNTRIES.find((country) => country.code === formData.phoneCountry) ?? PHONE_COUNTRIES[0];
   const errorMessage = isArabic
     ? "تعذر إرسال النموذج الآن. حاول مرة أخرى بعد لحظات."
     : "The form could not be sent right now. Please try again in a moment.";
@@ -35,15 +65,67 @@ export default function ContactFormModal({ content, setShowForm }) {
     };
   }, [setShowForm]);
 
+  useEffect(() => {
+    const element = scrollRef.current;
+    if (!element) {
+      return undefined;
+    }
+
+    const updateScrollIndicator = () => {
+      const { clientHeight, scrollHeight, scrollTop } = element;
+      const trackHeight = indicatorTrackRef.current?.clientHeight ?? clientHeight;
+      const canScroll = scrollHeight > clientHeight + 4;
+
+      if (!canScroll) {
+        setScrollIndicator({ canScroll: false, height: 0, top: 0 });
+        return;
+      }
+
+      const thumbHeight = Math.max(trackHeight * (clientHeight / scrollHeight), 72);
+      const maxOffset = Math.max(trackHeight - thumbHeight, 0);
+      const top = scrollHeight === clientHeight ? 0 : (scrollTop / (scrollHeight - clientHeight)) * maxOffset;
+
+      setScrollIndicator({ canScroll: true, height: thumbHeight, top });
+    };
+
+    updateScrollIndicator();
+    element.addEventListener("scroll", updateScrollIndicator, { passive: true });
+
+    const resizeObserver = new ResizeObserver(() => updateScrollIndicator());
+    resizeObserver.observe(element);
+
+    return () => {
+      element.removeEventListener("scroll", updateScrollIndicator);
+      resizeObserver.disconnect();
+    };
+  }, [
+    submitState,
+    showWhatsappError,
+    validationErrors.businessName,
+    validationErrors.email,
+    validationErrors.idea,
+    validationErrors.name,
+    validationErrors.phone,
+    modal.description,
+    modal.idea,
+    setShowForm,
+  ]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (submitState !== "idle") {
       setSubmitState("idle");
     }
+    if (validationErrors[name]) {
+      setValidationErrors((previous) => ({ ...previous, [name]: "" }));
+    }
     if (name === "phone" || name === "whatsapp") {
       setShowWhatsappError(false);
     }
-    setFormData((previous) => ({ ...previous, [name]: value }));
+    setFormData((previous) => ({
+      ...previous,
+      [name]: name === "phone" ? value.replace(/\D/g, "") : value,
+    }));
   };
 
   const handleWhatsappChange = (value) => {
@@ -54,8 +136,52 @@ export default function ContactFormModal({ content, setShowForm }) {
     setFormData((previous) => ({ ...previous, whatsapp: value }));
   };
 
+  const handleCountryChange = (value) => {
+    if (submitState !== "idle") {
+      setSubmitState("idle");
+    }
+    if (validationErrors.phone) {
+      setValidationErrors((previous) => ({ ...previous, phone: "" }));
+    }
+    setShowWhatsappError(false);
+    setFormData((previous) => ({ ...previous, phoneCountry: value }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const trimmedName = formData.name.trim();
+    const trimmedBusinessName = formData.businessName.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedIdea = formData.idea.trim();
+    const phoneDigits = formData.phone.replace(/\D/g, "");
+    const nextValidationErrors = { name: "", businessName: "", email: "", phone: "", idea: "" };
+
+    if (!trimmedName) {
+      nextValidationErrors.name = modal.nameRequired;
+    }
+
+    if (!trimmedBusinessName) {
+      nextValidationErrors.businessName = modal.businessNameRequired;
+    }
+
+    if (trimmedEmail && !emailPattern.test(trimmedEmail)) {
+      nextValidationErrors.email = modal.emailInvalid;
+    }
+
+    if (!phoneDigits) {
+      nextValidationErrors.phone = modal.phoneRequired;
+    } else if (phoneDigits.length < activePhoneCountry.min || phoneDigits.length > activePhoneCountry.max) {
+      nextValidationErrors.phone = modal.phoneInvalid;
+    }
+
+    if (!trimmedIdea) {
+      nextValidationErrors.idea = modal.ideaRequired;
+    }
+
+    if (Object.values(nextValidationErrors).some(Boolean)) {
+      setValidationErrors(nextValidationErrors);
+      return;
+    }
 
     if (!formData.whatsapp) {
       setShowWhatsappError(true);
@@ -66,18 +192,18 @@ export default function ContactFormModal({ content, setShowForm }) {
 
     try {
       const payload = {
-        name: formData.name,
-        business_name: formData.businessName,
-        email: formData.email,
-        phone: formData.phone,
+        name: trimmedName,
+        business_name: trimmedBusinessName,
+        email: trimmedEmail,
+        phone: `${activePhoneCountry.dialCode} ${phoneDigits}`,
         whatsapp_on_number: formData.whatsapp === "yes" ? modal.whatsappYes : modal.whatsappNo,
-        message: formData.idea,
-        _subject: `${modal.emailSubject} ${formData.name}`,
+        message: trimmedIdea,
+        _subject: `${modal.emailSubject} ${trimmedName}`,
         _captcha: "false",
       };
 
-      if (formData.email) {
-        payload._replyto = formData.email;
+      if (trimmedEmail) {
+        payload._replyto = trimmedEmail;
       }
 
       const response = await fetch(formEndpoint, {
@@ -91,7 +217,8 @@ export default function ContactFormModal({ content, setShowForm }) {
       const data = await response.json().catch(() => null);
 
       if (response.ok && data?.success !== "false") {
-        setFormData({ name: "", businessName: "", email: "", phone: "", whatsapp: "", idea: "" });
+        setFormData({ name: "", businessName: "", email: "", phoneCountry: "EG", phone: "", whatsapp: "", idea: "" });
+        setValidationErrors({ name: "", businessName: "", email: "", phone: "", idea: "" });
         setSubmitState("success");
       } else {
         setSubmitState("error");
@@ -110,117 +237,276 @@ export default function ContactFormModal({ content, setShowForm }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-inquiry-title"
-        className="animate-fade-in max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_30px_80px_rgba(15,23,42,0.2)] sm:p-8 md:p-10"
+        className="animate-fade-in relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.2)]"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="space-y-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-purple-700">{modal.eyebrow}</p>
-          <h2 id="project-inquiry-title" className="text-[2rem] font-bold leading-[1.08] text-slate-950 sm:text-3xl">{modal.title}</h2>
-          <p className="text-slate-600">{modal.description}</p>
-        </div>
-
-        {submitState === "success" ? (
-          <div className="mt-8 space-y-5">
-            <div className="rounded-[2rem] border border-emerald-100 bg-[linear-gradient(180deg,#f7fffb_0%,#ecfdf5_100%)] p-6 shadow-[0_20px_50px_rgba(16,185,129,0.08)]">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-[0_16px_30px_rgba(16,185,129,0.22)]">
-                <FaCheck />
-              </div>
-              <h3 className="mt-5 text-xl font-bold text-slate-950 sm:text-2xl">{modal.successTitle}</h3>
-              <p className="mt-3 text-base leading-7 text-slate-600">{modal.successDescription}</p>
-            </div>
-            <ActionButton className="w-full" onClick={() => setShowForm(false)}>
-              {modal.successButton}
-            </ActionButton>
+        {scrollIndicator.canScroll ? (
+          <div
+            ref={indicatorTrackRef}
+            className="pointer-events-none absolute bottom-8 right-3 top-8 z-10 h-auto sm:bottom-10 sm:right-4 sm:top-10 md:bottom-12 md:right-5 md:top-10"
+          >
+            <Motion.div
+              className="w-1.5 rounded-full bg-gradient-to-b from-purple-400 via-fuchsia-400 to-sky-400 shadow-[0_0_18px_rgba(168,85,247,0.28)]"
+              animate={{ height: scrollIndicator.height, y: scrollIndicator.top, opacity: 1 }}
+              transition={{ duration: 0.18, ease: "linear" }}
+            />
           </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-            <input
-              type="text"
-              name="name"
-              placeholder={modal.name}
-              required
-              onChange={handleInputChange}
-              value={formData.name}
-              className={inputClassName}
-            />
-            <input
-              type="text"
-              name="businessName"
-              placeholder={modal.businessName}
-              required
-              onChange={handleInputChange}
-              value={formData.businessName}
-              className={inputClassName}
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder={modal.email}
-              onChange={handleInputChange}
-              value={formData.email}
-              className={inputClassName}
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder={modal.phone}
-              required
-              onChange={handleInputChange}
-              value={formData.phone}
-              className={inputClassName}
-            />
-            <div className="space-y-3">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
-                {modal.whatsappQuestion}
-              </p>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <WhatsappOption
-                  active={formData.whatsapp === "yes"}
-                  description={modal.whatsappYesHint}
-                  icon={<FaWhatsapp />}
-                  label={modal.whatsappYes}
-                  onClick={() => handleWhatsappChange("yes")}
-                />
-                <WhatsappOption
-                  active={formData.whatsapp === "no"}
-                  description={modal.whatsappNoHint}
-                  icon={<FaCheck />}
-                  label={modal.whatsappNo}
-                  onClick={() => handleWhatsappChange("no")}
-                />
+        ) : null}
+
+        <div ref={scrollRef} className="modal-scroll max-h-[92vh] overflow-y-auto px-5 py-5 pr-8 sm:px-8 sm:py-8 sm:pr-12 md:px-10 md:py-10 md:pr-14">
+          <div className="space-y-3">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-purple-700">{modal.eyebrow}</p>
+            <h2 id="project-inquiry-title" className="text-[2rem] font-bold leading-[1.08] text-slate-950 sm:text-3xl">{modal.title}</h2>
+            <p className="text-slate-600">{modal.description}</p>
+          </div>
+
+          {submitState === "success" ? (
+            <div className="mt-8 space-y-5">
+              <div className="rounded-[2rem] border border-emerald-100 bg-[linear-gradient(180deg,#f7fffb_0%,#ecfdf5_100%)] p-6 shadow-[0_20px_50px_rgba(16,185,129,0.08)]">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-[0_16px_30px_rgba(16,185,129,0.22)]">
+                  <FaCheck />
+                </div>
+                <h3 className="mt-5 text-xl font-bold text-slate-950 sm:text-2xl">{modal.successTitle}</h3>
+                <p className="mt-3 text-base leading-7 text-slate-600">{modal.successDescription}</p>
               </div>
-              {showWhatsappError ? (
+              <ActionButton className="w-full" onClick={() => setShowForm(false)}>
+                {modal.successButton}
+              </ActionButton>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+              <input
+                type="text"
+                name="name"
+                placeholder={modal.name}
+                onChange={handleInputChange}
+                value={formData.name}
+                className={inputClassName}
+              />
+              {validationErrors.name ? (
                 <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {modal.whatsappRequired}
+                  {validationErrors.name}
                 </p>
               ) : null}
-            </div>
-            <textarea
-              name="idea"
-              placeholder={modal.idea}
-              rows="5"
-              required
-              onChange={handleInputChange}
-              value={formData.idea}
-              className={`${inputClassName} resize-none`}
-            />
+              <input
+                type="text"
+                name="businessName"
+                placeholder={modal.businessName}
+                onChange={handleInputChange}
+                value={formData.businessName}
+                className={inputClassName}
+              />
+              {validationErrors.businessName ? (
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {validationErrors.businessName}
+                </p>
+              ) : null}
+              <input
+                type="email"
+                name="email"
+                placeholder={modal.email}
+                autoComplete="email"
+                onChange={handleInputChange}
+                value={formData.email}
+                className={inputClassName}
+              />
+              {validationErrors.email ? (
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {validationErrors.email}
+                </p>
+              ) : null}
+              <div className="grid gap-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                <CountryDropdown
+                  countries={PHONE_COUNTRIES}
+                  isArabic={isArabic}
+                  label={modal.phoneCountry}
+                  onChange={handleCountryChange}
+                  value={formData.phoneCountry}
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder={modal.phone}
+                  inputMode="numeric"
+                  autoComplete="tel-national"
+                  onChange={handleInputChange}
+                  value={formData.phone}
+                  className={inputClassName}
+                />
+              </div>
+              {validationErrors.phone ? (
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {validationErrors.phone}
+                </p>
+              ) : null}
+              <div className="space-y-3">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  {modal.whatsappQuestion}
+                </p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <WhatsappOption
+                    active={formData.whatsapp === "yes"}
+                    description={modal.whatsappYesHint}
+                    icon={<FaWhatsapp />}
+                    label={modal.whatsappYes}
+                    onClick={() => handleWhatsappChange("yes")}
+                  />
+                  <WhatsappOption
+                    active={formData.whatsapp === "no"}
+                    description={modal.whatsappNoHint}
+                    icon={<FaCheck />}
+                    label={modal.whatsappNo}
+                    onClick={() => handleWhatsappChange("no")}
+                  />
+                </div>
+                {showWhatsappError ? (
+                  <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {modal.whatsappRequired}
+                  </p>
+                ) : null}
+              </div>
+              <textarea
+                name="idea"
+                placeholder={modal.idea}
+                rows="5"
+                onChange={handleInputChange}
+                value={formData.idea}
+                className={`${inputClassName} resize-none`}
+              />
+              {validationErrors.idea ? (
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {validationErrors.idea}
+                </p>
+              ) : null}
 
-            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-              <ActionButton className="sm:flex-1" onClick={() => setShowForm(false)} variant="secondary">
-                {modal.cancel}
-              </ActionButton>
-              <ActionButton className="sm:flex-1" disabled={submitState === "submitting"} type="submit">
-                {submitState === "submitting" ? sendingLabel : modal.submit}
-              </ActionButton>
-            </div>
-            {submitState === "error" ? (
-              <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                {errorMessage}
-              </p>
-            ) : null}
-          </form>
-        )}
+              <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+                <ActionButton className="sm:flex-1" onClick={() => setShowForm(false)} variant="secondary">
+                  {modal.cancel}
+                </ActionButton>
+                <ActionButton className="sm:flex-1" disabled={submitState === "submitting"} type="submit">
+                  {submitState === "submitting" ? sendingLabel : modal.submit}
+                </ActionButton>
+              </div>
+              {submitState === "error" ? (
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {errorMessage}
+                </p>
+              ) : null}
+            </form>
+          )}
+        </div>
       </div>
+    </div>
+  );
+}
+
+function CountryDropdown({ countries, isArabic, label, onChange, value }) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef(null);
+  const selectedCountry = countries.find((country) => country.code === value) ?? countries[0];
+
+  useEffect(() => {
+    if (!open) {
+      return undefined;
+    }
+
+    const handlePointerDown = (event) => {
+      if (!rootRef.current?.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [open]);
+
+  return (
+    <div ref={rootRef} className="relative">
+      <label className="sr-only" htmlFor="phoneCountryButton">
+        {label}
+      </label>
+      <button
+        id="phoneCountryButton"
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        className={`${inputClassName} flex items-center justify-between gap-3 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] pr-3 text-left shadow-[0_12px_30px_rgba(148,163,184,0.08)] hover:border-purple-300/70`}
+        onClick={() => setOpen((previous) => !previous)}
+      >
+        <div className="flex min-w-0 items-center gap-2">
+          <p className="truncate text-base font-medium text-slate-900">
+            {selectedCountry.label[isArabic ? "ar" : "en"].replace(` (${selectedCountry.dialCode})`, "")}
+          </p>
+          <span className="shrink-0 rounded-full bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-700">
+            {selectedCountry.dialCode}
+          </span>
+        </div>
+        <span
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-purple-100 bg-white text-purple-600 shadow-[0_10px_24px_rgba(168,85,247,0.12)] transition ${
+            open ? "rotate-180" : ""
+          }`}
+        >
+          <FaChevronDown className="text-xs" />
+        </span>
+      </button>
+
+      {open ? (
+        <Motion.div
+          initial={{ opacity: 0, y: 8, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.16, ease: "easeOut" }}
+          className="absolute left-0 right-0 top-[calc(100%+0.6rem)] z-30 overflow-hidden rounded-[1.5rem] border border-slate-200/90 bg-white/95 p-2 shadow-[0_24px_60px_rgba(15,23,42,0.16)] backdrop-blur"
+        >
+          <div className="max-h-64 space-y-1 overflow-y-auto pr-1">
+            {countries.map((country) => {
+              const selected = country.code === value;
+              return (
+                <button
+                  key={country.code}
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  className={`flex w-full items-center justify-between gap-3 rounded-[1.1rem] px-3 py-3 text-left transition ${
+                    selected
+                      ? "bg-[linear-gradient(135deg,rgba(245,243,255,1)_0%,rgba(239,246,255,1)_100%)] text-slate-950 shadow-[inset_0_0_0_1px_rgba(168,85,247,0.18)]"
+                      : "text-slate-700 hover:bg-slate-50 hover:text-slate-950"
+                  }`}
+                  onClick={() => {
+                    onChange(country.code);
+                    setOpen(false);
+                  }}
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">
+                      {country.label[isArabic ? "ar" : "en"].replace(` (${country.dialCode})`, "")}
+                    </p>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold transition ${
+                      selected
+                        ? "bg-white text-purple-700 shadow-[0_10px_20px_rgba(168,85,247,0.14)]"
+                        : "bg-slate-100 text-slate-500"
+                    }`}
+                  >
+                    {country.dialCode}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </Motion.div>
+      ) : null}
     </div>
   );
 }

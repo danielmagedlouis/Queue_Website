@@ -1,24 +1,18 @@
-import { motion as Motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion as Motion, useReducedMotion } from "framer-motion";
 
 export default function FocusSection({
   children,
   className = "",
-  inactiveOpacity = 0.58,
-  inactiveScale = 0.992,
   innerClassName = "",
 }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { amount: 0.25, margin: "-18% 0px -18% 0px" });
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <Motion.section
-      ref={ref}
-      animate={{
-        opacity: inView ? 1 : inactiveOpacity,
-        scale: inView ? 1 : inactiveScale,
-      }}
-      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 28 }}
+      whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.16, margin: "0px 0px -10% 0px" }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       <div className={innerClassName}>{children}</div>

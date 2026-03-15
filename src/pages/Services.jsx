@@ -25,12 +25,12 @@ export default function Services({ content, navTo }) {
   return (
     <PageShell>
       <FocusSection
-        className="px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
+        className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
         innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1.05fr_0.95fr] md:gap-12"
       >
-          <Reveal className="mx-auto h-full w-full max-w-xl rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:max-w-none md:p-10">
+          <Reveal className="mx-auto h-full w-full max-w-xl rounded-[2rem] border border-slate-300/70 bg-slate-100/78 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:max-w-none md:p-10">
             <div className="flex h-full flex-col justify-center space-y-8">
-            <div className="inline-flex w-fit rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
+            <div className="inline-flex w-fit rounded-full border border-purple-200 bg-slate-50/90 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
               {servicesContent.hero.eyebrow}
             </div>
 
@@ -59,8 +59,8 @@ export default function Services({ content, navTo }) {
           />
       </FocusSection>
 
-      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
-        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-6 md:max-w-6xl md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:p-10">
+      <FocusSection className="bg-slate-950 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
+        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-900/90 bg-slate-950 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-5 md:max-w-6xl md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:border-slate-300/70 md:bg-slate-100/76 md:p-10">
           <div className="order-1 relative h-[calc(100svh-8.5rem)] min-h-[26rem] max-h-[34rem] overflow-hidden rounded-[2rem] bg-slate-950 p-4 text-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-8 md:h-auto md:max-h-none md:p-8 md:order-1">
             <div className="absolute -left-12 top-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
             <div className="absolute bottom-0 right-0 h-48 w-48 rounded-full bg-sky-400/15 blur-3xl" />
@@ -126,7 +126,7 @@ export default function Services({ content, navTo }) {
 
             <div className="grid gap-4 sm:grid-cols-2">
               {servicesContent.automationHighlight.points.map((point) => (
-                <div key={point.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 sm:max-w-none sm:p-6">
+                <div key={point.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-300/60 bg-slate-50/88 p-5 sm:max-w-none sm:p-6">
                   <h3 className="text-lg font-bold text-slate-950">{point.title}</h3>
                   <p className="mt-2 leading-7 text-slate-600">{point.description}</p>
                 </div>
@@ -136,8 +136,8 @@ export default function Services({ content, navTo }) {
         </Reveal>
       </FocusSection>
 
-      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
-        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-6 md:max-w-6xl md:grid-cols-[1.05fr_0.95fr] md:gap-8 md:p-10">
+      <FocusSection className="border-y border-slate-300/50 bg-slate-100/58 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
+        <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-slate-900/90 bg-slate-950 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-5 md:max-w-6xl md:grid-cols-[1.05fr_0.95fr] md:gap-8 md:border-slate-300/70 md:bg-slate-100/76 md:p-10">
           <div className="order-2 grid gap-4 md:order-1">
             <AnimatedImage
               src={servicesContent.callAgentHighlight.image}
@@ -148,7 +148,7 @@ export default function Services({ content, navTo }) {
 
             <div className="grid gap-4 sm:grid-cols-2">
               {servicesContent.callAgentHighlight.points.map((point) => (
-                <div key={point.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 sm:max-w-none sm:p-6">
+                <div key={point.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-300/60 bg-slate-50/88 p-5 sm:max-w-none sm:p-6">
                   <h3 className="text-lg font-bold text-slate-950">{point.title}</h3>
                   <p className="mt-2 leading-7 text-slate-600">{point.description}</p>
                 </div>
@@ -214,17 +214,20 @@ export default function Services({ content, navTo }) {
       </FocusSection>
 
       <FocusSection
-        className="px-5 py-16 sm:px-6 sm:py-20 md:py-24"
+        className="bg-slate-950 px-5 py-14 sm:px-6 sm:py-18 md:py-20"
         inactiveOpacity={1}
         inactiveScale={1}
-        innerClassName="mx-auto max-w-xl space-y-8 md:max-w-6xl md:space-y-10"
+        innerClassName="mx-auto max-w-xl space-y-6 md:max-w-6xl md:space-y-8"
       >
           <Reveal>
             <SectionHeading
+              className="space-y-3 md:space-y-4"
+              descriptionClassName="max-w-[20rem] text-slate-300 sm:max-w-2xl md:max-w-3xl"
               eyebrow={ui.capabilities}
               locale={locale}
               mobileDescription={servicesContent.capabilitiesMobileDescription}
               mobileTitle={servicesContent.capabilitiesMobileTitle}
+              titleClassName="text-white"
               title={servicesContent.capabilitiesTitle}
               description={servicesContent.capabilitiesDescription}
             />
@@ -236,7 +239,7 @@ export default function Services({ content, navTo }) {
 
               return (
                 <Reveal key={service.title} delay={index * 0.06}>
-                  <article className="group mx-auto w-full max-w-sm overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] md:max-w-none">
+                  <article className="group mx-auto w-full max-w-sm overflow-hidden rounded-[2rem] border border-slate-300/70 bg-slate-100/82 shadow-[0_24px_60px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] md:max-w-none">
                     <div className="relative h-44 overflow-hidden sm:h-60">
                       <img
                         src={service.image}
@@ -244,7 +247,7 @@ export default function Services({ content, navTo }) {
                         className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-transparent" />
-                      <div className="absolute left-5 top-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/90 text-purple-700 shadow-lg">
+                      <div className="absolute left-5 top-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50/92 text-purple-700 shadow-lg">
                         <Icon />
                       </div>
                     </div>
@@ -273,8 +276,8 @@ export default function Services({ content, navTo }) {
           </div>
       </FocusSection>
 
-      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
-        <Reveal className="mx-auto grid w-full max-w-xl items-start gap-6 rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-6 md:max-w-6xl md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:p-10">
+      <FocusSection className="border-y border-slate-300/50 bg-slate-100/58 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
+        <Reveal className="mx-auto grid w-full max-w-xl items-start gap-6 rounded-[2rem] border border-slate-300/70 bg-slate-100/76 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-2xl sm:p-6 md:max-w-6xl md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:p-10">
           <div className="mx-auto w-full max-w-xl">
             <SectionHeading
               eyebrow={ui.whyQueue}
@@ -288,7 +291,7 @@ export default function Services({ content, navTo }) {
 
           <div className="grid gap-4 sm:grid-cols-2">
             {servicesContent.reasons.map((item) => (
-              <div key={item.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 sm:max-w-none sm:p-6">
+              <div key={item.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-300/60 bg-slate-50/88 p-5 sm:max-w-none sm:p-6">
                 <h4 className="text-xl font-bold text-slate-950">{item.title}</h4>
                 <p className="mt-2 leading-7 text-slate-600">{item.description}</p>
               </div>

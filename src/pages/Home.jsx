@@ -1,4 +1,5 @@
-import { motion as Motion } from "framer-motion";
+import { motion as Motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { useState } from "react";
 import PageShell from "../components/layout/PageShell";
 import ActionButton from "../components/ui/ActionButton";
 import AnimatedImage from "../components/ui/AnimatedImage";
@@ -10,75 +11,107 @@ import SectionHeading from "../components/ui/SectionHeading";
 export default function Home({ content, navTo, setShowForm }) {
   const home = content.home;
   const ui = content.ui;
-  const isRtl = content.direction === "rtl";
   const locale = content.locale;
+  const isArabic = locale === "ar";
+  const [showHeroLabels, setShowHeroLabels] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setShowHeroLabels(latest > 120);
+  });
 
   return (
     <PageShell>
-      <FocusSection className="px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20" innerClassName="mx-auto max-w-xl text-center md:max-w-6xl">
-          <Motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mx-auto inline-flex rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur"
-          >
-            {home.heroBadge}
-          </Motion.div>
+      <FocusSection
+        className="flex min-h-[100svh] items-center px-5 pb-10 pt-24 sm:px-6 sm:pb-12 sm:pt-28 md:pt-32"
+        innerClassName="mx-auto w-full max-w-xl text-center md:max-w-6xl"
+      >
+          <Reveal className="mx-auto flex min-h-[calc(100svh-9rem)] w-full flex-col">
+            <div className="flex flex-1 flex-col items-center justify-center">
+              <Motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.75, delay: 0.1 }}
+                className={`mx-auto mt-7 overflow-visible pb-2 font-bold text-slate-950 ${
+                  isArabic
+                    ? "max-w-[19rem] text-[2.25rem] leading-[1.12] sm:max-w-5xl sm:pb-3 sm:text-[3.6rem] lg:text-[4.4rem]"
+                    : "max-w-[19rem] text-[2.5rem] leading-[1.02] sm:max-w-6xl sm:pb-3 sm:text-5xl lg:text-[5rem]"
+                }`}
+              >
+                <span className="mt-2 block overflow-visible pb-[0.12em] bg-gradient-to-r from-slate-950 via-purple-700 to-violet-500 bg-clip-text text-transparent">
+                  {home.heroTitleAccent}
+                </span>
+                <span
+                  className={`mx-auto mt-3 block ${
+                    isArabic
+                      ? "max-w-[18rem] text-center text-[0.62em] leading-[1.2] sm:max-w-4xl"
+                      : "text-[0.62em] leading-[1.08] md:hidden"
+                  }`}
+                >
+                  {home.heroTitleTop}
+                </span>
+                {!isArabic ? (
+                  <span className="mt-3 hidden whitespace-nowrap text-[0.62em] leading-[1.08] md:block">{home.heroTitleTop}</span>
+                ) : null}
+              </Motion.h1>
 
-          <Motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.1 }}
-            className="mx-auto mt-5 max-w-[19rem] text-[2.15rem] font-bold leading-[1.04] text-slate-950 sm:max-w-4xl sm:text-5xl md:mt-8 md:text-6xl xl:text-7xl"
-          >
-            <span className="md:hidden">{home.heroMobileTitleTop ?? home.heroTitleTop}</span>
-            <span className="hidden md:inline">{home.heroTitleTop}</span>
-            <span className="block bg-gradient-to-r from-slate-950 via-purple-700 to-violet-500 bg-clip-text text-transparent">
-              {home.heroTitleAccent}
-            </span>
-          </Motion.h1>
+              <Motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.75, delay: 0.2 }}
+                className="mx-auto mt-6 max-w-[20rem] text-[15px] leading-7 text-slate-600 sm:max-w-3xl sm:text-xl"
+              >
+                {home.heroDescription}
+              </Motion.p>
 
-          <Motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.2 }}
-          >
-            <ExpandableText
-              className="mx-auto mt-4 max-w-[21rem] text-[15px] leading-7 text-slate-600 sm:max-w-xl sm:text-lg md:mt-6 md:max-w-3xl md:text-xl"
-              desktopText={home.heroDescription}
-              locale={locale}
-              mobileWords={7}
-              text={home.heroMobileDescription ?? home.heroDescription}
-            />
-          </Motion.div>
+              <Motion.div
+                initial={false}
+                animate={{
+                  opacity: showHeroLabels ? 1 : 0,
+                  y: showHeroLabels ? 0 : 22,
+                }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className={`mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5 ${
+                  showHeroLabels ? "pointer-events-auto" : "pointer-events-none"
+                }`}
+              >
+                <ActionButton onClick={() => setShowForm(true)} className="px-7">
+                  {ui.startProject}
+                </ActionButton>
+                <button
+                  type="button"
+                  onClick={() => navTo("services")}
+                  className="text-sm font-semibold text-slate-700 transition hover:text-purple-700"
+                >
+                  {ui.ourServices}
+                </button>
+              </Motion.div>
+            </div>
 
-          <Motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.3 }}
-            className="mt-8 flex flex-col justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4"
-          >
-            <ActionButton onClick={() => setShowForm(true)}>{ui.startProject}</ActionButton>
-            <ActionButton onClick={() => navTo("services")} variant="secondary">
-              {ui.ourServices}
-            </ActionButton>
-          </Motion.div>
-
-          <div className={`mx-auto mt-8 grid max-w-xl gap-3 md:mt-12 md:max-w-4xl md:grid-cols-3 md:gap-4 ${isRtl ? "text-right" : "text-left"}`}>
-            {home.heroCards.map((card, index) => (
-              <Reveal key={card.title} className="mx-auto w-full max-w-sm md:max-w-none" delay={index * 0.08}>
-                <div className="rounded-[1.75rem] border border-white/80 bg-white/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-purple-700">
-                    {card.title}
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{card.description}</p>
+            <Motion.div
+              initial={false}
+              animate={{
+                opacity: showHeroLabels ? 1 : 0,
+                y: showHeroLabels ? 0 : 26,
+              }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className={`mt-10 grid grid-cols-3 gap-4 border-t border-slate-300/60 pt-6 text-center transition-opacity ${
+                showHeroLabels ? "pointer-events-auto" : "pointer-events-none"
+              }`}
+            >
+              {home.heroCards.map((card) => (
+                <div key={card.title} className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-500 sm:text-sm">
+                  {card.title}
                 </div>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </Motion.div>
+          </Reveal>
       </FocusSection>
 
-      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-2 md:gap-12">
+      <FocusSection
+        className="border-y border-slate-300/50 bg-slate-100/58 px-5 py-14 sm:px-6 sm:py-20 md:py-24"
+        innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-2 md:gap-12"
+      >
           <Reveal className="mx-auto h-full w-full max-w-xl rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:max-w-none md:p-10">
             <div className="flex h-full flex-col justify-center">
             <SectionHeading
@@ -108,12 +141,12 @@ export default function Home({ content, navTo, setShowForm }) {
           />
       </FocusSection>
 
-      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-2 md:gap-12">
+      <FocusSection className="bg-slate-950 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-2 md:gap-12">
           <AnimatedImage
             src={home.sections[1].image}
             alt={home.sections[1].imageAlt}
-            className="order-2 mx-auto h-full w-full max-w-sm sm:max-w-xl md:order-1 md:max-w-none"
-            imageClassName="h-[12.75rem] object-center sm:h-[20rem] md:h-full md:min-h-[26rem]"
+            className="order-2 mx-auto w-full max-w-sm sm:max-w-xl md:order-1 md:max-w-[34rem]"
+            imageClassName="h-[12.5rem] object-center sm:h-[18rem] md:h-[22rem] lg:h-[24rem]"
           />
 
           <Reveal className="order-1 mx-auto h-full w-full max-w-xl overflow-hidden rounded-[2rem] border border-slate-900/90 bg-slate-950 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-8 md:order-2 md:max-w-none md:p-10">
@@ -148,7 +181,10 @@ export default function Home({ content, navTo, setShowForm }) {
           </Reveal>
       </FocusSection>
 
-      <FocusSection className="px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto max-w-xl space-y-8 md:max-w-6xl">
+      <FocusSection
+        className="border-y border-slate-300/50 bg-slate-100/58 px-5 py-14 sm:px-6 sm:py-20 md:py-24"
+        innerClassName="mx-auto max-w-xl space-y-8 md:max-w-6xl"
+      >
           <Reveal>
             <SectionHeading
               eyebrow={home.gallery.eyebrow}

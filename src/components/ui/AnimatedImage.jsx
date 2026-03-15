@@ -34,7 +34,7 @@ export default function AnimatedImage({ alt, className = "", imageClassName = ""
         whileHover={{ y: -8, scale: 1.01 }}
         transition={{ type: "spring", stiffness: 180, damping: 18 }}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white/80 p-3 shadow-[0_20px_50px_rgba(15,23,42,0.1)] backdrop-blur sm:rounded-[2rem] sm:p-4 sm:shadow-[0_30px_80px_rgba(15,23,42,0.12)]"
+        className="group relative overflow-hidden rounded-[1.75rem] border border-slate-300/70 bg-slate-100/76 p-3 shadow-[0_20px_50px_rgba(15,23,42,0.1)] backdrop-blur sm:rounded-[2rem] sm:p-4 sm:shadow-[0_30px_80px_rgba(15,23,42,0.12)]"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-sky-300/10 opacity-0 transition duration-500 group-hover:opacity-100" />
         <img
