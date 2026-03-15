@@ -1,5 +1,6 @@
 import { AnimatePresence, motion as Motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
+import { FaLanguage } from "react-icons/fa";
 import ActionButton from "../ui/ActionButton";
 
 export default function SiteHeader({
@@ -18,6 +19,8 @@ export default function SiteHeader({
   const nextLocale = locale === "en" ? "ar" : "en";
   const languageLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" : "English";
   const languageMobileLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629 (Egypt)" : "English (US)";
+  const headerPrimaryButtonClassName =
+    "min-w-[11.25rem] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(241,245,249,0.94)_100%)] px-6 py-3 text-slate-950 shadow-[0_18px_40px_rgba(15,23,42,0.08)] hover:border-slate-300 hover:bg-white";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 20);
@@ -38,7 +41,7 @@ export default function SiteHeader({
             className={`flex items-center gap-3 rounded-full px-1 py-1 transition hover:bg-slate-50 ${isRtl ? "text-right" : "text-left"}`}
           >
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-slate-100 shadow-sm sm:h-12 sm:w-12">
-              <img src="/queue-logo.jpeg" alt={content.siteDetails.name} className="h-full w-full object-cover" />
+              <img src="/queue-logo.png" alt={content.siteDetails.name} className="h-full w-full object-contain p-1.5" />
             </div>
             <div className="max-w-[8.75rem] sm:max-w-none">
               <p className="text-[13px] font-bold tracking-wide text-slate-950 sm:text-base">{content.siteDetails.name}</p>
@@ -81,10 +84,8 @@ export default function SiteHeader({
           </nav>
 
           <div className={`hidden items-center gap-3 md:flex ${isRtl ? "flex-row-reverse" : ""}`}>
-            <ActionButton className="px-6 py-3" onClick={() => onLocaleChange(nextLocale)} variant="subtle">
-              <span>{languageLabel}</span>
-            </ActionButton>
-            <ActionButton className="px-6 py-3" onClick={() => setShowForm(true)} variant="secondary">
+            <LanguageToggleButton compact label={languageLabel} onClick={() => onLocaleChange(nextLocale)} />
+            <ActionButton className={headerPrimaryButtonClassName} onClick={() => setShowForm(true)} variant="secondary">
               {content.ui.startProject}
             </ActionButton>
           </div>
@@ -119,10 +120,8 @@ export default function SiteHeader({
               ))}
             </nav>
             <div className="mt-4 grid gap-3">
-              <ActionButton className="w-full" onClick={() => onLocaleChange(nextLocale)} variant="subtle">
-                <span>{languageMobileLabel}</span>
-              </ActionButton>
-              <ActionButton className="w-full" onClick={() => setShowForm(true)} variant="secondary">
+              <LanguageToggleButton label={languageMobileLabel} onClick={() => onLocaleChange(nextLocale)} />
+              <ActionButton className={headerPrimaryButtonClassName} onClick={() => setShowForm(true)} variant="secondary">
                 {content.ui.startProject}
               </ActionButton>
             </div>
@@ -141,5 +140,27 @@ export default function SiteHeader({
         </div>
       </div>
     </header>
+  );
+}
+
+function LanguageToggleButton({ compact = false, label, onClick }) {
+  return (
+    <Motion.button
+      type="button"
+      onClick={onClick}
+      whileHover={{ y: -2, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className={`inline-flex items-center justify-between gap-2 rounded-full border border-slate-200/90 bg-white/96 text-left shadow-[0_14px_32px_rgba(15,23,42,0.08)] transition hover:border-purple-300 hover:text-purple-700 hover:shadow-[0_18px_36px_rgba(168,85,247,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 ${
+        compact ? "min-w-[7.5rem] px-2.5 py-1.5" : "w-full px-3 py-2.5"
+      }`}
+    >
+      <span className={`flex min-w-0 items-center ${compact ? "gap-2" : "gap-3"}`}>
+        <span className={`flex shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,rgba(248,245,255,1)_0%,rgba(239,246,255,1)_100%)] text-purple-700 shadow-[inset_0_0_0_1px_rgba(216,180,254,0.75)] ${compact ? "h-8 w-8" : "h-9 w-9"}`}>
+          <FaLanguage className={compact ? "text-xs" : "text-sm"} />
+        </span>
+        <span className={`truncate font-semibold text-slate-900 ${compact ? "text-[13px]" : "text-sm"}`}>{label}</span>
+      </span>
+      <span className={`shrink-0 rounded-full bg-gradient-to-br from-purple-500 to-sky-400 ${compact ? "h-1.5 w-1.5" : "h-2 w-2"}`} />
+    </Motion.button>
   );
 }

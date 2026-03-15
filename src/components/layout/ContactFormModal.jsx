@@ -1,6 +1,6 @@
 import { motion as Motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { FaCheck, FaChevronDown, FaWhatsapp } from "react-icons/fa";
+import { FaCheck, FaChevronDown, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
 import ActionButton from "../ui/ActionButton";
 
 const inputClassName =
@@ -216,13 +216,13 @@ export default function ContactFormModal({ content, setShowForm }) {
       });
       const data = await response.json().catch(() => null);
 
-      if (response.ok && data?.success !== "false") {
-        setFormData({ name: "", businessName: "", email: "", phoneCountry: "EG", phone: "", whatsapp: "", idea: "" });
-        setValidationErrors({ name: "", businessName: "", email: "", phone: "", idea: "" });
-        setSubmitState("success");
-      } else {
-        setSubmitState("error");
+      if (!response.ok || data?.success === "false") {
+        throw new Error("Lead submission failed.");
       }
+
+      setFormData({ name: "", businessName: "", email: "", phoneCountry: "EG", phone: "", whatsapp: "", idea: "" });
+      setValidationErrors({ name: "", businessName: "", email: "", phone: "", idea: "" });
+      setSubmitState("success");
     } catch {
       setSubmitState("error");
     }
@@ -350,13 +350,15 @@ export default function ContactFormModal({ content, setShowForm }) {
                     icon={<FaWhatsapp />}
                     label={modal.whatsappYes}
                     onClick={() => handleWhatsappChange("yes")}
+                    tone="whatsapp"
                   />
                   <WhatsappOption
                     active={formData.whatsapp === "no"}
                     description={modal.whatsappNoHint}
-                    icon={<FaCheck />}
+                    icon={<FaPhoneAlt />}
                     label={modal.whatsappNo}
                     onClick={() => handleWhatsappChange("no")}
+                    tone="calls"
                   />
                 </div>
                 {showWhatsappError ? (
@@ -511,7 +513,20 @@ function CountryDropdown({ countries, isArabic, label, onChange, value }) {
   );
 }
 
-function WhatsappOption({ active, description, icon, label, onClick }) {
+function WhatsappOption({ active, description, icon, label, onClick, tone }) {
+  const activeClassName =
+    tone === "whatsapp"
+      ? "border-emerald-300 bg-emerald-50 shadow-[0_16px_30px_rgba(16,185,129,0.12)]"
+      : "border-purple-200 bg-[linear-gradient(135deg,rgba(248,250,252,1)_0%,rgba(241,245,249,1)_100%)] shadow-[0_16px_30px_rgba(148,163,184,0.14)]";
+  const iconClassName =
+    tone === "whatsapp"
+      ? active
+        ? "bg-emerald-500 text-white"
+        : "bg-white text-emerald-500 shadow-sm"
+      : active
+        ? "bg-slate-900 text-white"
+        : "bg-white text-slate-500 shadow-sm";
+
   return (
     <Motion.button
       type="button"
@@ -520,13 +535,13 @@ function WhatsappOption({ active, description, icon, label, onClick }) {
       whileTap={{ scale: 0.98 }}
       className={`flex items-center gap-3 rounded-[1.5rem] border px-4 py-4 text-left transition ${
         active
-          ? "border-emerald-300 bg-emerald-50 shadow-[0_16px_30px_rgba(16,185,129,0.12)]"
+          ? activeClassName
           : "border-slate-200 bg-slate-50 hover:border-purple-200 hover:bg-white"
       }`}
     >
       <div
         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-base sm:h-12 sm:w-12 sm:text-lg ${
-          active ? "bg-emerald-500 text-white" : "bg-white text-emerald-500 shadow-sm"
+          iconClassName
         }`}
       >
         {icon}
