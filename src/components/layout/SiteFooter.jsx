@@ -1,4 +1,4 @@
-import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaEnvelope } from "react-icons/fa";
 import Reveal from "../ui/Reveal";
 
 const socialIcons = {
@@ -53,37 +53,35 @@ export default function SiteFooter({ content, navTo }) {
             </div>
           </div>
 
-          <div className={`text-center ${desktopAlign} ${connectOrder}`}>
+          <div className={`text-center ${connectOrder}`}>
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">{content.ui.footerConnect}</p>
-            <div className="mt-4 space-y-3">
-              <a
-                href={`mailto:${content.siteDetails.email}`}
-                className={`flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 transition hover:border-purple-300 hover:bg-white hover:text-slate-950 ${socialAlignment}`}
-              >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-purple-700 shadow-sm">
-                  @
-                </span>
-                <span className="min-w-0 break-all text-sm sm:text-base">{content.siteDetails.email}</span>
-              </a>
-              {content.socialLinks.map((link) => {
-                const Icon = socialIcons[link.id];
-                const isExternal = link.href.startsWith("http");
+            <div className="mt-4 flex flex-col items-center justify-center">
+              <div className={`flex gap-4 ${isRtl ? "flex-row-reverse" : ""}`}>
+                <a
+                  href={`mailto:${content.siteDetails.email}`}
+                  className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-purple-100 hover:text-purple-700"
+                  title={content.siteDetails.email}
+                >
+                  <FaEnvelope size={20} />
+                </a>
+                {content.socialLinks.map((link) => {
+                  const Icon = socialIcons[link.id];
+                  const isExternal = link.href.startsWith("http");
 
-                return (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noreferrer" : undefined}
-                    className={`flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 transition hover:border-purple-300 hover:bg-white hover:text-slate-950 ${socialAlignment}`}
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-purple-700 shadow-sm">
-                      <Icon />
-                    </span>
-                    <span className="min-w-0">{link.label}</span>
-                  </a>
-                );
-              })}
+                  return (
+                    <a
+                      key={link.id}
+                      href={link.href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noreferrer" : undefined}
+                      className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-purple-100 hover:text-purple-700"
+                      title={link.label}
+                    >
+                      <Icon size={20} />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

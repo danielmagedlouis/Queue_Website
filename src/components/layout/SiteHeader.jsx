@@ -38,16 +38,10 @@ export default function SiteHeader({
         <div className="flex items-center justify-between gap-2 px-2.5 py-2.5 sm:px-4 sm:py-3 lg:px-6">
           <button
             onClick={() => navTo("home")}
-            className={`flex items-center gap-3 rounded-full px-1 py-1 transition hover:bg-slate-50 ${isRtl ? "text-right" : "text-left"}`}
+            className="flex items-center justify-center rounded-full px-1 py-1 transition hover:bg-slate-50"
           >
-            <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-slate-100 shadow-sm sm:h-12 sm:w-12">
-              <img src="/queue-logo.png" alt={content.siteDetails.name} className="h-full w-full object-contain p-1.5" />
-            </div>
-            <div className="max-w-[8.75rem] sm:max-w-none">
-              <p className="text-[13px] font-bold tracking-wide text-slate-950 sm:text-base">{content.siteDetails.name}</p>
-              <p className="hidden text-[10px] uppercase tracking-[0.2em] text-slate-500 sm:block">
-                {content.siteDetails.shortTagline}
-              </p>
+            <div className="flex h-11 w-11 items-center justify-center overflow-hidden sm:h-12 sm:w-12">
+              <img src="/queue-logo.png" alt={content.siteDetails.name} className="h-full w-full object-contain" />
             </div>
           </button>
 
@@ -59,7 +53,7 @@ export default function SiteHeader({
                 <button
                   key={item.id}
                   onClick={() => navTo(item.id)}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition ${
+                  className={`relative rounded-full px-4 py-2 text-sm font-medium leading-[1.5] transition ${
                     active ? "text-white" : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
                   }`}
                 >
@@ -111,7 +105,7 @@ export default function SiteHeader({
                 <button
                   key={item.id}
                   onClick={() => navTo(item.id)}
-                  className={`rounded-2xl px-4 py-3 text-[15px] font-medium transition ${isRtl ? "text-right" : "text-left"} ${
+                  className={`rounded-2xl px-4 py-3 text-[15px] font-medium leading-[1.5] transition ${isRtl ? "text-right" : "text-left"} ${
                     currentPage === item.id ? "bg-slate-950 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
                   }`}
                 >

@@ -67,6 +67,14 @@
 }
 
 @layer utilities {
+  .text-sm {
+    @apply leading-relaxed;
+  }
+
+  .text-xs {
+    @apply leading-relaxed;
+  }
+
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
   }

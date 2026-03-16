@@ -32,11 +32,7 @@ export default function Home({ content, navTo, setShowForm }) {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.75, delay: 0.1 }}
-                className={`mx-auto mt-7 flex w-full flex-col items-center overflow-visible pb-2 text-center font-bold text-slate-950 ${
-                  isArabic
-                    ? "max-w-[20rem] text-[2rem] leading-[1.14] sm:max-w-5xl sm:pb-3 sm:text-[3.6rem] lg:text-[4.4rem]"
-                    : "max-w-[20rem] text-[2.2rem] leading-[1.04] sm:max-w-6xl sm:pb-3 sm:text-5xl lg:text-[5rem]"
-                }`}
+                className={`mx-auto mt-7 flex w-full flex-col items-center overflow-visible pb-2 text-center font-bold text-slate-950 max-w-[20rem] text-[2.6rem] leading-[1.04] sm:max-w-6xl sm:pb-3 sm:text-6xl lg:text-[6rem]`}
               >
                 <span className="mt-2 block w-full overflow-visible pb-[0.12em] text-center bg-gradient-to-r from-slate-950 via-purple-700 to-violet-500 bg-clip-text text-transparent">
                   {home.heroTitleAccent}

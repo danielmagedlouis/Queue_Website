@@ -26,14 +26,10 @@ export default function Services({ content, navTo }) {
     <PageShell>
       <FocusSection
         className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
-        innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1.05fr_0.95fr] md:gap-12"
+        innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-1"
       >
           <Reveal className="mx-auto h-full w-full max-w-xl rounded-[2rem] border border-slate-300/70 bg-slate-100/78 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:max-w-none md:p-10">
             <div className="flex h-full flex-col justify-center space-y-8">
-            <div className="inline-flex w-fit rounded-full border border-purple-200 bg-slate-50/90 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
-              {servicesContent.hero.eyebrow}
-            </div>
-
             <SectionHeading
               locale={locale}
               mobileDescription={servicesContent.hero.mobileDescription}
@@ -50,13 +46,6 @@ export default function Services({ content, navTo }) {
             </div>
             </div>
           </Reveal>
-
-          <AnimatedImage
-            src={servicesContent.hero.image}
-            alt={servicesContent.hero.imageAlt}
-            className="mx-auto h-full w-full max-w-sm sm:max-w-xl md:max-w-none"
-            imageClassName="h-[13rem] object-center sm:h-[20rem] md:h-full md:min-h-[28rem]"
-          />
       </FocusSection>
 
       <FocusSection className="bg-slate-950 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">

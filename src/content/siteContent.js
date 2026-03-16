@@ -2,7 +2,7 @@ import aiAutomationsImage from "../../images/ai-automations.png";
 import aiCallAgentImage from "../../images/Ai-Call-Agent.jpg";
 
 const sharedImages = {
-  homeTech: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
+  homeTech: "images/web-design-stock.png",
   homeAi: "images/ai-automations.png",
   officeOne: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
   officeTwo: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
@@ -119,8 +119,7 @@ export const SITE_CONTENT = {
       heroMobileTitleTop: "Where Your Ideas Come True",
       heroMobileDescription: "We design clean digital experiences, internal systems, and AI automations that make your business look sharper and run faster.",
       heroTitleAccent: "Queue Solutions",
-      heroDescription:
-        "We design clean digital experiences, internal systems, and AI automations that make your business look sharper and run faster.",
+      heroDescription: "One Place For All Your Technical Needs",
       heroCards: [
         { title: "Websites", description: "Clear, polished websites that build trust and turn interest into real inquiries." },
         { title: "Systems", description: "Simple dashboards and tools that help teams stay aligned and work with less friction." },
@@ -128,38 +127,38 @@ export const SITE_CONTENT = {
       ],
       sections: [
         {
-          eyebrow: "Built for trust",
-          title: "A website that makes the right impression before the first call",
+          eyebrow: "",
+          title: "Website Design ",
           mobileTitle: "A website that builds trust fast",
           mobileDescription: "Clear structure and strong messaging help people trust the business faster.",
           description:
-            "Clean structure, stronger messaging, and polished visuals help people understand what you do and why they should take you seriously.",
+            "The Perfect landing page for your business should make it easy for visitors to understand what you offer, why it matters, and how to take the next step",
           image: sharedImages.homeTech,
           imageAlt: "Premium workspace with laptop and code",
           points: [
-            { title: "Clear messaging", description: "Visitors quickly understand the offer, the value, and the next step." },
-            { title: "Mobile polish", description: "The experience stays clean, readable, and well paced on smaller screens." },
+            { title: "Clean design", description: "Clean and modern design that makes the website visually appealing and easy to navigate." },
+            { title: "Functionality", description: "Fast, responsive, and reliable performance that ensures a smooth user experience on all devices." },
           ],
         },
         {
-          eyebrow: "Less repeated work",
-          title: "We build AI automation that handles the routine work, so you can focus on growing the business",
-          mobileTitle: "AI automation handles the routine work",
+          eyebrow: "Enforce Your Buisness With AI",
+          title: "We build AI automations that handles the routine work, so you can focus on growing the business",
+          mobileTitle: "AI automations handles the routine work",
           mobileDescription: "Automation handles follow-up, reminders, and routing so your team can focus on growth.",
           description:
-            "Lead replies, reminders, follow-up messages, request sorting, internal updates, and task routing can all happen automatically instead of taking time from your team every day.",
+            "why do the repetitive tasks when you can have them handled automatically? We build AI automations that keep the work moving in the background, so your team can focus on clients, delivery, and growth instead of busywork.",
           image: sharedImages.homeAi,
           imageAlt: "Futuristic AI workflow screen",
-          tags: ["Instant replies", "Automatic follow-up", "Smart routing", "Less manual admin"],
+          tags: ["Automated replies", "API Integrations", "Chatbots & AI Assistants", "Workflow Automation"],
         },
       ],
       gallery: {
-        eyebrow: "How It Should Feel",
-        title: "Professional, current, and easy to trust",
+        eyebrow: "Custome Operation systems and dashboards",
+        title: "Professional, effective systems that makes the work feel easier",
         mobileTitle: "Professional and easy to trust",
         mobileDescription: "The design should feel organized, current, and ready for serious work.",
         description:
-          "Every section is designed to make the company feel organized, capable, and ready for serious work.",
+          "We design custom digital systems and dashboards that help business owners manage their operations, track performance, and make smarter decisions. Our solutions are built specifically for your business to streamline workflows, organize data, and provide real-time insights in one powerful platform..",
         images: [
           { src: sharedImages.officeOne, alt: "Software team working across laptops in a product session" },
           { src: sharedImages.officeTwo, alt: "Business intelligence dashboard with charts and metrics" },
@@ -169,9 +168,9 @@ export const SITE_CONTENT = {
     },
     services: {
       hero: {
-        eyebrow: "Our Services",
-        title: "Websites, systems, and automation that take pressure off your team",
-        mobileTitle: "Websites, systems, and automation",
+        eyebrow: "",
+        title: "We provide practical, polished solutions that elevate your business",
+        mobileTitle: "Websites, systems, and automations",
         mobileDescription: "We help businesses look stronger and waste less time on repeated work.",
         description:
           "We help businesses look sharper, work faster, and stop losing time on the repeated tasks that should already be handled.",
