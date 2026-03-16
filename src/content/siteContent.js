@@ -1,9 +1,10 @@
 import aiAutomationsImage from "../../images/ai-automations.png";
 import aiCallAgentImage from "../../images/Ai-Call-Agent.jpg";
+import webDesignStockImage from "../../images/web-design-stock.png";
 
 const sharedImages = {
-  homeTech: "images/web-design-stock.png",
-  homeAi: "images/ai-automations.png",
+  homeTech: webDesignStockImage,
+  homeAi: aiAutomationsImage,
   officeOne: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
   officeTwo: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
   teamOne: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",

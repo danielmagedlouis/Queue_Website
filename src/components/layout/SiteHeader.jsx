@@ -16,6 +16,7 @@ export default function SiteHeader({
   const [scrolled, setScrolled] = useState(false);
   const { scrollY, scrollYProgress } = useScroll();
   const isRtl = content.direction === "rtl";
+  const logoSrc = `${import.meta.env.BASE_URL}queue-logo.png`;
   const nextLocale = locale === "en" ? "ar" : "en";
   const languageLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" : "English";
   const languageMobileLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629 (Egypt)" : "English (US)";
@@ -41,7 +42,7 @@ export default function SiteHeader({
             className="flex items-center justify-center rounded-full px-1 py-1 transition hover:bg-slate-50"
           >
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden sm:h-12 sm:w-12">
-              <img src="/queue-logo.png" alt={content.siteDetails.name} className="h-full w-full object-contain" />
+              <img src={logoSrc} alt={content.siteDetails.name} className="h-full w-full object-contain" />
             </div>
           </button>
 

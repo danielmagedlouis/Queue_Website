@@ -8,6 +8,7 @@ const socialIcons = {
 
 export default function SiteFooter({ content, navTo }) {
   const isRtl = content.direction === "rtl";
+  const logoSrc = `${import.meta.env.BASE_URL}queue-logo.png`;
   const desktopAlign = isRtl ? "md:text-right" : "md:text-left";
   const socialAlignment = isRtl ? "flex-row-reverse text-right" : "text-left";
   const year = new Date().getFullYear();
@@ -25,7 +26,7 @@ export default function SiteFooter({ content, navTo }) {
           <div className={`space-y-5 text-center ${desktopAlign} ${brandOrder}`}>
             <div className={`flex items-center gap-3 ${isRtl ? "justify-center md:flex-row-reverse md:justify-start" : "justify-center md:justify-start"}`}>
               <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_18px_34px_rgba(15,23,42,0.08)]">
-                <img src="/queue-logo.png" alt={content.siteDetails.name} className="h-full w-full object-contain p-1.5" />
+                <img src={logoSrc} alt={content.siteDetails.name} className="h-full w-full object-contain p-1.5" />
               </div>
               <div className="min-w-0">
                 <p className="text-lg font-semibold text-slate-950">{content.siteDetails.name}</p>
