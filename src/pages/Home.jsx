@@ -26,8 +26,8 @@ export default function Home({ content, navTo, setShowForm }) {
         className="flex min-h-[100svh] items-center px-5 pb-8 pt-24 sm:px-6 sm:pb-12 sm:pt-28 md:pt-32"
         innerClassName="mx-auto w-full max-w-xl text-center md:max-w-6xl"
       >
-          <Reveal className="mx-auto flex min-h-[calc(100svh-8rem)] w-full flex-col justify-center gap-10 sm:min-h-[calc(100svh-9rem)] sm:justify-start sm:gap-0">
-            <div className="flex flex-col items-center justify-center sm:flex-1">
+        <Reveal className="mx-auto flex min-h-[calc(100svh-8rem)] w-full flex-col justify-between sm:min-h-[calc(100svh-9rem)] sm:justify-start sm:gap-0">
+            <div className="flex flex-1 flex-col items-center justify-center">
               <Motion.h1
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -198,7 +198,7 @@ export default function Home({ content, navTo, setShowForm }) {
                 key={image.src}
                 src={image.src}
                 alt={image.alt}
-                className={`mx-auto w-full max-w-sm ${index === 1 ? "lg:translate-y-6" : ""}`}
+                className={`mx-auto w-full max-w-sm ${index > 0 ? "hidden md:block" : ""} ${index === 1 ? "lg:translate-y-6" : ""}`}
                 imageClassName="h-44 object-center sm:h-64 md:h-72"
               />
             ))}
