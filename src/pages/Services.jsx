@@ -77,14 +77,6 @@ export default function Services({ content, navTo }) {
                   {servicesContent.automationHighlight.note}
                 </p>
               </div>
-              <div className="relative mt-4 overflow-hidden rounded-[1.35rem] border border-white/10 md:hidden">
-                <img
-                  src={servicesContent.automationHighlight.image}
-                  alt={servicesContent.automationHighlight.imageAlt}
-                  className="h-28 w-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
-              </div>
 
               <div className="mt-4 flex flex-wrap gap-2 md:mt-6 md:gap-3">
                 {servicesContent.automationHighlight.chips.map((chip, index) => (
@@ -171,14 +163,6 @@ export default function Services({ content, navTo }) {
                 <p className="hidden text-sm leading-7 text-slate-200 md:block">
                   {servicesContent.callAgentHighlight.note}
                 </p>
-              </div>
-              <div className="relative mt-4 overflow-hidden rounded-[1.35rem] border border-white/10 md:hidden">
-                <img
-                  src={servicesContent.callAgentHighlight.image}
-                  alt={servicesContent.callAgentHighlight.imageAlt}
-                  className="h-28 w-full object-cover object-[center_35%]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2 md:mt-6 md:gap-3">
