@@ -12,6 +12,7 @@ import Process from "./pages/Process";
 import Services from "./pages/Services";
 
 export default function App() {
+  const defaultTitle = "Queue Solutions | Web Development & AI Solutions";
   const [currentPage, setCurrentPage] = useState("home");
   const [showForm, setShowForm] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -29,8 +30,8 @@ export default function App() {
 
   useEffect(() => {
     const pageTitle = content.navItems.find((item) => item.id === currentPage)?.label ?? content.siteDetails.name;
-    document.title = currentPage === "home" ? content.siteDetails.name : `${pageTitle} | ${content.siteDetails.name}`;
-  }, [content.navItems, content.siteDetails.name, currentPage]);
+    document.title = currentPage === "home" ? defaultTitle : `${pageTitle} | ${content.siteDetails.name}`;
+  }, [content.navItems, content.siteDetails.name, currentPage, defaultTitle]);
 
   const navTo = (page) => {
     setCurrentPage(page);
