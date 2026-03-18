@@ -15,6 +15,19 @@ Only use the public anon key in the frontend.
 
 Never expose the Supabase `service_role` key in Vite, React, or any committed client-side file.
 
+## GitHub Pages deployment
+
+This site is built in GitHub Actions, so the live site only receives Vite env vars that are present during the workflow build.
+
+Add these secrets in GitHub before deploying:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+You can store them either as repository secrets or as secrets on the `github-pages` environment used by `.github/workflows/deploy.yml`.
+
+If they are missing, the workflow now fails on purpose instead of publishing a broken bundle where form submissions always error.
+
 ## Supabase SQL
 
 Run this SQL in the Supabase SQL editor:
