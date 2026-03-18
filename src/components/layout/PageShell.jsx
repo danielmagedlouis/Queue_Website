@@ -70,13 +70,13 @@ export default function PageShell({ children }) {
           src={shellBackground}
           alt=""
           aria-hidden="true"
-          className="h-full w-full object-cover object-center opacity-[0.08]"
+          className="h-full w-full object-cover object-center opacity-[0.04] md:opacity-[0.08]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(237,242,247,0.62)_0%,rgba(233,237,246,0.72)_42%,rgba(230,235,245,0.82)_100%)]" />
-        <div className="absolute left-1/2 top-[-10rem] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-purple-300/25 blur-3xl" />
-        <div className="absolute right-[-8rem] top-[28rem] h-[24rem] w-[24rem] rounded-full bg-sky-200/25 blur-3xl" />
-        <div className="absolute left-[-8rem] top-[62rem] h-[22rem] w-[22rem] rounded-full bg-violet-200/25 blur-3xl" />
-        <div className="absolute inset-0 opacity-40">
+        <div className="absolute left-1/2 top-[-10rem] hidden h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-purple-300/25 blur-3xl md:block" />
+        <div className="absolute right-[-8rem] top-[28rem] hidden h-[24rem] w-[24rem] rounded-full bg-sky-200/25 blur-3xl md:block" />
+        <div className="absolute left-[-8rem] top-[62rem] hidden h-[22rem] w-[22rem] rounded-full bg-violet-200/25 blur-3xl md:block" />
+        <div className="absolute inset-0 hidden opacity-40 md:block">
           <div className="h-full w-full bg-[linear-gradient(to_right,rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(168,85,247,0.08)_1px,transparent_1px)] bg-[size:88px_88px]" />
         </div>
       </div>

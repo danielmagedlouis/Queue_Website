@@ -17,6 +17,27 @@ const iconMap = {
   mobile: FaMobileAlt,
 };
 
+const automationMobilePreviewTitles = [
+  "Instant lead replies",
+  "No-chase follow-up",
+  "Smart request routing",
+  "More time back",
+];
+
+const callAgentMobilePreviewTitles = [
+  "Calls answered fast",
+  "Clear service intro",
+  "Lead details captured",
+  "Stronger first impression",
+];
+
+const reasonsMobilePreviewTitles = [
+  "Business-first thinking",
+  "Easy to trust",
+  "Useful technology",
+  "One connected process",
+];
+
 export default function Services({ content, navTo }) {
   const servicesContent = content.services;
   const ui = content.ui;
@@ -25,11 +46,11 @@ export default function Services({ content, navTo }) {
   return (
     <PageShell>
       <FocusSection
-        className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
+        className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-8 pt-6 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
         innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-1"
       >
-          <Reveal className="mx-auto h-full w-full max-w-xl rounded-[2rem] border border-slate-300/70 bg-slate-100/78 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:max-w-none md:p-10">
-            <div className="flex h-full flex-col justify-center space-y-8">
+          <Reveal className="mx-auto h-full w-full max-w-xl rounded-[2rem] border border-slate-300/70 bg-slate-100/78 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8 md:max-w-none md:p-10">
+            <div className="flex h-full flex-col justify-center space-y-6 sm:space-y-8">
             <SectionHeading
               locale={locale}
               mobileDescription={servicesContent.hero.mobileDescription}
@@ -38,9 +59,11 @@ export default function Services({ content, navTo }) {
               description={servicesContent.hero.description}
             />
 
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <ActionButton onClick={() => navTo("contact")}>{ui.contactUs}</ActionButton>
-              <ActionButton onClick={() => navTo("portfolio")} variant="secondary">
+            <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-row sm:gap-4">
+              <ActionButton onClick={() => navTo("contact")} className="w-full justify-center">
+                {ui.contactUs}
+              </ActionButton>
+              <ActionButton onClick={() => navTo("portfolio")} variant="secondary" className="w-full justify-center">
                 {ui.viewPortfolio}
               </ActionButton>
             </div>
@@ -48,7 +71,7 @@ export default function Services({ content, navTo }) {
           </Reveal>
       </FocusSection>
 
-      <FocusSection className="bg-slate-950 px-5 py-14 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
+      <FocusSection className="bg-slate-950 px-5 pb-14 pt-8 sm:px-6 sm:py-20 md:py-24" innerClassName="mx-auto">
         <Reveal className="mx-auto grid w-full max-w-xl gap-6 rounded-[2rem] border border-white/10 bg-slate-950 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.18)] backdrop-blur sm:max-w-2xl sm:p-5 md:max-w-6xl md:grid-cols-[1.04fr_0.96fr] md:items-stretch md:gap-8 md:p-10">
           <div className="order-1 relative min-h-[23rem] overflow-hidden rounded-[2rem] border border-white/8 bg-slate-950 p-4 text-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:min-h-[26rem] sm:p-8 md:order-1 md:min-h-[34rem] md:p-8">
             <div className="absolute -left-12 top-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
@@ -101,11 +124,27 @@ export default function Services({ content, navTo }) {
             <AnimatedImage
               src={servicesContent.automationHighlight.image}
               alt={servicesContent.automationHighlight.imageAlt}
-              className="mx-auto hidden w-full max-w-sm sm:max-w-xl md:block md:max-w-none"
-              imageClassName="h-[12.5rem] object-center sm:h-[20rem] md:h-[22rem]"
+              className="mx-auto w-full max-w-sm sm:max-w-xl md:max-w-none"
+              imageClassName="h-[11rem] object-center sm:h-[15rem] md:h-[22rem]"
             />
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-2 gap-3 md:hidden">
+              {servicesContent.automationHighlight.points.map((point, index) => (
+                <div
+                  key={point.title}
+                  className="mx-auto flex h-full w-full max-w-sm flex-col justify-between rounded-[1.35rem] border border-white/10 bg-white/[0.05] p-4 shadow-[0_14px_32px_rgba(15,23,42,0.16)] sm:max-w-none"
+                >
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-purple-200/90">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-4 text-[1rem] font-bold leading-[1.2] text-white">
+                    {automationMobilePreviewTitles[index] ?? point.title}
+                  </h3>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden gap-4 sm:grid-cols-2 md:grid">
               {servicesContent.automationHighlight.points.map((point) => (
                 <div key={point.title} className="mx-auto flex h-full w-full max-w-sm flex-col justify-start rounded-[1.5rem] border border-white/10 bg-slate-900/92 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.2)] sm:max-w-none md:p-5">
                   <h3 className="text-lg font-bold text-white">{point.title}</h3>
@@ -123,11 +162,27 @@ export default function Services({ content, navTo }) {
             <AnimatedImage
               src={servicesContent.callAgentHighlight.image}
               alt={servicesContent.callAgentHighlight.imageAlt}
-              className="mx-auto hidden w-full max-w-sm sm:max-w-xl md:block md:max-w-none"
-              imageClassName="h-[12.5rem] object-[center_35%] sm:h-[20rem] md:h-[22rem] md:object-center"
+              className="mx-auto w-full max-w-sm sm:max-w-xl md:max-w-none"
+              imageClassName="h-[11rem] object-[center_35%] sm:h-[15rem] md:h-[22rem] md:object-center"
             />
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-2 gap-3 md:hidden">
+              {servicesContent.callAgentHighlight.points.map((point, index) => (
+                <div
+                  key={point.title}
+                  className="mx-auto flex h-full w-full max-w-sm flex-col justify-between rounded-[1.35rem] border border-slate-300/60 bg-slate-50/88 p-4 shadow-[0_14px_32px_rgba(15,23,42,0.08)] sm:max-w-none"
+                >
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-purple-600/90">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-4 text-[1rem] font-bold leading-[1.2] text-slate-950">
+                    {callAgentMobilePreviewTitles[index] ?? point.title}
+                  </h3>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden gap-4 sm:grid-cols-2 md:grid">
               {servicesContent.callAgentHighlight.points.map((point) => (
                 <div key={point.title} className="mx-auto flex h-full w-full max-w-sm flex-col justify-start rounded-[1.5rem] border border-slate-300/60 bg-slate-50/88 p-5 sm:max-w-none md:p-5">
                   <h3 className="text-lg font-bold text-slate-950">{point.title}</h3>
@@ -262,7 +317,23 @@ export default function Services({ content, navTo }) {
             />
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-3 md:hidden">
+            {servicesContent.reasons.map((item, index) => (
+                <div
+                  key={item.title}
+                  className="mx-auto flex h-full w-full max-w-sm flex-col items-center justify-center rounded-[1.35rem] border border-slate-300/60 bg-slate-50/88 p-4 text-center shadow-[0_14px_32px_rgba(15,23,42,0.08)] sm:max-w-none"
+                >
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-purple-600/90">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h4 className="mt-4 text-[1rem] font-bold leading-[1.2] text-slate-950">
+                    {reasonsMobilePreviewTitles[index] ?? item.title}
+                  </h4>
+                </div>
+            ))}
+          </div>
+
+          <div className="hidden gap-4 sm:grid-cols-2 md:grid">
             {servicesContent.reasons.map((item) => (
               <div key={item.title} className="mx-auto w-full max-w-sm rounded-[1.5rem] border border-slate-300/60 bg-slate-50/88 p-5 sm:max-w-none sm:p-6">
                 <h4 className="text-xl font-bold text-slate-950">{item.title}</h4>

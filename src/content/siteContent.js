@@ -48,6 +48,8 @@ export const SITE_CONTENT = {
     siteDetails: {
       name: "Queue Solutions",
       email: "queuesolutions25@gmail.com",
+      whatsappNumber: "(+20 11 27435060)",
+      whatsappHref: "https://wa.me/201127435060",
       tagline: "Websites, systems, and AI that help businesses grow",
       shortTagline: "Web, systems, and AI for modern brands",
       description:
@@ -101,6 +103,8 @@ export const SITE_CONTENT = {
       contactCards: {
         emailTitle: "Business email",
         emailAction: "We usually reply after reviewing the form",
+        whatsappTitle: "WhatsApp",
+        whatsappAction: "Message us directly",
         formTitle: "Start with the form",
         formBody: "Share the main project details and we will contact you directly.",
         formAction: "Open project form",

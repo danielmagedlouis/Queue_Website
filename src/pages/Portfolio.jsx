@@ -16,7 +16,7 @@ export default function Portfolio({ content, setShowForm }) {
 
   return (
     <PageShell>
-      <FocusSection className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" innerClassName="mx-auto max-w-xl space-y-5 text-center md:max-w-6xl md:space-y-8">
+      <FocusSection className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-8 pt-8 sm:px-6 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" innerClassName="mx-auto max-w-xl space-y-4 text-center md:max-w-6xl md:space-y-8">
           <Reveal>
             <div className="inline-flex rounded-full border border-purple-200 bg-slate-50/90 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
               {portfolio.hero.eyebrow}
@@ -34,7 +34,7 @@ export default function Portfolio({ content, setShowForm }) {
           </Reveal>
       </FocusSection>
 
-      <FocusSection className="bg-slate-950 px-5 pb-14 pt-14 sm:px-6 sm:pb-20 sm:pt-20 md:pb-24 md:pt-24" innerClassName="mx-auto grid max-w-xl gap-5 md:max-w-6xl md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
+      <FocusSection className="bg-slate-950 px-5 pb-14 pt-8 sm:px-6 sm:pb-20 sm:pt-20 md:pb-24 md:pt-24" innerClassName="mx-auto grid max-w-xl gap-5 md:max-w-6xl md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
           {portfolio.projects.map((project, index) => (
             <Reveal key={project.title} className="mx-auto w-full max-w-sm md:max-w-none" delay={index * 0.05}>
               <article className="group overflow-hidden rounded-[2rem] border border-slate-300/70 bg-slate-100/82 shadow-[0_24px_60px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(15,23,42,0.12)]">

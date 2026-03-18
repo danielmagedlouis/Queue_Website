@@ -13,11 +13,13 @@ export default function Home({ content, navTo, setShowForm }) {
   const ui = content.ui;
   const locale = content.locale;
   const isArabic = locale === "ar";
-  const [showHeroLabels, setShowHeroLabels] = useState(false);
+  const [showHeroLabels, setShowHeroLabels] = useState(() => (typeof window !== "undefined" ? window.scrollY > 24 : false));
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setShowHeroLabels(latest > 120);
+    if (latest > 24) {
+      setShowHeroLabels(true);
+    }
   });
 
   return (
@@ -66,7 +68,7 @@ export default function Home({ content, navTo, setShowForm }) {
                   opacity: showHeroLabels ? 1 : 0,
                   y: showHeroLabels ? 0 : 22,
                 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 className={`mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5 ${
                   showHeroLabels ? "pointer-events-auto" : "pointer-events-none"
                 }`}
@@ -90,7 +92,7 @@ export default function Home({ content, navTo, setShowForm }) {
                 opacity: showHeroLabels ? 1 : 0,
                 y: showHeroLabels ? 0 : 26,
               }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className={`mt-10 grid grid-cols-1 gap-3 border-t border-slate-300/60 pt-5 text-center transition-opacity sm:grid-cols-3 sm:gap-4 sm:pt-6 ${
                 showHeroLabels ? "pointer-events-auto" : "pointer-events-none"
               }`}

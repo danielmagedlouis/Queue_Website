@@ -1,4 +1,4 @@
-import { FaFacebookF, FaInstagram, FaEnvelope } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaEnvelope, FaWhatsapp } from "react-icons/fa";
 import Reveal from "../ui/Reveal";
 
 const socialIcons = {
@@ -6,11 +6,22 @@ const socialIcons = {
   facebook: FaFacebookF,
 };
 
+const iconButtonClassNames = {
+  email:
+    "bg-white text-slate-600 shadow-[0_12px_28px_rgba(239,68,68,0.12)] hover:bg-red-50 hover:text-red-600 hover:shadow-[0_16px_34px_rgba(239,68,68,0.2)]",
+  whatsapp:
+    "bg-white text-slate-600 shadow-[0_12px_28px_rgba(34,197,94,0.14)] hover:bg-green-50 hover:text-green-600 hover:shadow-[0_16px_34px_rgba(34,197,94,0.22)]",
+  instagram:
+    "bg-white text-slate-600 shadow-[0_12px_28px_rgba(236,72,153,0.14)] hover:bg-pink-50 hover:text-pink-600 hover:shadow-[0_16px_34px_rgba(236,72,153,0.22)]",
+  facebook:
+    "bg-white text-slate-600 shadow-[0_12px_28px_rgba(59,130,246,0.14)] hover:bg-blue-50 hover:text-blue-600 hover:shadow-[0_16px_34px_rgba(59,130,246,0.22)]",
+};
+
 export default function SiteFooter({ content, navTo }) {
   const isRtl = content.direction === "rtl";
+  const whatsappHref = content.siteDetails.whatsappHref ?? "https://wa.me/201127435060";
   const logoSrc = `${import.meta.env.BASE_URL}queue-logo.png`;
   const desktopAlign = isRtl ? "md:text-right" : "md:text-left";
-  const socialAlignment = isRtl ? "flex-row-reverse text-right" : "text-left";
   const year = new Date().getFullYear();
   const footerLegalLine = isRtl
     ? `${content.ui.footerRights} ${content.siteDetails.name} ${year}`
@@ -60,10 +71,19 @@ export default function SiteFooter({ content, navTo }) {
               <div className={`flex gap-4 ${isRtl ? "flex-row-reverse" : ""}`}>
                 <a
                   href={`mailto:${content.siteDetails.email}`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-purple-100 hover:text-purple-700"
+                  className={`flex h-10 w-10 items-center justify-center rounded-full transition ${iconButtonClassNames.email}`}
                   title={content.siteDetails.email}
                 >
                   <FaEnvelope size={20} />
+                </a>
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`flex h-10 w-10 items-center justify-center rounded-full transition ${iconButtonClassNames.whatsapp}`}
+                  title="WhatsApp"
+                >
+                  <FaWhatsapp size={20} />
                 </a>
                 {content.socialLinks.map((link) => {
                   const Icon = socialIcons[link.id];
@@ -75,7 +95,9 @@ export default function SiteFooter({ content, navTo }) {
                       href={link.href}
                       target={isExternal ? "_blank" : undefined}
                       rel={isExternal ? "noreferrer" : undefined}
-                      className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-purple-100 hover:text-purple-700"
+                      className={`flex h-10 w-10 items-center justify-center rounded-full transition ${
+                        iconButtonClassNames[link.id] ?? "bg-white text-slate-600 shadow-[0_12px_28px_rgba(15,23,42,0.12)] hover:bg-slate-100 hover:text-slate-900"
+                      }`}
                       title={link.label}
                     >
                       <Icon size={20} />

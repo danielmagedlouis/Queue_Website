@@ -1,22 +1,19 @@
 import { motion as Motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { FaCheck, FaChevronDown, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
+import {
+  buildLeadRecord,
+  insertLeadRecord,
+  isValidEmail,
+  normalizeDigitsToEnglish,
+  normalizePhoneDigits,
+  PHONE_COUNTRIES,
+  sendLeadNotification,
+} from "../../lib/leadCapture";
 import ActionButton from "../ui/ActionButton";
 
 const inputClassName =
   "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder-slate-400 transition focus:border-purple-500/50 focus:outline-none";
-const formEndpoint = "https://formsubmit.co/ajax/queuesolutions25@gmail.com";
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_COUNTRIES = [
-  { code: "EG", dialCode: "+20", label: { en: "Egypt (+20)", ar: "مصر (+20)" }, min: 10, max: 10 },
-  { code: "SA", dialCode: "+966", label: { en: "Saudi Arabia (+966)", ar: "السعودية (+966)" }, min: 9, max: 9 },
-  { code: "AE", dialCode: "+971", label: { en: "UAE (+971)", ar: "الإمارات (+971)" }, min: 9, max: 9 },
-  { code: "QA", dialCode: "+974", label: { en: "Qatar (+974)", ar: "قطر (+974)" }, min: 8, max: 8 },
-  { code: "KW", dialCode: "+965", label: { en: "Kuwait (+965)", ar: "الكويت (+965)" }, min: 8, max: 8 },
-  { code: "BH", dialCode: "+973", label: { en: "Bahrain (+973)", ar: "البحرين (+973)" }, min: 8, max: 8 },
-  { code: "US", dialCode: "+1", label: { en: "United States (+1)", ar: "الولايات المتحدة (+1)" }, min: 10, max: 10 },
-  { code: "GB", dialCode: "+44", label: { en: "United Kingdom (+44)", ar: "المملكة المتحدة (+44)" }, min: 10, max: 11 },
-];
 
 export default function ContactFormModal({ content, setShowForm }) {
   const [formData, setFormData] = useState({
@@ -47,15 +44,27 @@ export default function ContactFormModal({ content, setShowForm }) {
   const trimmedBusinessName = formData.businessName.trim();
   const trimmedEmail = formData.email.trim();
   const trimmedIdea = formData.idea.trim();
-  const phoneDigits = formData.phone.replace(/\D/g, "");
-  const hasRequiredFields = Boolean(trimmedName && trimmedBusinessName && phoneDigits && trimmedIdea && formData.whatsapp);
-  const isPhoneLengthValid = phoneDigits.length >= activePhoneCountry.min && phoneDigits.length <= activePhoneCountry.max;
-  const hasValidOptionalEmail = !trimmedEmail || emailPattern.test(trimmedEmail);
-  const isSubmitDisabled = submitState === "submitting" || !hasRequiredFields || !isPhoneLengthValid || !hasValidOptionalEmail;
+  const phoneDigits = normalizeDigitsToEnglish(formData.phone).replace(/\D/g, "");
+  const normalizedPhoneDigits = normalizePhoneDigits(formData.phone, activePhoneCountry);
+  const isPhoneValid =
+    normalizedPhoneDigits.length >= activePhoneCountry.min &&
+    normalizedPhoneDigits.length <= activePhoneCountry.max &&
+    !/^(\d)\1+$/.test(normalizedPhoneDigits);
+  const emailPlaceholder = isArabic
+    ? "\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)"
+    : "Email (optional)";
+  const requiredMessages = {
+    name: modal.nameRequired ?? (isArabic ? "\u0623\u062f\u062e\u0644 \u0627\u0633\u0645\u0643 \u0627\u0644\u0643\u0627\u0645\u0644." : "Enter your full name."),
+    businessName:
+      modal.businessNameRequired ??
+      (isArabic ? "\u0623\u062f\u062e\u0644 \u0627\u0633\u0645 \u0627\u0644\u0634\u0631\u0643\u0629." : "Enter your business name."),
+    phone: modal.phoneRequired ?? (isArabic ? "\u0623\u062f\u062e\u0644 \u0631\u0642\u0645 \u0627\u0644\u0647\u0627\u062a\u0641." : "Enter your phone number."),
+    idea: modal.ideaRequired ?? (isArabic ? "\u0627\u0643\u062a\u0628 \u0641\u0643\u0631\u0629 \u0627\u0644\u0645\u0634\u0631\u0648\u0639." : "Enter your project idea."),
+  };
   const errorMessage = isArabic
-    ? "تعذر إرسال النموذج الآن. حاول مرة أخرى بعد لحظات."
+    ? "\u062a\u0639\u0630\u0631 \u0625\u0631\u0633\u0627\u0644 \u0627\u0644\u0646\u0645\u0648\u0630\u062c \u0627\u0644\u0622\u0646. \u062d\u0627\u0648\u0644 \u0645\u0631\u0629 \u0623\u062e\u0631\u0649 \u0628\u0639\u062f \u0644\u062d\u0638\u0627\u062a."
     : "The form could not be sent right now. Please try again in a moment.";
-  const sendingLabel = isArabic ? "جاري الإرسال..." : "Sending...";
+  const sendingLabel = isArabic ? "\u062c\u0627\u0631\u064a \u0627\u0644\u0625\u0631\u0633\u0627\u0644..." : "Sending...";
 
   const getFieldClassName = (fieldName) =>
     `${inputClassName} ${validationErrors[fieldName] ? "border-red-300 bg-red-50/70 focus:border-red-400" : ""}`.trim();
@@ -111,138 +120,129 @@ export default function ContactFormModal({ content, setShowForm }) {
       resizeObserver.disconnect();
     };
   }, [
-    submitState,
+    modal.description,
+    modal.idea,
     showWhatsappError,
+    submitState,
     validationErrors.businessName,
     validationErrors.email,
     validationErrors.idea,
     validationErrors.name,
     validationErrors.phone,
-    modal.description,
-    modal.idea,
-    setShowForm,
   ]);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
+  const resetSubmitState = () => {
     if (submitState !== "idle") {
       setSubmitState("idle");
     }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    resetSubmitState();
+
     if (validationErrors[name]) {
       setValidationErrors((previous) => ({ ...previous, [name]: "" }));
     }
+
     if (name === "phone" || name === "whatsapp") {
       setShowWhatsappError(false);
     }
+
     setFormData((previous) => ({
       ...previous,
-      [name]: name === "phone" ? value.replace(/\D/g, "") : value,
+      [name]: name === "phone" ? normalizeDigitsToEnglish(value).replace(/\D/g, "") : value,
     }));
   };
 
   const handleWhatsappChange = (value) => {
-    if (submitState !== "idle") {
-      setSubmitState("idle");
-    }
+    resetSubmitState();
     setShowWhatsappError(false);
     setFormData((previous) => ({ ...previous, whatsapp: value }));
   };
 
   const handleCountryChange = (value) => {
-    if (submitState !== "idle") {
-      setSubmitState("idle");
-    }
+    resetSubmitState();
+
     if (validationErrors.phone) {
       setValidationErrors((previous) => ({ ...previous, phone: "" }));
     }
+
     setShowWhatsappError(false);
     setFormData((previous) => ({ ...previous, phoneCountry: value }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const nextValidationErrors = { name: "", businessName: "", email: "", phone: "", idea: "" };
 
-    if (!hasRequiredFields) {
-      setValidationErrors({
-        name: trimmedName ? "" : modal.nameRequired,
-        businessName: trimmedBusinessName ? "" : modal.businessNameRequired,
-        email: "",
-        phone: phoneDigits ? "" : modal.phoneRequired,
-        idea: trimmedIdea ? "" : modal.ideaRequired,
-      });
-      setShowWhatsappError(!formData.whatsapp);
-      return;
-    }
-
     if (!trimmedName) {
-      nextValidationErrors.name = modal.nameRequired;
+      nextValidationErrors.name = requiredMessages.name;
     }
 
     if (!trimmedBusinessName) {
-      nextValidationErrors.businessName = modal.businessNameRequired;
+      nextValidationErrors.businessName = requiredMessages.businessName;
     }
 
-    if (trimmedEmail && !emailPattern.test(trimmedEmail)) {
+    if (trimmedEmail && !isValidEmail(trimmedEmail)) {
       nextValidationErrors.email = modal.emailInvalid;
     }
 
     if (!phoneDigits) {
-      nextValidationErrors.phone = modal.phoneRequired;
-    } else if (phoneDigits.length < activePhoneCountry.min || phoneDigits.length > activePhoneCountry.max) {
+      nextValidationErrors.phone = requiredMessages.phone;
+    } else if (!isPhoneValid) {
       nextValidationErrors.phone = modal.phoneInvalid;
     }
 
     if (!trimmedIdea) {
-      nextValidationErrors.idea = modal.ideaRequired;
+      nextValidationErrors.idea = requiredMessages.idea;
     }
 
-    if (Object.values(nextValidationErrors).some(Boolean)) {
+    const hasValidationErrors = Object.values(nextValidationErrors).some(Boolean);
+
+    if (hasValidationErrors || !formData.whatsapp) {
       setValidationErrors(nextValidationErrors);
-      return;
-    }
-
-    if (!formData.whatsapp) {
-      setShowWhatsappError(true);
+      setShowWhatsappError(!formData.whatsapp);
       return;
     }
 
     setSubmitState("submitting");
 
+    const leadSubject = `${modal.emailSubject} ${trimmedName}`;
+    const leadRecord = buildLeadRecord({
+      activePhoneCountry,
+      formData,
+      pageUrl: typeof window !== "undefined" ? window.location.href : null,
+      subject: leadSubject,
+      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : null,
+    });
+
     try {
-      const payload = {
-        name: trimmedName,
-        business_name: trimmedBusinessName,
-        email: trimmedEmail,
-        phone: `${activePhoneCountry.dialCode} ${phoneDigits}`,
-        whatsapp_on_number: formData.whatsapp === "yes" ? modal.whatsappYes : modal.whatsappNo,
-        message: trimmedIdea,
-        _subject: `${modal.emailSubject} ${trimmedName}`,
-        _captcha: "false",
-      };
+      await insertLeadRecord(leadRecord);
 
-      if (trimmedEmail) {
-        payload._replyto = trimmedEmail;
-      }
-
-      const response = await fetch(formEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json().catch(() => null);
-
-      if (!response.ok || data?.success === "false") {
-        throw new Error("Lead submission failed.");
+      try {
+        await sendLeadNotification({
+          businessName: trimmedBusinessName,
+          email: trimmedEmail,
+          message: trimmedIdea,
+          name: trimmedName,
+          phone: leadRecord.phone,
+          replyTo: trimmedEmail,
+          subject: leadSubject,
+          whatsappLabel: formData.whatsapp === "yes" ? modal.whatsappYes : modal.whatsappNo,
+        });
+      } catch (emailError) {
+        console.warn("Lead saved in Supabase but email notification failed.", emailError);
       }
 
       setFormData({ name: "", businessName: "", email: "", phoneCountry: "EG", phone: "", whatsapp: "", idea: "" });
       setValidationErrors({ name: "", businessName: "", email: "", phone: "", idea: "" });
+      setShowWhatsappError(false);
       setSubmitState("success");
-    } catch {
+    } catch (submitError) {
+      console.error("Lead capture failed.", submitError);
       setSubmitState("error");
     }
   };
@@ -275,7 +275,9 @@ export default function ContactFormModal({ content, setShowForm }) {
         <div ref={scrollRef} className="modal-scroll max-h-[92vh] overflow-y-auto px-5 py-5 pr-8 sm:px-8 sm:py-8 sm:pr-12 md:px-10 md:py-10 md:pr-14">
           <div className="space-y-3">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-purple-700">{modal.eyebrow}</p>
-            <h2 id="project-inquiry-title" className="text-[2rem] font-bold leading-[1.08] text-slate-950 sm:text-3xl">{modal.title}</h2>
+            <h2 id="project-inquiry-title" className="text-[2rem] font-bold leading-[1.08] text-slate-950 sm:text-3xl">
+              {modal.title}
+            </h2>
             <p className="text-slate-600">{modal.description}</p>
           </div>
 
@@ -288,7 +290,7 @@ export default function ContactFormModal({ content, setShowForm }) {
                 <h3 className="mt-5 text-xl font-bold text-slate-950 sm:text-2xl">{modal.successTitle}</h3>
                 <p className="mt-3 text-base leading-7 text-slate-600">{modal.successDescription}</p>
               </div>
-              <ActionButton className="w-full" onClick={() => setShowForm(false)}>
+              <ActionButton className="w-full" onClick={() => setShowForm(false)} type="button">
                 {modal.successButton}
               </ActionButton>
             </div>
@@ -303,10 +305,9 @@ export default function ContactFormModal({ content, setShowForm }) {
                 className={getFieldClassName("name")}
               />
               {validationErrors.name ? (
-                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {validationErrors.name}
-                </p>
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{validationErrors.name}</p>
               ) : null}
+
               <input
                 type="text"
                 name="businessName"
@@ -316,24 +317,22 @@ export default function ContactFormModal({ content, setShowForm }) {
                 className={getFieldClassName("businessName")}
               />
               {validationErrors.businessName ? (
-                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {validationErrors.businessName}
-                </p>
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{validationErrors.businessName}</p>
               ) : null}
+
               <input
                 type="email"
                 name="email"
-                placeholder={modal.email}
+                placeholder={emailPlaceholder}
                 autoComplete="email"
                 onChange={handleInputChange}
                 value={formData.email}
                 className={getFieldClassName("email")}
               />
               {validationErrors.email ? (
-                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {validationErrors.email}
-                </p>
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{validationErrors.email}</p>
               ) : null}
+
               <div className="grid gap-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
                 <CountryDropdown
                   countries={PHONE_COUNTRIES}
@@ -354,14 +353,11 @@ export default function ContactFormModal({ content, setShowForm }) {
                 />
               </div>
               {validationErrors.phone ? (
-                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {validationErrors.phone}
-                </p>
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{validationErrors.phone}</p>
               ) : null}
+
               <div className="space-y-3">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
-                  {modal.whatsappQuestion}
-                </p>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">{modal.whatsappQuestion}</p>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <WhatsappOption
                     active={formData.whatsapp === "yes"}
@@ -381,11 +377,10 @@ export default function ContactFormModal({ content, setShowForm }) {
                   />
                 </div>
                 {showWhatsappError ? (
-                  <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                    {modal.whatsappRequired}
-                  </p>
+                  <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{modal.whatsappRequired}</p>
                 ) : null}
               </div>
+
               <textarea
                 name="idea"
                 placeholder={modal.idea}
@@ -395,23 +390,20 @@ export default function ContactFormModal({ content, setShowForm }) {
                 className={`${getFieldClassName("idea")} resize-none`}
               />
               {validationErrors.idea ? (
-                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {validationErrors.idea}
-                </p>
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{validationErrors.idea}</p>
               ) : null}
 
               <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-                <ActionButton className="sm:flex-1" onClick={() => setShowForm(false)} variant="secondary">
+                <ActionButton className="sm:flex-1" onClick={() => setShowForm(false)} type="button" variant="secondary">
                   {modal.cancel}
                 </ActionButton>
-                <ActionButton className="sm:flex-1" disabled={isSubmitDisabled} type="submit">
+                <ActionButton className="sm:flex-1" disabled={submitState === "submitting"} type="submit">
                   {submitState === "submitting" ? sendingLabel : modal.submit}
                 </ActionButton>
               </div>
+
               {submitState === "error" ? (
-                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {errorMessage}
-                </p>
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{errorMessage}</p>
               ) : null}
             </form>
           )}
@@ -492,6 +484,7 @@ function CountryDropdown({ countries, isArabic, label, onChange, value }) {
           <div className="max-h-64 space-y-1 overflow-y-auto pr-1">
             {countries.map((country) => {
               const selected = country.code === value;
+
               return (
                 <button
                   key={country.code}
@@ -515,9 +508,7 @@ function CountryDropdown({ countries, isArabic, label, onChange, value }) {
                   </div>
                   <span
                     className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold transition ${
-                      selected
-                        ? "bg-white text-purple-700 shadow-[0_10px_20px_rgba(168,85,247,0.14)]"
-                        : "bg-slate-100 text-slate-500"
+                      selected ? "bg-white text-purple-700 shadow-[0_10px_20px_rgba(168,85,247,0.14)]" : "bg-slate-100 text-slate-500"
                     }`}
                   >
                     {country.dialCode}
@@ -553,9 +544,7 @@ function WhatsappOption({ active, description, icon, label, onClick, tone }) {
       whileHover={{ y: -2, scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
       className={`flex items-center gap-3 rounded-[1.5rem] border px-4 py-4 text-left transition ${
-        active
-          ? activeClassName
-          : "border-slate-200 bg-slate-50 hover:border-purple-200 hover:bg-white"
+        active ? activeClassName : "border-slate-200 bg-slate-50 hover:border-purple-200 hover:bg-white"
       }`}
     >
       <div

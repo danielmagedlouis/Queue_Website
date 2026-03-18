@@ -20,6 +20,10 @@ export default function SiteHeader({
   const nextLocale = locale === "en" ? "ar" : "en";
   const languageLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" : "English";
   const languageMobileLabel = nextLocale === "ar" ? "\u0627\u0644\u0639\u0631\u0628\u064A\u0629 (Egypt)" : "English (US)";
+  const openProjectForm = () => {
+    setMobileMenuOpen(false);
+    setShowForm(true);
+  };
   const headerPrimaryButtonClassName =
     "min-w-[11.25rem] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(241,245,249,0.94)_100%)] px-6 py-3 text-slate-950 shadow-[0_18px_40px_rgba(15,23,42,0.08)] hover:border-slate-300 hover:bg-white";
 
@@ -30,7 +34,7 @@ export default function SiteHeader({
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-2.5 pt-2.5 sm:px-6 sm:pt-4">
       <div
-        className={`mx-auto max-w-7xl rounded-[1.75rem] border backdrop-blur transition-all ${
+        className={`mx-auto max-w-7xl rounded-[1.75rem] border transition-all md:backdrop-blur ${
           scrolled
             ? "border-slate-200/85 bg-slate-100/95 shadow-[0_20px_60px_rgba(15,23,42,0.12)]"
             : "border-slate-200/80 bg-slate-100/88 shadow-[0_14px_40px_rgba(15,23,42,0.08)]"
@@ -80,7 +84,7 @@ export default function SiteHeader({
 
           <div className={`hidden items-center gap-3 md:flex ${isRtl ? "flex-row-reverse" : ""}`}>
             <LanguageToggleButton compact label={languageLabel} onClick={() => onLocaleChange(nextLocale)} />
-            <ActionButton className={headerPrimaryButtonClassName} onClick={() => setShowForm(true)} variant="secondary">
+            <ActionButton className={headerPrimaryButtonClassName} onClick={openProjectForm} variant="secondary">
               {content.ui.startProject}
             </ActionButton>
           </div>
@@ -99,29 +103,49 @@ export default function SiteHeader({
           </button>
         </div>
 
-        {mobileMenuOpen ? (
-          <div className="border-t border-slate-200 px-3 py-3 md:hidden">
-            <nav className="grid gap-2">
-              {content.navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => navTo(item.id)}
-                  className={`rounded-2xl px-4 py-3 text-[15px] font-medium leading-[1.5] transition ${isRtl ? "text-right" : "text-left"} ${
-                    currentPage === item.id ? "bg-slate-950 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-            <div className="mt-4 grid gap-3">
-              <LanguageToggleButton label={languageMobileLabel} onClick={() => onLocaleChange(nextLocale)} />
-              <ActionButton className={headerPrimaryButtonClassName} onClick={() => setShowForm(true)} variant="secondary">
-                {content.ui.startProject}
-              </ActionButton>
-            </div>
-          </div>
-        ) : null}
+        <AnimatePresence initial={false}>
+          {mobileMenuOpen ? (
+            <Motion.div
+              initial={{ opacity: 0, x: 36, height: 0 }}
+              animate={{ opacity: 1, x: 0, height: "auto" }}
+              exit={{ opacity: 0, x: 36, height: 0 }}
+              transition={{
+                opacity: { duration: 0.18, ease: "easeOut" },
+                x: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                height: { duration: 0.26, ease: [0.22, 1, 0.36, 1] },
+              }}
+              className="overflow-hidden border-t border-slate-200 md:hidden"
+            >
+              <Motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.16, delay: 0.04 }}
+                className="px-3 py-3"
+              >
+                <nav className="grid gap-2">
+                  {content.navItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => navTo(item.id)}
+                      className={`rounded-2xl px-4 py-3 text-[15px] font-medium leading-[1.5] transition ${isRtl ? "text-right" : "text-left"} ${
+                        currentPage === item.id ? "bg-slate-950 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+                <div className="mt-4 grid gap-3">
+                  <LanguageToggleButton label={languageMobileLabel} onClick={() => onLocaleChange(nextLocale)} />
+                  <ActionButton className={headerPrimaryButtonClassName} onClick={openProjectForm} variant="secondary">
+                    {content.ui.startProject}
+                  </ActionButton>
+                </div>
+              </Motion.div>
+            </Motion.div>
+          ) : null}
+        </AnimatePresence>
 
         <div className="px-2.5 pb-2.5 sm:px-4 sm:pb-3 lg:px-6">
           <div className="h-[2px] overflow-hidden rounded-full">
@@ -155,7 +179,6 @@ function LanguageToggleButton({ compact = false, label, onClick }) {
         </span>
         <span className={`truncate font-semibold text-slate-900 ${compact ? "text-[13px]" : "text-sm"}`}>{label}</span>
       </span>
-      <span className={`shrink-0 rounded-full bg-gradient-to-br from-purple-500 to-sky-400 ${compact ? "h-1.5 w-1.5" : "h-2 w-2"}`} />
     </Motion.button>
   );
 }

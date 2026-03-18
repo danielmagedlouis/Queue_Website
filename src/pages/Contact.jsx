@@ -1,4 +1,4 @@
-import { FaArrowRight, FaEnvelope, FaFacebookF, FaInstagram, FaPaperPlane } from "react-icons/fa";
+import { FaArrowRight, FaEnvelope, FaFacebookF, FaInstagram, FaPaperPlane, FaWhatsapp } from "react-icons/fa";
 import PageShell from "../components/layout/PageShell";
 import ActionButton from "../components/ui/ActionButton";
 import AnimatedImage from "../components/ui/AnimatedImage";
@@ -11,11 +11,13 @@ export default function Contact({ content, setShowForm }) {
   const ui = content.ui;
   const site = content.siteDetails;
   const locale = content.locale;
+  const whatsappHref = site.whatsappHref ?? "https://wa.me/201127435060";
+  const whatsappTitle = ui.contactCards.whatsappTitle ?? (locale === "ar" ? "واتساب" : "WhatsApp");
 
   return (
     <PageShell>
       <FocusSection
-        className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-16 md:pt-20"
+        className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-14 pt-16 sm:px-6 sm:pb-20 sm:pt-20 md:pt-24"
         innerClassName="mx-auto grid max-w-xl items-stretch gap-6 md:max-w-6xl md:grid-cols-[1fr_0.95fr] md:gap-12"
       >
           <div className="mx-auto w-full max-w-xl space-y-6 sm:space-y-8">
@@ -35,26 +37,37 @@ export default function Contact({ content, setShowForm }) {
               />
             </Reveal>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid auto-rows-fr gap-4 sm:grid-cols-2">
               <ContactCard
+                className="sm:min-h-[13.75rem]"
                 icon={<FaEnvelope />}
+                eyebrow={locale === "ar" ? "رد سريع" : "Fast Reply"}
+                tone="email"
                 title={ui.contactCards.emailTitle}
                 body={site.email}
-                action={<span className="text-sm font-semibold text-slate-500">{ui.contactCards.emailAction}</span>}
+                ctaLabel={locale === "ar" ? "أرسل بريدًا" : "Send Email"}
+                href={`mailto:${site.email}`}
+              />
+              <ContactCard
+                className="sm:min-h-[13.75rem]"
+                icon={<FaWhatsapp />}
+                eyebrow={locale === "ar" ? "متاح الآن" : "Available Now"}
+                tone="whatsapp"
+                title={whatsappTitle}
+                body={locale === "ar" ? "تواصل معنا مباشرة على واتساب." : "Chat with us directly on WhatsApp."}
+                href={whatsappHref}
+                rel="noreferrer"
+                target="_blank"
               />
               <ContactCard
                 icon={<FaPaperPlane />}
+                eyebrow={locale === "ar" ? "ابدأ بوضوح" : "Project Brief"}
+                tone="form"
                 title={ui.contactCards.formTitle}
                 body={ui.contactCards.formBody}
-                action={
-                  <button
-                    type="button"
-                    onClick={() => setShowForm(true)}
-                    className="text-sm font-semibold text-purple-700 transition hover:text-purple-600"
-                  >
-                    {ui.contactCards.formAction}
-                  </button>
-                }
+                ctaLabel={ui.contactCards.formAction}
+                className="sm:col-span-2 sm:min-h-[12.75rem]"
+                onClick={() => setShowForm(true)}
               />
             </div>
           </div>
@@ -92,6 +105,9 @@ export default function Contact({ content, setShowForm }) {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <SocialPill href={whatsappHref} icon={<FaWhatsapp />}>
+                {whatsappTitle}
+              </SocialPill>
               {content.socialLinks.map((link) => (
                 <SocialPill key={link.id} href={link.href} icon={link.id === "instagram" ? <FaInstagram /> : <FaFacebookF />}>
                   {link.label}
@@ -124,15 +140,77 @@ export default function Contact({ content, setShowForm }) {
   );
 }
 
-function ContactCard({ action, body, icon, title }) {
-  return (
-    <Reveal className="mx-auto w-full max-w-sm rounded-[1.75rem] border border-slate-300/60 bg-slate-100/80 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:max-w-none sm:p-6">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-700">
-        {icon}
+function ContactCard({ body, className = "", ctaLabel, eyebrow, href, icon, onClick, rel, target, title, tone = "email" }) {
+  const toneClasses = {
+    email: {
+      panel:
+        "border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.05)] hover:border-violet-300 hover:shadow-[0_18px_36px_rgba(15,23,42,0.08)]",
+      icon: "bg-violet-50 text-violet-700",
+      eyebrow: "text-violet-700",
+      cta: "text-violet-700",
+    },
+    whatsapp: {
+      panel:
+        "border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.05)] hover:border-green-300 hover:shadow-[0_18px_36px_rgba(15,23,42,0.08)]",
+      icon: "bg-green-50 text-green-600",
+      eyebrow: "text-green-700",
+      cta: "text-green-700",
+    },
+    form: {
+      panel:
+        "border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.05)] hover:border-violet-300 hover:shadow-[0_18px_36px_rgba(15,23,42,0.08)]",
+      icon: "bg-violet-50 text-violet-700",
+      eyebrow: "text-violet-700",
+      cta: "text-violet-700",
+    },
+  };
+  const theme = toneClasses[tone] ?? toneClasses.email;
+  const baseClassName = `group relative mx-auto flex min-h-[13.75rem] w-full flex-col overflow-hidden rounded-[1.5rem] border p-5 text-left backdrop-blur transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 sm:max-w-none sm:p-6 ${theme.panel}`.trim();
+
+  const content = (
+    <>
+      <div className="flex items-start justify-between gap-4">
+        <div className={`flex h-12 w-12 items-center justify-center rounded-[1.1rem] text-base ${theme.icon}`}>
+          {icon}
+        </div>
+        {eyebrow ? (
+          <span className={`rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${theme.eyebrow}`}>
+            {eyebrow}
+          </span>
+        ) : null}
       </div>
-      <h3 className="mt-4 text-xl font-bold text-slate-950">{title}</h3>
-      <p className="mt-2 leading-7 text-slate-600">{body}</p>
-      <div className="mt-4">{action}</div>
+      <div className="mt-5 space-y-2">
+        <h3 className="text-[1.15rem] font-bold leading-[1.1] tracking-[-0.03em] text-slate-950 sm:text-[1.3rem]">{title}</h3>
+        <p className={`max-w-[28rem] text-[0.98rem] leading-7 text-slate-600 ${tone === "email" ? "break-all text-slate-700" : ""}`}>
+          {body}
+        </p>
+      </div>
+      {ctaLabel ? (
+        <div className={`mt-auto pt-5 text-sm font-semibold ${theme.cta}`}>
+          <span className="inline-flex items-center gap-2">
+            {ctaLabel}
+            <FaArrowRight className="text-xs transition-transform duration-200 group-hover:translate-x-0.5" />
+          </span>
+        </div>
+      ) : null}
+    </>
+  );
+
+  if (href) {
+    return (
+      <Reveal className={className}>
+        <a href={href} target={target} rel={rel} className={baseClassName}>
+          {content}
+        </a>
+      </Reveal>
+    );
+  }
+
+  return (
+    <Reveal className={className}>
+      <button type="button" onClick={onClick} className={`${baseClassName} appearance-none`}>
+        {content}
+      </button>
     </Reveal>
   );
 }

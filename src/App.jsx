@@ -1,5 +1,5 @@
 import { AnimatePresence, motion as Motion } from "framer-motion";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useLayoutEffect, useState } from "react";
 import ContactFormModal from "./components/layout/ContactFormModal";
 import ScrollToTopButton from "./components/layout/ScrollToTopButton";
 import SiteFooter from "./components/layout/SiteFooter";
@@ -33,10 +33,59 @@ export default function App() {
     document.title = currentPage === "home" ? defaultTitle : `${pageTitle} | ${content.siteDetails.name}`;
   }, [content.navItems, content.siteDetails.name, currentPage, defaultTitle]);
 
+  useEffect(() => {
+    if (!("scrollRestoration" in window.history)) {
+      return undefined;
+    }
+
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
+  useEffect(() => {
+    const forceScrollTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      });
+    };
+
+    forceScrollTop();
+
+    window.addEventListener("pageshow", forceScrollTop);
+    window.addEventListener("popstate", forceScrollTop);
+
+    return () => {
+      window.removeEventListener("pageshow", forceScrollTop);
+      window.removeEventListener("popstate", forceScrollTop);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [currentPage, locale]);
+
+  useEffect(() => {
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+
+    const timeoutId = window.setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [currentPage, locale]);
+
   const navTo = (page) => {
     setCurrentPage(page);
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleLocaleChange = (nextLocale) => {
