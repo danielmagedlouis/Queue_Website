@@ -161,7 +161,7 @@ export function buildLeadRecord({ activePhoneCountry, formData, pageUrl, subject
 
 export async function insertLeadRecord(leadRecord) {
   if (!hasSupabaseConfig || !supabase) {
-    throw new Error("Supabase is not configured. Check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in the deployment build environment.");
+    throw new Error("Supabase is not configured. Check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY");
   }
 
   const { error } = await supabase.from("leads").insert([leadRecord]);

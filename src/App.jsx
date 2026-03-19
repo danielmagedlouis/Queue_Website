@@ -1,10 +1,14 @@
 import { AnimatePresence, motion as Motion } from "framer-motion";
-import { startTransition, useEffect, useLayoutEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import ContactFormModal from "./components/layout/ContactFormModal";
+import ScrollManager from "./components/routing/ScrollManager";
+import RouteSeo from "./components/seo/RouteSeo";
 import ScrollToTopButton from "./components/layout/ScrollToTopButton";
 import SiteFooter from "./components/layout/SiteFooter";
 import SiteHeader from "./components/layout/SiteHeader";
 import { SITE_CONTENT } from "./content/siteContent";
+import { getPageIdForPath, getPathForPageId } from "./lib/routes";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
@@ -12,15 +16,24 @@ import Process from "./pages/Process";
 import Services from "./pages/Services";
 
 export default function App() {
-  const defaultTitle = "Queue Solutions | Web Development & AI Solutions";
-  const [currentPage, setCurrentPage] = useState("home");
+  return (
+    <BrowserRouter>
+      <AppShell />
+    </BrowserRouter>
+  );
+}
+
+function AppShell() {
   const [showForm, setShowForm] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [locale, setLocale] = useState("en");
   const [localeFxKey, setLocaleFxKey] = useState(0);
   const [localeFxDirection, setLocaleFxDirection] = useState(1);
+  const location = useLocation();
+  const navigate = useNavigate();
   const content = SITE_CONTENT[locale];
   const isRtl = content.direction === "rtl";
+  const currentPage = getPageIdForPath(location.pathname);
 
   useEffect(() => {
     document.documentElement.lang = locale === "ar" ? "ar-EG" : "en-US";
@@ -28,64 +41,9 @@ export default function App() {
     document.body.dir = content.direction;
   }, [content.direction, locale]);
 
-  useEffect(() => {
-    const pageTitle = content.navItems.find((item) => item.id === currentPage)?.label ?? content.siteDetails.name;
-    document.title = currentPage === "home" ? defaultTitle : `${pageTitle} | ${content.siteDetails.name}`;
-  }, [content.navItems, content.siteDetails.name, currentPage, defaultTitle]);
-
-  useEffect(() => {
-    if (!("scrollRestoration" in window.history)) {
-      return undefined;
-    }
-
-    const previousScrollRestoration = window.history.scrollRestoration;
-    window.history.scrollRestoration = "manual";
-
-    return () => {
-      window.history.scrollRestoration = previousScrollRestoration;
-    };
-  }, []);
-
-  useEffect(() => {
-    const forceScrollTop = () => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      window.requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      });
-    };
-
-    forceScrollTop();
-
-    window.addEventListener("pageshow", forceScrollTop);
-    window.addEventListener("popstate", forceScrollTop);
-
-    return () => {
-      window.removeEventListener("pageshow", forceScrollTop);
-      window.removeEventListener("popstate", forceScrollTop);
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [currentPage, locale]);
-
-  useEffect(() => {
-    window.requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    });
-
-    const timeoutId = window.setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }, 0);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [currentPage, locale]);
-
   const navTo = (page) => {
-    setCurrentPage(page);
     setMobileMenuOpen(false);
+    navigate(getPathForPageId(page));
   };
 
   const handleLocaleChange = (nextLocale) => {
@@ -101,22 +59,15 @@ export default function App() {
     });
   };
 
-  const pages = {
-    home: <Home content={content} navTo={navTo} setShowForm={setShowForm} />,
-    services: <Services content={content} navTo={navTo} setShowForm={setShowForm} />,
-    portfolio: <Portfolio content={content} navTo={navTo} setShowForm={setShowForm} />,
-    process: <Process content={content} navTo={navTo} setShowForm={setShowForm} />,
-    contact: <Contact content={content} navTo={navTo} setShowForm={setShowForm} />,
-  };
-
   return (
     <div className={`min-h-screen bg-white text-slate-900 ${isRtl ? "font-sans" : ""}`}>
+      <RouteSeo content={content} pageId={currentPage} />
+      <ScrollManager scrollKey={locale} />
+
       <SiteHeader
         content={content}
-        currentPage={currentPage}
         locale={locale}
         mobileMenuOpen={mobileMenuOpen}
-        navTo={navTo}
         onLocaleChange={handleLocaleChange}
         setMobileMenuOpen={setMobileMenuOpen}
         setShowForm={setShowForm}
@@ -125,18 +76,25 @@ export default function App() {
       <main className={currentPage === "home" ? "" : "pt-22 sm:pt-28"}>
         <AnimatePresence mode="wait">
           <Motion.div
-            key={currentPage}
+            key={`${location.pathname}:${locale}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
-            {pages[currentPage]}
+            <Routes location={location}>
+              <Route path="/" element={<Home content={content} navTo={navTo} setShowForm={setShowForm} />} />
+              <Route path="/services" element={<Services content={content} navTo={navTo} />} />
+              <Route path="/portfolio" element={<Portfolio content={content} setShowForm={setShowForm} />} />
+              <Route path="/process" element={<Process content={content} setShowForm={setShowForm} />} />
+              <Route path="/contact" element={<Contact content={content} setShowForm={setShowForm} />} />
+              <Route path="*" element={<Navigate replace to="/" />} />
+            </Routes>
           </Motion.div>
         </AnimatePresence>
       </main>
 
-      <SiteFooter content={content} navTo={navTo} setShowForm={setShowForm} />
+      <SiteFooter content={content} />
       <ScrollToTopButton />
 
       <AnimatePresence initial={false}>

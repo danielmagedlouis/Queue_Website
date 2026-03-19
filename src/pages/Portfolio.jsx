@@ -16,13 +16,13 @@ export default function Portfolio({ content, setShowForm }) {
 
   return (
     <PageShell>
-      <FocusSection className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-8 pt-8 sm:px-6 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" innerClassName="mx-auto max-w-xl space-y-4 text-center md:max-w-6xl md:space-y-8">
-          <Reveal>
+      <FocusSection trigger="mount" className="border-y border-slate-300/50 bg-slate-100/58 px-5 pb-8 pt-8 sm:px-6 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" innerClassName="mx-auto max-w-xl space-y-4 text-center md:max-w-6xl md:space-y-8">
+          <Reveal trigger="mount">
             <div className="inline-flex rounded-full border border-purple-200 bg-slate-50/90 px-4 py-2 text-sm font-medium text-purple-700 shadow-[0_12px_30px_rgba(168,85,247,0.12)] backdrop-blur">
               {portfolio.hero.eyebrow}
             </div>
           </Reveal>
-          <Reveal delay={0.08}>
+          <Reveal trigger="mount" delay={0.08}>
             <SectionHeading
               align="center"
               locale={locale}
@@ -34,9 +34,9 @@ export default function Portfolio({ content, setShowForm }) {
           </Reveal>
       </FocusSection>
 
-      <FocusSection className="bg-slate-950 px-5 pb-14 pt-8 sm:px-6 sm:pb-20 sm:pt-20 md:pb-24 md:pt-24" innerClassName="mx-auto grid max-w-xl gap-5 md:max-w-6xl md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
+      <FocusSection trigger="mount" className="bg-slate-950 px-5 pb-14 pt-8 sm:px-6 sm:pb-20 sm:pt-20 md:pb-24 md:pt-24" innerClassName="mx-auto grid max-w-xl gap-5 md:max-w-6xl md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
           {portfolio.projects.map((project, index) => (
-            <Reveal key={project.title} className="mx-auto w-full max-w-sm md:max-w-none" delay={index * 0.05}>
+            <Reveal trigger="mount" key={project.title} className="mx-auto w-full max-w-sm md:max-w-none" delay={index * 0.05}>
               <article className="group overflow-hidden rounded-[2rem] border border-slate-300/70 bg-slate-100/82 shadow-[0_24px_60px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(15,23,42,0.12)]">
                 <div className="relative h-44 overflow-hidden sm:h-72">
                   <img
@@ -71,10 +71,11 @@ export default function Portfolio({ content, setShowForm }) {
       </FocusSection>
 
       <FocusSection
+        trigger="mount"
         className="border-y border-slate-300/50 bg-slate-100/58 px-5 py-14 sm:px-6 sm:py-20 md:py-24"
         innerClassName="mx-auto grid max-w-xl items-stretch gap-6 rounded-[2rem] border border-slate-300/70 bg-slate-100/76 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur md:max-w-6xl md:grid-cols-[1.1fr_0.9fr] md:gap-8 md:p-10"
       >
-          <Reveal className="h-full overflow-hidden rounded-[1.75rem] bg-slate-950 p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] sm:p-8">
+          <Reveal trigger="mount" className="h-full overflow-hidden rounded-[1.75rem] bg-slate-950 p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] sm:p-8">
             <div className="flex h-full flex-col justify-center space-y-5">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-purple-200">
               {portfolio.cta.eyebrow}

@@ -33,6 +33,18 @@
     />
     <meta name="twitter:image" content="https://queuesolutions.org/og-image.jpg" />
 
+    <script>
+      (function () {
+        const currentUrl = new URL(window.location.href);
+        const redirectedPath = currentUrl.searchParams.get('p');
+
+        if (!redirectedPath) {
+          return;
+        }
+
+        window.history.replaceState(null, '', redirectedPath);
+      })();
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-19YFREF1C7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];

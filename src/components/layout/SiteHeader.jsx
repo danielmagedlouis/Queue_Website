@@ -1,14 +1,14 @@
 import { AnimatePresence, motion as Motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 import { FaLanguage } from "react-icons/fa";
+import { Link, NavLink } from "react-router-dom";
+import { getPathForPageId } from "../../lib/routes";
 import ActionButton from "../ui/ActionButton";
 
 export default function SiteHeader({
   content,
-  currentPage,
   locale,
   mobileMenuOpen,
-  navTo,
   onLocaleChange,
   setMobileMenuOpen,
   setShowForm,
@@ -41,43 +41,52 @@ export default function SiteHeader({
         }`}
       >
         <div className="flex items-center justify-between gap-2 px-2.5 py-2.5 sm:px-4 sm:py-3 lg:px-6">
-          <button
-            onClick={() => navTo("home")}
+          <Link
+            to="/"
+            onClick={() => setMobileMenuOpen(false)}
             className="flex items-center justify-center rounded-full px-1 py-1 transition hover:bg-slate-50"
           >
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden sm:h-12 sm:w-12">
               <img src={logoSrc} alt={content.siteDetails.name} className="h-full w-full object-contain" />
             </div>
-          </button>
+          </Link>
 
           <nav className={`hidden items-center gap-2 md:flex ${isRtl ? "flex-row-reverse" : ""}`}>
             {content.navItems.map((item) => {
-              const active = currentPage === item.id;
-
               return (
-                <button
+                <NavLink
                   key={item.id}
-                  onClick={() => navTo(item.id)}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium leading-[1.5] transition ${
-                    active ? "text-white" : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
-                  }`}
+                  to={getPathForPageId(item.id)}
+                  end={item.id === "home"}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `relative rounded-full px-4 py-2 text-sm font-medium leading-[1.5] transition ${
+                      isActive ? "" : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+                    }`
+                  }
                 >
-                  <AnimatePresence>
-                    {active ? (
+                  {({ isActive }) => (
+                    <>
+                      <AnimatePresence>
+                        {isActive ? (
+                          <Motion.span
+                            layoutId="active-nav-pill"
+                            className="absolute inset-0 rounded-full bg-slate-950 shadow-[0_12px_30px_rgba(15,23,42,0.16)]"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        ) : null}
+                      </AnimatePresence>
                       <Motion.span
-                        layoutId="active-nav-pill"
-                        className="absolute inset-0 rounded-full bg-slate-950 shadow-[0_12px_30px_rgba(15,23,42,0.16)]"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/0 via-purple-400/20 to-sky-400/0 opacity-0"
+                        whileTap={{ opacity: [0, 1, 0], scale: [0.92, 1.05, 1.08] }}
+                        transition={{ duration: 0.45 }}
                       />
-                    ) : null}
-                  </AnimatePresence>
-                  <Motion.span
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/0 via-purple-400/20 to-sky-400/0 opacity-0"
-                    whileTap={{ opacity: [0, 1, 0], scale: [0.92, 1.05, 1.08] }}
-                    transition={{ duration: 0.45 }}
-                  />
-                  <span className="relative z-10">{item.label}</span>
-                </button>
+                      <span className={`relative z-10 ${isActive ? "text-white" : "text-slate-600 hover:text-slate-950"}`}>
+                        {item.label}
+                      </span>
+                    </>
+                  )}
+                </NavLink>
               );
             })}
           </nav>
@@ -124,17 +133,25 @@ export default function SiteHeader({
                 className="px-3 py-3"
               >
                 <nav className="grid gap-2">
-                  {content.navItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => navTo(item.id)}
-                      className={`rounded-2xl px-4 py-3 text-[15px] font-medium leading-[1.5] transition ${isRtl ? "text-right" : "text-left"} ${
-                        currentPage === item.id ? "bg-slate-950 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
+                  {content.navItems.map((item) => {
+                    const itemPath = getPathForPageId(item.id);
+
+                    return (
+                      <NavLink
+                        key={item.id}
+                        to={itemPath}
+                        end={item.id === "home"}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={({ isActive }) =>
+                          `rounded-2xl px-4 py-3 text-[15px] font-medium leading-[1.5] transition ${isRtl ? "text-right" : "text-left"} ${
+                            isActive ? "bg-slate-950 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
+                          }`
+                        }
+                      >
+                        {item.label}
+                      </NavLink>
+                    );
+                  })}
                 </nav>
                 <div className="mt-4 grid gap-3">
                   <LanguageToggleButton label={languageMobileLabel} onClick={() => onLocaleChange(nextLocale)} />

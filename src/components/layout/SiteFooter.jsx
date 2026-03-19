@@ -1,4 +1,6 @@
 import { FaFacebookF, FaInstagram, FaEnvelope, FaWhatsapp } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { getPathForPageId } from "../../lib/routes";
 import Reveal from "../ui/Reveal";
 
 const socialIcons = {
@@ -17,7 +19,7 @@ const iconButtonClassNames = {
     "bg-white text-slate-600 shadow-[0_12px_28px_rgba(59,130,246,0.14)] hover:bg-blue-50 hover:text-blue-600 hover:shadow-[0_16px_34px_rgba(59,130,246,0.22)]",
 };
 
-export default function SiteFooter({ content, navTo }) {
+export default function SiteFooter({ content }) {
   const isRtl = content.direction === "rtl";
   const whatsappHref = content.siteDetails.whatsappHref ?? "https://wa.me/201127435060";
   const logoSrc = `${import.meta.env.BASE_URL}queue-logo.png`;
@@ -54,13 +56,20 @@ export default function SiteFooter({ content, navTo }) {
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">{content.ui.footerNavigate}</p>
             <div className="mt-4 grid gap-2">
               {content.navItems.map((item) => (
-                <button
+                <NavLink
                   key={item.id}
-                  onClick={() => navTo(item.id)}
-                  className={`rounded-xl px-3 py-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-950 ${isRtl ? "text-right" : "text-left"}`}
+                  to={getPathForPageId(item.id)}
+                  end={item.id === "home"}
+                  className={({ isActive }) =>
+                    `rounded-xl px-3 py-2 transition ${isRtl ? "text-right" : "text-left"} ${
+                      isActive
+                        ? "bg-slate-950 text-white"
+                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                    }`
+                  }
                 >
                   {item.label}
-                </button>
+                </NavLink>
               ))}
             </div>
           </div>
